@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@android:drawable/btn_star"
+        android:title="ホーム" />
+    <item
+        android:id="@+id/passwordActivity"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="その他" />
+
+</menu>
