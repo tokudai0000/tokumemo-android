@@ -14,11 +14,29 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class PasswordActivity : AppCompatActivity() {
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.home -> {
+                finish()
+            }
+            R.id.passwordActivity -> {
+
+            }
+        }
+        false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
+
+        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
         initSetup()
     }
 

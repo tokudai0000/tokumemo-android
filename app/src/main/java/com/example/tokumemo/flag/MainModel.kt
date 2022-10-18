@@ -20,6 +20,21 @@ class MainModel: ViewModel() {
     ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
+
+    public fun isAnyWebsite(pageId: Int): String {
+
+        var url = ""
+
+        when (pageId) {
+            2 -> {
+                url = "https://my.ait.tokushima-u.ac.jp/portal/"
+            }
+            else -> {}
+        }
+
+        return url
+    }
+
     public fun anyJavaScriptExecute(urlString: String): JavaScriptType {
         // 大学統合認証システム(IAS)のログイン画面
         if (urlString.startsWith("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=", 0)) {

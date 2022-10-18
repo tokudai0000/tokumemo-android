@@ -36,11 +36,54 @@ class WebActivity : AppCompatActivity() {
                 if (url != null) {
                     urlString = url
                 }
+
+                when (viewModel.anyJavaScriptExecute(urlString)) {
+                    MainModel.JavaScriptType.loginIAS -> {
+
+                        if (shouldShowPasswordView()) {
+                            // パスワード登録画面を表示
+                            val intent = Intent(applicationContext, PasswordActivity::class.java)
+                            startActivity(intent)
+                            // 戻ってきた時、startForPasswordActivityを呼び出す
+//                          startForPasswordActivity.launch(intent)
+                        }
+                        else {
+                            val cAccount = encryptedLoad("KEY_cAccount")
+                            val password = encryptedLoad("KEY_password")
+
+                            webView.evaluateJavascript(
+                                "document.getElementById('username').value= '$cAccount'",
+                                null
+                            )
+                            webView.evaluateJavascript(
+                                "document.getElementById('password').value= '$password'",
+                                null
+                            )
+                            webView.evaluateJavascript(
+                                "document.getElementsByClassName('form-element form-button')[0].click();",
+                                null
+                            )
+                            // フラグを下ろす
+                            DataManager.canExecuteJavascript = false
+                        }
+                    }
+                    else -> {}
+                }
+
                 super.onPageFinished(view, url)
             }
         }
 
-        webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
+        // MainActivityからデータを受け取る
+        // どのWebサイトを開こうとしているかをIdで判別
+        var receivedData = intent.getStringExtra("PAGE_KEY")
+        var pageId = 99
+        // 整数型に変換
+        if (receivedData != null) {
+            pageId = receivedData.toInt()
+        }
+
+        webView.loadUrl(viewModel.isAnyWebsite(pageId))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
