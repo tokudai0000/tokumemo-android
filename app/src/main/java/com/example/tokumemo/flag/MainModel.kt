@@ -26,8 +26,32 @@ class MainModel: ViewModel() {
         var url = ""
 
         when (pageId) {
+            0 -> {
+                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
+            }
+            1 -> {
+                url = "https://manaba.lms.tokushima-u.ac.jp/ct/home"
+            }
             2 -> {
-                url = "https://my.ait.tokushima-u.ac.jp/portal/"
+                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
+            }
+            3 -> {
+                url = "https://outlook.office365.com/mail/"
+            }
+            4 -> {
+                url = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+            }
+            5 -> {
+                url = "https://vsign.jp/tokudai/maruco"
+            }
+            6 -> {
+                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Results.aspx"
+            }
+            7 -> {
+                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
+            }
+            8 -> {
+                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
             }
             else -> {}
         }

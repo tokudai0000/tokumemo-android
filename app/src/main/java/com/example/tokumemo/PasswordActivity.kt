@@ -23,7 +23,7 @@ class PasswordActivity : AppCompatActivity() {
             R.id.home -> {
                 finish()
             }
-            R.id.passwordActivity -> {
+            R.id.others -> {
 
             }
         }
@@ -38,21 +38,6 @@ class PasswordActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         initSetup()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.password_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.goBack -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun initSetup() {

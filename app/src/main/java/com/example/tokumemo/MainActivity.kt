@@ -12,11 +12,9 @@ import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.newFixedThreadPoolContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             R.id.home -> {
 
             }
-            R.id.passwordActivity -> {
+            R.id.others -> {
                 val intent = Intent(applicationContext, PasswordActivity::class.java)
                 startActivity(intent)
             }
@@ -93,43 +91,96 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
         // 隠れWebビューここまで
 
-
+        // メニューバー表示
         val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
+        // キャリアセンターを押したとき
+        val Button0 = findViewById<Button>(R.id.carrierCenter)
+        Button0.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "0"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+        // マナバを押したとき
+        val Button1 = findViewById<Button>(R.id.manaba)
+        Button1.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "1"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
         // 教務システムを押したとき
-        val nextButton = findViewById<Button>(R.id.academicAffairsSystem)
-        nextButton.setOnClickListener{
+        val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
+        Button2.setOnClickListener{
             val intent = Intent(this, WebActivity::class.java)
             val pageId = "2"
             // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
             intent.putExtra("PAGE_KEY",pageId)
             startActivity(intent)
         }
-
-
-    }
-
-//    オプションメニューバーは消す予定
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.goPage -> {
-                val intent = Intent(applicationContext, WebActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.setPassword -> {
-                val intent = Intent(applicationContext, PasswordActivity::class.java)
-                startActivity(intent)
-            }
+        // メールを押したとき
+        val Button3 = findViewById<Button>(R.id.email)
+        Button3.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "3"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
         }
-        return super.onOptionsItemSelected(item)
+        // 図書館を押したとき
+        val Button4 = findViewById<Button>(R.id.library)
+        Button4.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "4"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+        // 生協を押したとき
+        val Button5 = findViewById<Button>(R.id.seikyou)
+        Button5.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "5"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+        // 成績を押したとき
+        val Button6 = findViewById<Button>(R.id.result)
+        Button6.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "6"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+        // 時間割を押したとき
+        val Button7 = findViewById<Button>(R.id.timetable)
+        Button7.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "7"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+        // シラバスを押したとき
+        val Button8 = findViewById<Button>(R.id.syllabus)
+        Button8.setOnClickListener{
+            val intent = Intent(this, WebActivity::class.java)
+            val pageId = "8"
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",pageId)
+            startActivity(intent)
+        }
+
+
+
     }
+
 
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {

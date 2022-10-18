@@ -6,7 +6,7 @@
         android:icon="@android:drawable/btn_star"
         android:title="ホーム" />
     <item
-        android:id="@+id/passwordActivity"
+        android:id="@+id/others"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="その他" />
 

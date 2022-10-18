@@ -23,17 +23,17 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="50dp"
-        app:menu="@menu/bottom_navigation_item" />
+        app:menu="@menu/bottom_navigation_item"
+        tools:layout_editor_absoluteX="50dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,40 +54,91 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/carrierCenter"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="キャリアセンター" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/manaba"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
+                android:layout_height="80dp"
                 android:layout_marginTop="32dp"
-                android:text="Button" />
+                android:layout_weight="1"
+                android:text="manaba" />
 
             <Button
                 android:id="@+id/academicAffairsSystem"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="総合認証" />
+                android:text="教務システム" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="メール" />
+
+            <Button
+                android:id="@+id/library"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="図書館" />
+
+            <Button
+                android:id="@+id/seikyou"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="生協" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/result"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="成績" />
+
+            <Button
+                android:id="@+id/timetable"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="時間割" />
+
+            <Button
+                android:id="@+id/syllabus"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:text="シラバス" />
+        </LinearLayout>
 
     </LinearLayout>
 
