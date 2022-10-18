@@ -107,6 +107,8 @@ class WebActivity : AppCompatActivity() {
         webView.getSettings().setLoadWithOverviewMode( true );
         // ワイドビューポートへの対応
         webView.getSettings().setUseWideViewPort( true );
+        // 拡大縮小対応
+        webView.getSettings().setBuiltInZoomControls(true);
 
         webViewLoadUrl()
     }
