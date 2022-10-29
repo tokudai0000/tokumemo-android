@@ -27,7 +27,7 @@ class MainModel: ViewModel() {
 
         when (pageId) {
             0 -> {
-                url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
+                url = "https://www.tokudai-syusyoku.com/index.php"
             }
             1 -> {
                 url = "https://manaba.lms.tokushima-u.ac.jp/ct/home"

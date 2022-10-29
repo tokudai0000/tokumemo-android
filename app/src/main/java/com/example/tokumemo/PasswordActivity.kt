@@ -21,10 +21,12 @@ class PasswordActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.home -> {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }
             R.id.others -> {
-
+                finish()
             }
         }
         false

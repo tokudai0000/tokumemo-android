@@ -26,6 +26,8 @@ class WebActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.home -> {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }
             R.id.others -> {
@@ -44,24 +46,50 @@ class WebActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        // WebView
+//        webViewLoadUrl()
+
+        webViewSetup()
+    }
+
+    // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く
+    private fun webViewLoadUrl() {
+        // MainActivityからデータを受け取る
+        // どのWebサイトを開こうとしているかをIdで判別
+        var receivedData = intent.getStringExtra("PAGE_KEY")
+        var pageId = 99
+        // 整数型に変換
+        if (receivedData != null) {
+            pageId = receivedData.toInt()
+        }
+
+        webView.loadUrl(viewModel.isAnyWebsite(pageId))
+    }
+
+    // WebViewの設定
+    private fun webViewSetup() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
         viewModel = ViewModelProvider(this).get(MainModel::class.java)
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
-            // URLの読み込みが終わった時の処理
-            override fun onPageFinished(view: WebView?, url: String?) {
+            // URLの読み込みが始まった時の処理
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 if (url != null) {
                     urlString = url
                 }
-
                 // タイムアウトをしていた場合
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
                     DataManager.canExecuteJavascript = true
                     webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
+                }
+            }
+
+            // URLの読み込みが終わった時の処理
+            override fun onPageFinished(view: WebView?, url: String?) {
+                if (url != null) {
+                    urlString = url
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
@@ -75,7 +103,7 @@ class WebActivity : AppCompatActivity() {
                             // 戻ってきた時、startForPasswordActivityを呼び出す
 //                          startForPasswordActivity.launch(intent)
                         }
-                        else {
+                        else if (DataManager.canExecuteJavascript) {
                             val cAccount = encryptedLoad("KEY_cAccount")
                             val password = encryptedLoad("KEY_password")
 
@@ -113,20 +141,6 @@ class WebActivity : AppCompatActivity() {
         webViewLoadUrl()
     }
 
-    // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く
-    private fun webViewLoadUrl() {
-        // MainActivityからデータを受け取る
-        // どのWebサイトを開こうとしているかをIdで判別
-        var receivedData = intent.getStringExtra("PAGE_KEY")
-        var pageId = 99
-        // 整数型に変換
-        if (receivedData != null) {
-            pageId = receivedData.toInt()
-        }
-
-        webView.loadUrl(viewModel.isAnyWebsite(pageId))
-    }
-
     // PasswordActivityで登録ボタンを押した場合、再度ログイン処理を行う
 //    private val startForPasswordActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 //        if (result.resultCode == Activity.RESULT_OK) {
@@ -161,22 +175,4 @@ class WebActivity : AppCompatActivity() {
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
     }
-    // 保存
-//    private fun encryptedSave(KEY: String, text: String) {
-//        val mainKey = MasterKey.Builder(applicationContext)
-//            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-//            .build()
-//
-//        val prefs = EncryptedSharedPreferences.create(
-//            applicationContext,
-//            WebActivity.PREF_NAME,
-//            mainKey,
-//            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-//            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-//        )
-//        with (prefs.edit()) {
-//            putString(KEY, text)
-//            apply()
-//        }
-//    }
 }

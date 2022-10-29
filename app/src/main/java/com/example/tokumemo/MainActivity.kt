@@ -28,8 +28,9 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.others -> {
-                val intent = Intent(applicationContext, PasswordActivity::class.java)
+                val intent = Intent(applicationContext, OthersActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
         false
@@ -77,8 +78,6 @@ class MainActivity : AppCompatActivity() {
                                 "document.getElementsByClassName('form-element form-button')[0].click();",
                                 null
                             )
-                            // フラグを下ろす
-                            DataManager.canExecuteJavascript = false
                         }
                     }
                     else -> {}
@@ -98,87 +97,48 @@ class MainActivity : AppCompatActivity() {
         // キャリアセンターを押したとき
         val Button0 = findViewById<Button>(R.id.carrierCenter)
         Button0.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "0"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("0")
         }
         // マナバを押したとき
         val Button1 = findViewById<Button>(R.id.manaba)
         Button1.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "1"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("1")
         }
         // 教務システムを押したとき
         val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
         Button2.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "2"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("2")
         }
         // メールを押したとき
         val Button3 = findViewById<Button>(R.id.email)
         Button3.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "3"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("3")
         }
         // 図書館を押したとき
         val Button4 = findViewById<Button>(R.id.library)
         Button4.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "4"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("4")
         }
         // 生協を押したとき
         val Button5 = findViewById<Button>(R.id.seikyou)
         Button5.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "5"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("5")
         }
         // 成績を押したとき
         val Button6 = findViewById<Button>(R.id.result)
         Button6.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "6"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("6")
         }
         // 時間割を押したとき
         val Button7 = findViewById<Button>(R.id.timetable)
         Button7.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "7"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("7")
         }
         // シラバスを押したとき
         val Button8 = findViewById<Button>(R.id.syllabus)
         Button8.setOnClickListener{
-            val intent = Intent(this, WebActivity::class.java)
-            val pageId = "8"
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",pageId)
-            startActivity(intent)
+            goWeb("8")
         }
-
-
-
     }
 
 
@@ -207,6 +167,16 @@ class MainActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
+    }
+
+    // 押されたWebサイトにとぶ
+    private fun goWeb(pageId: String) {
+        val intent = Intent(this, WebActivity::class.java)
+        // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+        intent.putExtra("PAGE_KEY",pageId)
+        // 自動入力のフラグを上げる
+        DataManager.canExecuteJavascript = true
+        startActivity(intent)
     }
 
 }
