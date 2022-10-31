@@ -23,10 +23,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="64dp"
         android:background="@color/white"
-        app:itemTextColor="@drawable/bottom_navigation_item_state"
         app:itemIconTint="@drawable/bottom_navigation_item_state"
+        app:itemTextColor="@drawable/bottom_navigation_item_state"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_item"
         tools:layout_editor_absoluteX="50dp" />
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="64dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="64dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:text="キャリアセンター"
                 app:icon="@drawable/ic_career_center_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/manaba"
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:text="manaba"
                 app:icon="@drawable/ic_manaba_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/academicAffairsSystem"
@@ -81,7 +81,7 @@
                 android:layout_weight="1"
                 android:text="教務システム"
                 app:icon="@drawable/ic_school_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:text="メール"
                 app:icon="@drawable/ic_baseline_email_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/library"
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 android:text="図書館"
                 app:icon="@drawable/ic_baseline_local_library_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/seikyou"
@@ -115,7 +115,7 @@
                 android:layout_weight="1"
                 android:text="生協"
                 app:icon="@drawable/ic_baseline_local_cafe_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
         </LinearLayout>
 
         <LinearLayout
@@ -131,7 +131,7 @@
                 android:layout_weight="1"
                 android:text="成績"
                 app:icon="@drawable/ic_baseline_result_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/timetable"
@@ -140,7 +140,7 @@
                 android:layout_weight="1"
                 android:text="時間割"
                 app:icon="@drawable/ic_baseline_time_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
 
             <Button
                 android:id="@+id/syllabus"
@@ -149,7 +149,7 @@
                 android:layout_weight="1"
                 android:text="シラバス"
                 app:icon="@drawable/ic_baseline_computer_24"
-                app:iconGravity="top"/>
+                app:iconGravity="top" />
         </LinearLayout>
 
     </LinearLayout>

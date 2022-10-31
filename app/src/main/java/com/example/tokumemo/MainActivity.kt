@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
             R.id.home -> {
 
             }
+            R.id.news -> {
+
+            }
+            R.id.review -> {
+
+            }
             R.id.others -> {
                 val intent = Intent(applicationContext, OthersActivity::class.java)
                 startActivity(intent)
