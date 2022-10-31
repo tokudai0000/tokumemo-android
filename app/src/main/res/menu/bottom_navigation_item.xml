@@ -3,10 +3,10 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="ホーム" />
     <item
-        android:id="@+id/passwordActivity"
+        android:id="@+id/others"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="その他" />
 

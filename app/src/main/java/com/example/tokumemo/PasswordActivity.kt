@@ -14,27 +14,32 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class PasswordActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_password)
-        initSetup()
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.password_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.goBack -> {
+            R.id.home -> {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.others -> {
                 finish()
             }
         }
-        return super.onOptionsItemSelected(item)
+        false
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_password)
+
+        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        initSetup()
     }
 
     private fun initSetup() {
