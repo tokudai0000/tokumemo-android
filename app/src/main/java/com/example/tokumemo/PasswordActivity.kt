@@ -25,6 +25,12 @@ class PasswordActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+            R.id.news -> {
+
+            }
+            R.id.review -> {
+
+            }
             R.id.others -> {
                 finish()
             }

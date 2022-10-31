@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="#D3D3D3">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        app:itemIconTint="@drawable/bottom_navigation_item_state"
+        app:itemTextColor="@drawable/bottom_navigation_item_state"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_item"
+        tools:layout_editor_absoluteX="50dp" />
+
     <TextView
         android:id="@+id/settings_title"
         android:layout_width="wrap_content"

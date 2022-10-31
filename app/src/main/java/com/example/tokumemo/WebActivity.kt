@@ -30,6 +30,12 @@ class WebActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+            R.id.news -> {
+
+            }
+            R.id.review -> {
+
+            }
             R.id.others -> {
                 val intent = Intent(applicationContext, PasswordActivity::class.java)
                 startActivity(intent)
