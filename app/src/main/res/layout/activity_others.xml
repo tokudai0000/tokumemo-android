@@ -6,16 +6,66 @@
     android:layout_height="match_parent"
     android:background="#D3D3D3">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
+    <LinearLayout
+        android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="@color/white"
-        app:itemIconTint="@drawable/bottom_navigation_item_state"
-        app:itemTextColor="@drawable/bottom_navigation_item_state"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_item"
-        tools:layout_editor_absoluteX="50dp" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/home"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="Home"
+            android:textColor="@color/blue"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_baseline_home_nav_24"
+            app:iconGravity="top"
+            app:iconTint="@color/blue" />
+
+        <Button
+            android:id="@+id/news"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="News"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_baseline_article_24"
+            app:iconGravity="top" />
+
+        <Button
+            android:id="@+id/review"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="Review"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_baseline_star_border_24"
+            app:iconGravity="top" />
+
+        <Button
+            android:id="@+id/others"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="Others"
+            android:textColor="@color/aiiro"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_baseline_manage_accounts_24"
+            app:iconGravity="top"
+            app:iconTint="@color/aiiro" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/settings_title"
@@ -35,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
+        android:layout_marginBottom="64dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

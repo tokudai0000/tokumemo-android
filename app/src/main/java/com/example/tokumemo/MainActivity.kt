@@ -1,5 +1,6 @@
 package com.example.tokumemo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,26 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainModel
     private var urlString = ""
 
-    private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.home -> {
-
-            }
-            R.id.news -> {
-
-            }
-            R.id.review -> {
-
-            }
-            R.id.others -> {
-                val intent = Intent(applicationContext, OthersActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-        false
-    }
-
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -97,9 +79,20 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
         // 隠れWebビューここまで
 
-        // メニューバー表示
-        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
+        // メニューバー
+        val Home = findViewById<Button>(R.id.home)
+        Home.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val Others = findViewById<Button>(R.id.others)
+        Others.setOnClickListener{
+            val intent = Intent(this, OthersActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         // キャリアセンターを押したとき
         val Button0 = findViewById<Button>(R.id.carrierCenter)

@@ -1,5 +1,6 @@
 package com.example.tokumemo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -24,34 +26,25 @@ class WebActivity : AppCompatActivity() {
 
     private var urlString = ""
 
-    private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.home -> {
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            R.id.news -> {
-
-            }
-            R.id.review -> {
-
-            }
-            R.id.others -> {
-                val intent = Intent(applicationContext, PasswordActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        false
-    }
-
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
 
-        // メニューバー表示
-        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
+        // メニューバー
+        val Home = findViewById<Button>(R.id.home)
+        Home.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val Others = findViewById<Button>(R.id.others)
+        Others.setOnClickListener{
+            val intent = Intent(this, OthersActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 //        webViewLoadUrl()
 
@@ -86,6 +79,7 @@ class WebActivity : AppCompatActivity() {
                     urlString = url
                 }
                 // タイムアウトをしていた場合
+                // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
                     DataManager.canExecuteJavascript = true
@@ -97,6 +91,13 @@ class WebActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 if (url != null) {
                     urlString = url
+                }
+
+                // タイムアウトをしていた場合
+                if (viewModel.isTimeout(urlString)) {
+                    // ログイン処理を始める
+                    DataManager.canExecuteJavascript = true
+                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
