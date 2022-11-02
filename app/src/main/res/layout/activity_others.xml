@@ -22,9 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
         android:text="Settings"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#FFFFFF"
-            android:text="TextView" />
+            android:text="@string/settings_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,59 +59,91 @@
                 android:id="@+id/passwordSetting"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:gravity="center|start"
                 android:text="パスワード設定"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/customize"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:gravity="center|start"
                 android:text="カスタマイズ"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/aboutThisApp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="48dp"
+                android:gravity="center|start"
                 android:text="このアプリについて"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/inquiry"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:gravity="center|start"
                 android:text="お問い合わせ"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/sns"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:gravity="center|start"
                 android:text="公式SNS"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/homePage"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:gravity="center|start"
                 android:text="ホームページ"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/termsOfService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
+                android:gravity="center|start"
                 android:text="利用規約"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
             <Button
                 android:id="@+id/privacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center|start"
                 android:text="プライバシーポリシー"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_navigate_next_24"
+                app:iconGravity="end"
+                app:iconTint="@color/gray" />
 
         </LinearLayout>
     </LinearLayout>
