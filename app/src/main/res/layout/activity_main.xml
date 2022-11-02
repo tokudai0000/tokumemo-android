@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="キャリアセンター"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_career_center_24"
                 app:iconGravity="top" />
 
@@ -71,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="manaba"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_manaba_24"
                 app:iconGravity="top" />
 
@@ -80,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="教務システム"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_school_24"
                 app:iconGravity="top" />
         </LinearLayout>
@@ -96,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="メール"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_email_24"
                 app:iconGravity="top" />
 
@@ -105,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="図書館"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_local_library_24"
                 app:iconGravity="top" />
 
@@ -114,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="生協"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_local_cafe_24"
                 app:iconGravity="top" />
         </LinearLayout>
@@ -130,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="成績"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_result_24"
                 app:iconGravity="top" />
 
@@ -139,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="時間割"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_time_24"
                 app:iconGravity="top" />
 
@@ -148,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="シラバス"
+                android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_computer_24"
                 app:iconGravity="top" />
         </LinearLayout>

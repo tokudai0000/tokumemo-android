@@ -15,6 +15,7 @@ import androidx.security.crypto.MasterKey
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainModel
     private var urlString = ""
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
         when (item.itemId) {
             R.id.home -> {
 
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         // メニューバー表示
         val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
 
         // キャリアセンターを押したとき
         val Button0 = findViewById<Button>(R.id.carrierCenter)

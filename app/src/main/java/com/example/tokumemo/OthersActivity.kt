@@ -13,10 +13,11 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.manager.DataManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class OthersActivity : AppCompatActivity() {
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
         when (item.itemId) {
             R.id.home -> {
                 val intent = Intent(applicationContext, MainActivity::class.java)
@@ -42,7 +43,7 @@ class OthersActivity : AppCompatActivity() {
 
         // メニューバー表示
         val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
 
         // パスワード設定を押したとき
         val passwordSetting = findViewById<Button>(R.id.passwordSetting)
