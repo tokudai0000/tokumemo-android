@@ -1,5 +1,6 @@
 package com.example.tokumemo
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -17,33 +18,25 @@ import com.google.android.material.navigation.NavigationBarView
 
 class OthersActivity : AppCompatActivity() {
 
-    private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.home -> {
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            R.id.news -> {
-
-            }
-            R.id.review -> {
-
-            }
-            R.id.others -> {
-
-            }
-        }
-        false
-    }
-
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_others)
 
-        // メニューバー表示
-        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
+        // メニューバー
+        val Home = findViewById<Button>(R.id.home)
+        Home.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val Others = findViewById<Button>(R.id.others)
+        Others.setOnClickListener{
+            val intent = Intent(this, OthersActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         // パスワード設定を押したとき
         val passwordSetting = findViewById<Button>(R.id.passwordSetting)
