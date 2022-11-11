@@ -36,6 +36,7 @@ class WebActivity : AppCompatActivity() {
         Home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            DataManager.canExecuteJavascript = true
             finish()
         }
 
@@ -70,7 +71,6 @@ class WebActivity : AppCompatActivity() {
         }
 
         webView.loadUrl(viewModel.isAnyWebsite(pageId))
-        DataManager.canExecuteJavascript = true
     }
 
     // WebViewの設定
@@ -90,7 +90,7 @@ class WebActivity : AppCompatActivity() {
                 // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
                 }
             }
 
@@ -103,7 +103,7 @@ class WebActivity : AppCompatActivity() {
                 // タイムアウトをしていた場合
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
@@ -116,8 +116,7 @@ class WebActivity : AppCompatActivity() {
                             startActivity(intent)
                             // 戻ってきた時、startForPasswordActivityを呼び出す
 //                          startForPasswordActivity.launch(intent)
-                        }
-                        else if (DataManager.canExecuteJavascript) {
+                        } else if (DataManager.canExecuteJavascript) {
                             val cAccount = encryptedLoad("KEY_cAccount")
                             val password = encryptedLoad("KEY_password")
 
@@ -136,8 +135,6 @@ class WebActivity : AppCompatActivity() {
                             // フラグを下ろす
                             DataManager.canExecuteJavascript = false
                         }
-                        // 再度URLを読み込む
-                        webViewLoadUrl()
                     }
                     else -> {}
                 }

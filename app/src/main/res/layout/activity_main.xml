@@ -10,7 +10,7 @@
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="@color/white"
+        android:background="@drawable/border"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -83,8 +83,10 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="アプリ開発プロジェクト"
+        android:layout_height="54dp"
+        android:gravity="center"
+        android:text="トクメモ＋"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +95,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="54dp"
         android:layout_marginBottom="54dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -236,6 +238,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/white"
                 android:text="シラバス"
                 android:textColor="@color/black"
                 app:icon="@drawable/ic_baseline_computer_24"

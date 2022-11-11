@@ -4,13 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D3D3D3">
+    android:background="@color/gray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/backBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/backButton2"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:autoText="false"
+            android:background="@color/gray"
+            android:backgroundTint="@color/gray"
+            android:gravity="top"
+            android:text="完了"
+            app:icon="@drawable/ic_baseline_backspace_24"
+            app:iconSize="32dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="54dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="@color/white"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -81,6 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
+        android:background="@color/gray"
         android:text="Settings"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -94,6 +129,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
         android:layout_marginBottom="54dp"
+        android:background="@color/gray"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +157,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/passwordSetting"
