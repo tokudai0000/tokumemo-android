@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tokumemo"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -31,6 +32,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".WebActivity"></activity>
+        <activity android:name=".NewsActivity"></activity>
         <activity android:name=".PasswordActivity"></activity>
         <activity android:name=".OthersActivity"></activity>
     </application>

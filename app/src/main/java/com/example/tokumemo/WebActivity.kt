@@ -39,6 +39,13 @@ class WebActivity : AppCompatActivity() {
             finish()
         }
 
+        val News = findViewById<Button>(R.id.news)
+        News.setOnClickListener{
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val Others = findViewById<Button>(R.id.others)
         Others.setOnClickListener{
             val intent = Intent(this, OthersActivity::class.java)
@@ -63,6 +70,7 @@ class WebActivity : AppCompatActivity() {
         }
 
         webView.loadUrl(viewModel.isAnyWebsite(pageId))
+        DataManager.canExecuteJavascript = true
     }
 
     // WebViewの設定
@@ -82,8 +90,7 @@ class WebActivity : AppCompatActivity() {
                 // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    DataManager.canExecuteJavascript = true
-                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
+                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
                 }
             }
 
@@ -96,8 +103,7 @@ class WebActivity : AppCompatActivity() {
                 // タイムアウトをしていた場合
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    DataManager.canExecuteJavascript = true
-                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
+                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {

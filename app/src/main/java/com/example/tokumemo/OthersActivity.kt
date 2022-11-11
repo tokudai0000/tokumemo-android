@@ -31,6 +31,13 @@ class OthersActivity : AppCompatActivity() {
             finish()
         }
 
+        val News = findViewById<Button>(R.id.news)
+        News.setOnClickListener{
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val Others = findViewById<Button>(R.id.others)
         Others.setOnClickListener{
             val intent = Intent(this, OthersActivity::class.java)

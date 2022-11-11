@@ -5,6 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="64dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="-5dp"
+        app:icon="@drawable/ic_baseline_backspace_24"
+        app:iconSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <WebView
+        android:id="@+id/webNews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </WebView>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:text="徳大ニュース"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ListView
+        android:id="@+id/newsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <LinearLayout
         android:id="@+id/nav"
         android:layout_width="match_parent"
@@ -21,12 +64,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/blue"
+            android:textColor="@color/gray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/blue" />
+            app:iconTint="@color/gray" />
 
         <Button
             android:id="@+id/news"
@@ -36,12 +79,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="News"
-            android:textColor="@color/gray"
+            android:textColor="@color/blue"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/blue" />
 
         <Button
             android:id="@+id/review"
@@ -73,17 +116,5 @@
             app:iconPadding="-2dp"
             app:iconTint="@color/gray" />
     </LinearLayout>
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="54dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

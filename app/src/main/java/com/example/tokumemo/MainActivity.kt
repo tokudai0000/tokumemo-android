@@ -2,6 +2,8 @@ package com.example.tokumemo
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,13 +12,21 @@ import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,10 +34,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainModel
     private var urlString = ""
 
+    lateinit var binding : ActivityMainBinding
+    private var resultText = ""
+    private var placeLat = 34.07003444012803
+    private var placeLon = 134.55981101249947
+
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // 天気情報を表示
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // 天気と時刻を取得
+        getWeatherNews()
+        // 結果をtextViewに表示
+//        binding.weatherText.text = resultText
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -51,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                             // 戻ってきた時、startForPasswordActivityを呼び出す
 //                          startForPasswordActivity.launch(intent)
                         }
-                        else {
+                        else if (DataManager.canExecuteJavascript) {
                             val cAccount = encryptedLoad("KEY_cAccount")
                             val password = encryptedLoad("KEY_password")
 
@@ -73,6 +98,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 super.onPageFinished(view, url)
+
+                // ついでに天気情報を更新しておく
+                binding.weatherText.text = resultText
             }
         }
 
@@ -83,6 +111,13 @@ class MainActivity : AppCompatActivity() {
         val Home = findViewById<Button>(R.id.home)
         Home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val News = findViewById<Button>(R.id.news)
+        News.setOnClickListener{
+            val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -178,6 +213,51 @@ class MainActivity : AppCompatActivity() {
         DataManager.canExecuteJavascript = true
         startActivity(intent)
     }
+
+    // unixtimeからフォーマットの日付に変換
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun unixTimeChange(unixTime: String): String {
+        var sdf = SimpleDateFormat("yyyy/MM/dd")
+        var nowTime = Date(unixTime.toInt() * 1000L)
+        return sdf.format(nowTime)
+    }
+
+    // 天気を取得
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getWeatherNews(): Job = GlobalScope.launch {
+        // 結果を初期化
+        resultText = ""
+        // APIを使う際に必要なKEY
+        var API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        // URL。場所と言語・API_KEYを添付
+        var API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
+                "units=metric&" +
+                "lat=" + placeLat + "&" +
+                "lon=" + placeLon + "&" +
+                "lang=" + "ja" + "&" +
+                "APPID=" + API_KEY
+        var url = URL(API_URL)
+        //APIから情報を取得する.
+        var br = BufferedReader(InputStreamReader(url.openStream()))
+        // 所得した情報を文字列化
+        var str = br.readText()
+        //json形式のデータとして識別
+        var json = JSONObject(str)
+        // hourlyの配列を取得
+//        var hourly = json.getJSONArray("hourly")
+
+        // 天気予報を取得
+//        var firstObject = hourly.getJSONObject(0)
+        var weatherList = json.getJSONArray("weather").getJSONObject(0)
+        // unixtime形式で保持されている時刻を取得
+        var time = json.getString("dt")
+        // 天気を取得
+        var descriptionText = weatherList.getString("description")
+        var temp = json.getJSONObject("main").getString("temp")
+//        var temp = main
+        resultText += "${unixTimeChange(time)}\n徳島市の天気\n$descriptionText $temp℃"
+    }
+
 
 }
 
