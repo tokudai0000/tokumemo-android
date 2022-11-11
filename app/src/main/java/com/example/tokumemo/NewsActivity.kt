@@ -37,6 +37,10 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var titleArray: Array<String>
     private lateinit var linkArray: Array<String>
 
+    override fun onBackPressed() {
+        // Android戻るボタン無効
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
