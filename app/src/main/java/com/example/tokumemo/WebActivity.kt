@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -16,8 +13,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 
 class WebActivity : AppCompatActivity() {
 
@@ -37,6 +32,7 @@ class WebActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             DataManager.canExecuteJavascript = true
+            webFinish()
             finish()
         }
 
@@ -53,8 +49,6 @@ class WebActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-//        webViewLoadUrl()
 
         webViewSetup()
     }
@@ -185,5 +179,19 @@ class WebActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
+    }
+
+    private fun webFinish(){
+        webView.stopLoading()
+        webView.clearCache(true)
+        webView.clearHistory()
+        try {
+            Thread.sleep(100)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        webView.setWebChromeClient(null)
+        unregisterForContextMenu(webView)
+        webView.destroy()
     }
 }

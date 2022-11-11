@@ -37,9 +37,6 @@ class OthersActivity : AppCompatActivity() {
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
         val back = findViewById<Button>(R.id.backButton2)
 
-        // 戻るボタンは非表示にしておく
-        bar.visibility = View.INVISIBLE
-
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
         Home.setOnClickListener{
