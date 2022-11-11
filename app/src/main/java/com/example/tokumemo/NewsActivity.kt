@@ -6,8 +6,10 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.WebViewFragment
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
@@ -49,7 +51,6 @@ class NewsActivity : AppCompatActivity() {
         Thread{
             getNews()
         }.start()
-//        getNews()
 
         Thread.sleep(1000)
 
@@ -60,7 +61,22 @@ class NewsActivity : AppCompatActivity() {
 
         // OnItemClickListenerを実装
         listView.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this, titleArray[position], Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, titleArray[position], Toast.LENGTH_SHORT).show()
+            listView.visibility = View.INVISIBLE
+            webView = findViewById(R.id.webNews)
+            webView.settings.javaScriptEnabled = true
+            viewModel = ViewModelProvider(this).get(MainModel::class.java)
+
+            // 検索アプリで開かない
+            webView.webViewClient = WebViewClient()
+            // 読み込み時にページ横幅を画面幅に無理やり合わせる
+            webView.getSettings().setLoadWithOverviewMode( true );
+            // ワイドビューポートへの対応
+            webView.getSettings().setUseWideViewPort( true );
+            // 拡大縮小対応
+            webView.getSettings().setBuiltInZoomControls(true);
+
+            webView.loadUrl("https://www.tokushima-u.ac.jp/")
         }
 
         // メニューバー
@@ -84,17 +100,6 @@ class NewsActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-//        binding.button.setOnClickListener {
-//            resultText = ""
-//            // 天気と時刻を取得
-//            getNews()
-//            // 3秒間処理を止める
-//            Thread.sleep(3000)
-//            // 結果をtextViewに表示
-//            binding.newsTitle.text = resultText
-//
-//        }
 
 //        webView = findViewById(R.id.webView)
 //        webView.settings.javaScriptEnabled = true
