@@ -35,6 +35,7 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var viewModel: MainModel
     private lateinit var titleArray: Array<String>
+    private lateinit var linkArray: Array<String>
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId")
@@ -46,6 +47,7 @@ class NewsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         titleArray = arrayOf("")
+        linkArray = arrayOf("")
         val listView = findViewById<ListView>(R.id.newsList)
 
         Thread{
@@ -57,12 +59,17 @@ class NewsActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleArray)
         listView.adapter = adapter
 
-//        binding.textView3.text = resultText
+        // ニュース閉じるボタンを非表示にしておく
+        val Back = findViewById<Button>(R.id.backButton)
+        Back.visibility = View.INVISIBLE
 
-        // OnItemClickListenerを実装
+        // 選んだニュースを表示
         listView.setOnItemClickListener { parent, view, position, id ->
-//            Toast.makeText(this, titleArray[position], Toast.LENGTH_SHORT).show()
+            // 一覧を非表示、戻るボタンを表示、Webビューを表示
             listView.visibility = View.INVISIBLE
+            Back.visibility = View.VISIBLE
+
+            var url = linkArray[position].toString()
             webView = findViewById(R.id.webNews)
             webView.settings.javaScriptEnabled = true
             viewModel = ViewModelProvider(this).get(MainModel::class.java)
@@ -76,7 +83,9 @@ class NewsActivity : AppCompatActivity() {
             // 拡大縮小対応
             webView.getSettings().setBuiltInZoomControls(true);
 
-            webView.loadUrl("https://www.tokushima-u.ac.jp/")
+            webView.loadUrl(url)
+            // webビューを表示モードに
+            webView.visibility = View.VISIBLE
         }
 
         // メニューバー
@@ -101,6 +110,12 @@ class NewsActivity : AppCompatActivity() {
             finish()
         }
 
+        Back.setOnClickListener{
+            listView.visibility = View.VISIBLE
+            Back.visibility = View.INVISIBLE
+            webView.visibility = View.INVISIBLE
+        }
+
 //        webView = findViewById(R.id.webView)
 //        webView.settings.javaScriptEnabled = true
 //        viewModel = ViewModelProvider(this).get(MainModel::class.java)
@@ -122,6 +137,7 @@ class NewsActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getNews(): Job = GlobalScope.launch {
         titleArray = arrayOf("")
+        linkArray = arrayOf("")
         // 結果を初期化
         // URL。場所と言語・API_KEYを添付
         var API_URL = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
@@ -142,8 +158,10 @@ class NewsActivity : AppCompatActivity() {
                 var link = itemList.getString("link")
                 if (i == 1){
                     titleArray[0] = "$title"
+                    linkArray[0] = "$link"
                 }else{
                     titleArray += "$title"
+                    linkArray += "$link"
                 }
             }
         }

@@ -117,14 +117,14 @@ class PasswordActivity : AppCompatActivity() {
 
             // テキストが変更された直後(入力が確定された後)に呼び出される
             override fun afterTextChanged(s: Editable?) {
-                cAccountLabel.text = "${editCAccount.text.toString().length}/10"
+                cAccountLabel.text = "Cアカウント　${editCAccount.text.toString().length}/10"
             }
         })
         editPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                passwordLabel.text = "${editPassword.text.toString().length}/100"
+                passwordLabel.text = "パスワード　${editPassword.text.toString().length}/100"
             }
         })
 
