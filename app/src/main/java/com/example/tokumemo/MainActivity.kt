@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         Home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            DataManager.canExecuteJavascript = true
             finish()
         }
 

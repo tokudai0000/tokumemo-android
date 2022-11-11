@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -16,8 +13,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 
 class WebActivity : AppCompatActivity() {
 
@@ -36,6 +31,8 @@ class WebActivity : AppCompatActivity() {
         Home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            DataManager.canExecuteJavascript = true
+            webFinish()
             finish()
         }
 
@@ -53,8 +50,6 @@ class WebActivity : AppCompatActivity() {
             finish()
         }
 
-//        webViewLoadUrl()
-
         webViewSetup()
     }
 
@@ -70,7 +65,6 @@ class WebActivity : AppCompatActivity() {
         }
 
         webView.loadUrl(viewModel.isAnyWebsite(pageId))
-        DataManager.canExecuteJavascript = true
     }
 
     // WebViewの設定
@@ -90,7 +84,7 @@ class WebActivity : AppCompatActivity() {
                 // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
                 }
             }
 
@@ -103,7 +97,7 @@ class WebActivity : AppCompatActivity() {
                 // タイムアウトをしていた場合
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
@@ -116,8 +110,7 @@ class WebActivity : AppCompatActivity() {
                             startActivity(intent)
                             // 戻ってきた時、startForPasswordActivityを呼び出す
 //                          startForPasswordActivity.launch(intent)
-                        }
-                        else if (DataManager.canExecuteJavascript) {
+                        } else if (DataManager.canExecuteJavascript) {
                             val cAccount = encryptedLoad("KEY_cAccount")
                             val password = encryptedLoad("KEY_password")
 
@@ -136,8 +129,6 @@ class WebActivity : AppCompatActivity() {
                             // フラグを下ろす
                             DataManager.canExecuteJavascript = false
                         }
-                        // 再度URLを読み込む
-                        webViewLoadUrl()
                     }
                     else -> {}
                 }
@@ -188,5 +179,19 @@ class WebActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
+    }
+
+    private fun webFinish(){
+        webView.stopLoading()
+        webView.clearCache(true)
+        webView.clearHistory()
+        try {
+            Thread.sleep(100)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        webView.setWebChromeClient(null)
+        unregisterForContextMenu(webView)
+        webView.destroy()
     }
 }

@@ -46,7 +46,7 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        titleArray = arrayOf("")
+        titleArray = arrayOf("ニュースを取得できませんでした。「News」をもう一度タップして更新してください。")
         linkArray = arrayOf("")
         val listView = findViewById<ListView>(R.id.newsList)
 
@@ -75,7 +75,13 @@ class NewsActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this).get(MainModel::class.java)
 
             // 検索アプリで開かない
-            webView.webViewClient = WebViewClient()
+            webView.webViewClient = object : WebViewClient(){
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    // webビューを表示モードに
+                    webView.visibility = View.VISIBLE
+                }
+            }
             // 読み込み時にページ横幅を画面幅に無理やり合わせる
             webView.getSettings().setLoadWithOverviewMode( true );
             // ワイドビューポートへの対応
@@ -84,8 +90,6 @@ class NewsActivity : AppCompatActivity() {
             webView.getSettings().setBuiltInZoomControls(true);
 
             webView.loadUrl(url)
-            // webビューを表示モードに
-            webView.visibility = View.VISIBLE
         }
 
         // メニューバー
@@ -115,28 +119,12 @@ class NewsActivity : AppCompatActivity() {
             Back.visibility = View.INVISIBLE
             webView.visibility = View.INVISIBLE
         }
-
-//        webView = findViewById(R.id.webView)
-//        webView.settings.javaScriptEnabled = true
-//        viewModel = ViewModelProvider(this).get(MainModel::class.java)
-//
-//        // 検索アプリで開かない
-//        webView.webViewClient = WebViewClient()
-//
-//        // 読み込み時にページ横幅を画面幅に無理やり合わせる
-//        webView.getSettings().setLoadWithOverviewMode( true );
-//        // ワイドビューポートへの対応
-//        webView.getSettings().setUseWideViewPort( true );
-//        // 拡大縮小対応
-//        webView.getSettings().setBuiltInZoomControls(true);
-//
-//        webView.loadUrl("https://www.tokushima-u.ac.jp/recent/")
     }
 
-
+    // ニュース取得
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getNews(): Job = GlobalScope.launch {
-        titleArray = arrayOf("")
+        titleArray = arrayOf("ニュースを取得できませんでした。「News」をもう一度タップして更新してください。")
         linkArray = arrayOf("")
         // 結果を初期化
         // URL。場所と言語・API_KEYを添付
