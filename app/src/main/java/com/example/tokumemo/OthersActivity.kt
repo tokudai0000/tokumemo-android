@@ -19,6 +19,10 @@ class OthersActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var viewModel: MainModel
 
+    override fun onBackPressed() {
+        // Android戻るボタン無効
+    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
