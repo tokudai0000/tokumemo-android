@@ -1,27 +1,19 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.tokumemo.flag.MainModel
-import com.example.tokumemo.manager.DataManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 
 class OthersActivity : AppCompatActivity() {
     private lateinit var webView: WebView
@@ -36,6 +28,7 @@ class OthersActivity : AppCompatActivity() {
         val title = findViewById<TextView>(R.id.settings_title)
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
         val back = findViewById<Button>(R.id.backButton2)
+        val aboutThisAppText = findViewById<ScrollView>(R.id.aboutThisAppText)
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
@@ -90,11 +83,25 @@ class OthersActivity : AppCompatActivity() {
             openWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt")
         }
 
+        // このアプリについてを押したとき
+        val aboutThisApp = findViewById<Button>(R.id.aboutThisApp)
+        aboutThisApp.setOnClickListener{
+            settingsScreen.visibility = View.INVISIBLE
+            title.visibility = View.INVISIBLE
+            bar.visibility = View.VISIBLE
+            aboutThisAppText.visibility = View.VISIBLE
+        }
+
         // 戻るボタンを押したとき
         back.setOnClickListener{
             settingsScreen.visibility = View.VISIBLE
             title.visibility = View.VISIBLE
-            webView.visibility = View.GONE
+            // 「このアプリについて」から戻るときはwebviewは関係ないのでif文で処理
+            if (aboutThisAppText.visibility == View.INVISIBLE){
+                webView.visibility = View.GONE
+            }
+
+            aboutThisAppText.visibility = View.INVISIBLE
             bar.visibility = View.INVISIBLE
         }
     }
