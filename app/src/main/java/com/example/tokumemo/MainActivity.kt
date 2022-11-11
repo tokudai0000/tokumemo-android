@@ -51,10 +51,8 @@ class MainActivity : AppCompatActivity() {
 
         // 天気と時刻を取得
         getWeatherNews()
-                // 3秒間処理を止める
-//        Thread.sleep(3000)
-                // 結果をtextViewに表示
-        binding.weatherText.text = resultText
+        // 結果をtextViewに表示
+//        binding.weatherText.text = resultText
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -113,6 +111,13 @@ class MainActivity : AppCompatActivity() {
         val Home = findViewById<Button>(R.id.home)
         Home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val News = findViewById<Button>(R.id.news)
+        News.setOnClickListener{
+            val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -254,5 +259,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    }
+}
 

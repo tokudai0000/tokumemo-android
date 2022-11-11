@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/newsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <LinearLayout
         android:id="@+id/nav"
         android:layout_width="match_parent"
@@ -21,12 +38,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/blue"
+            android:textColor="@color/gray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/blue" />
+            app:iconTint="@color/gray" />
 
         <Button
             android:id="@+id/news"
@@ -36,12 +53,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="News"
-            android:textColor="@color/gray"
+            android:textColor="@color/blue"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/blue" />
 
         <Button
             android:id="@+id/review"
@@ -73,17 +90,5 @@
             app:iconPadding="-2dp"
             app:iconTint="@color/gray" />
     </LinearLayout>
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="54dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

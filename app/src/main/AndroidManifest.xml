@@ -32,6 +32,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".WebActivity"></activity>
+        <activity android:name=".NewsActivity"></activity>
         <activity android:name=".PasswordActivity"></activity>
         <activity android:name=".OthersActivity"></activity>
     </application>

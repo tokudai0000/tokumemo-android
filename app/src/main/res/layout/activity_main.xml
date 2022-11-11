@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/nav"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="54dp"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -20,13 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/aiiro"
-            android:textSize="10sp"
+            android:textColor="@color/blue"
+            android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
-            app:iconTint="@color/aiiro" />
+            app:iconPadding="-2dp"
+            app:iconTint="@color/blue" />
 
         <Button
             android:id="@+id/news"
@@ -36,9 +37,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="News"
-            android:textSize="10sp"
+            android:textColor="@color/gray"
+            android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
-            app:iconGravity="top" />
+            app:iconGravity="top"
+            app:iconPadding="-2dp"
+            app:iconTint="@color/gray" />
 
         <Button
             android:id="@+id/review"
@@ -48,9 +52,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Review"
-            android:textSize="10sp"
+            android:textColor="@color/gray"
+            android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"
-            app:iconGravity="top" />
+            app:iconGravity="top"
+            app:iconPadding="-2dp"
+            app:iconTint="@color/gray" />
 
         <Button
             android:id="@+id/others"
@@ -60,9 +67,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Others"
-            android:textSize="10sp"
+            android:textColor="@color/gray"
+            android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"
-            app:iconGravity="top" />
+            app:iconGravity="top"
+            app:iconPadding="-2dp"
+            app:iconTint="@color/gray" />
     </LinearLayout>
 
     <WebView
@@ -84,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="54dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
