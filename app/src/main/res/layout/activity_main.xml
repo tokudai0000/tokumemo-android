@@ -84,8 +84,10 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:background="@color/blue"
         android:gravity="center"
         android:text="トクメモ＋"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,129 +123,151 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="天気を取得中" />
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="3">
 
-            <Button
-                android:id="@+id/carrierCenter"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="キャリアセンター"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_career_center_24"
-                app:iconGravity="top" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/manaba"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="manaba"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_manaba_24"
-                app:iconGravity="top" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/academicAffairsSystem"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="教務システム"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_school_24"
-                app:iconGravity="top" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/carrierCenter"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="キャリアセンター"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_career_center_24"
+                        app:iconGravity="top" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/manaba"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="manaba"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_manaba_24"
+                        app:iconGravity="top" />
 
-            <Button
-                android:id="@+id/email"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="メール"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_email_24"
-                app:iconGravity="top" />
+                    <Button
+                        android:id="@+id/academicAffairsSystem"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="教務システム"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_school_24"
+                        app:iconGravity="top" />
+                </LinearLayout>
 
-            <Button
-                android:id="@+id/library"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="図書館"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_local_library_24"
-                app:iconGravity="top" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/seikyou"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="生協"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_local_cafe_24"
-                app:iconGravity="top" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/result"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="成績"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_result_24"
+                        app:iconGravity="top" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/timetable"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="時間割"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_time_24"
+                        app:iconGravity="top" />
 
-            <Button
-                android:id="@+id/result"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="成績"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_result_24"
-                app:iconGravity="top" />
+                    <Button
+                        android:id="@+id/syllabus"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/white"
+                        android:text="シラバス"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_computer_24"
+                        app:iconGravity="top" />
+                </LinearLayout>
 
-            <Button
-                android:id="@+id/timetable"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="時間割"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_time_24"
-                app:iconGravity="top" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/syllabus"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"
-                android:text="シラバス"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_baseline_computer_24"
-                app:iconGravity="top" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/email"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="メール"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_email_24"
+                        app:iconGravity="top" />
+
+                    <Button
+                        android:id="@+id/library"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="図書館"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_local_library_24"
+                        app:iconGravity="top" />
+
+                    <Button
+                        android:id="@+id/seikyou"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="生協"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_local_cafe_24"
+                        app:iconGravity="top" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
