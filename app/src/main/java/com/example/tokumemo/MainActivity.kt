@@ -197,12 +197,30 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = EncryptedSharedPreferences.create(
             applicationContext,
-            WebActivity.PREF_NAME,
+            MainActivity.PREF_NAME,
             mainKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
+    }
+    // 保存
+    private fun encryptedSave(KEY: String, text: String) {
+        val mainKey = MasterKey.Builder(applicationContext)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val prefs = EncryptedSharedPreferences.create(
+            applicationContext,
+            MainActivity.PREF_NAME,
+            mainKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        with(prefs.edit()) {
+            putString(KEY, text)
+            apply()
+        }
     }
 
     // 押されたWebサイトにとぶ
@@ -218,7 +236,7 @@ class MainActivity : AppCompatActivity() {
     // unixtimeからフォーマットの日付に変換
     @RequiresApi(Build.VERSION_CODES.N)
     private fun unixTimeChange(unixTime: String): String {
-        var sdf = SimpleDateFormat("yyyy/MM/dd")
+        var sdf = SimpleDateFormat("yyyy/MM/dd HH")
         var nowTime = Date(unixTime.toInt() * 1000L)
         return sdf.format(nowTime)
     }
@@ -226,37 +244,50 @@ class MainActivity : AppCompatActivity() {
     // 天気を取得
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getWeatherNews(): Job = GlobalScope.launch {
-        // 結果を初期化
-        resultText = ""
-        // APIを使う際に必要なKEY
-        var API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
-        // URL。場所と言語・API_KEYを添付
-        var API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
-                "units=metric&" +
-                "lat=" + placeLat + "&" +
-                "lon=" + placeLon + "&" +
-                "lang=" + "ja" + "&" +
-                "APPID=" + API_KEY
-        var url = URL(API_URL)
-        //APIから情報を取得する.
-        var br = BufferedReader(InputStreamReader(url.openStream()))
-        // 所得した情報を文字列化
-        var str = br.readText()
-        //json形式のデータとして識別
-        var json = JSONObject(str)
-        // hourlyの配列を取得
+        val sdf = SimpleDateFormat("yyyy/MM/dd HH")
+        val currentTime = sdf.format(Date())
+
+        if (currentTime != encryptedLoad("dateTime")) {
+            val sdfForText = SimpleDateFormat("yyyy/MM/dd現在")
+            val currentTimeForText = sdfForText.format(Date())
+            // 結果を初期化
+            resultText = ""
+            // APIを使う際に必要なKEY
+            var API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+            // URL。場所と言語・API_KEYを添付
+            var API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
+                    "units=metric&" +
+                    "lat=" + placeLat + "&" +
+                    "lon=" + placeLon + "&" +
+                    "lang=" + "ja" + "&" +
+                    "APPID=" + API_KEY
+            var url = URL(API_URL)
+            //APIから情報を取得する.
+            var br = BufferedReader(InputStreamReader(url.openStream()))
+            // 所得した情報を文字列化
+            var str = br.readText()
+            //json形式のデータとして識別
+            var json = JSONObject(str)
+            // hourlyの配列を取得
 //        var hourly = json.getJSONArray("hourly")
 
-        // 天気予報を取得
+            // 天気予報を取得
 //        var firstObject = hourly.getJSONObject(0)
-        var weatherList = json.getJSONArray("weather").getJSONObject(0)
-        // unixtime形式で保持されている時刻を取得
-        var time = json.getString("dt")
-        // 天気を取得
-        var descriptionText = weatherList.getString("description")
-        var temp = json.getJSONObject("main").getString("temp")
+            var weatherList = json.getJSONArray("weather").getJSONObject(0)
+            // unixtime形式で保持されている時刻を取得
+            var time = json.getString("dt")
+            // 天気を取得
+            var descriptionText = weatherList.getString("description")
+            var temp = json.getJSONObject("main").getString("temp")
+            encryptedSave("dateTime", unixTimeChange(time))
+            encryptedSave("dateTimeForText", currentTimeForText)
+            encryptedSave("descriptionText", descriptionText)
+            encryptedSave("temp", temp)
 //        var temp = main
-        resultText += "${unixTimeChange(time)}\n徳島市の天気\n$descriptionText $temp℃"
+            resultText += "$currentTimeForText\n徳島市の天気\n$descriptionText $temp℃"
+        } else {
+            resultText += "${encryptedLoad("dateTimeForText")}\n徳島市の天気\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}"
+        }
     }
 
 
