@@ -284,9 +284,9 @@ class MainActivity : AppCompatActivity() {
             encryptedSave("descriptionText", descriptionText)
             encryptedSave("temp", temp)
 //        var temp = main
-            resultText += "$currentTimeForText\n徳島市の天気\n$descriptionText $temp℃"
+            resultText += "$currentTimeForText\n徳島市\n$descriptionText $temp℃"
         } else {
-            resultText += "${encryptedLoad("dateTimeForText")}\n徳島市の天気\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}"
+            resultText += "${encryptedLoad("dateTimeForText")}\n徳島市\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}℃"
         }
     }
 
