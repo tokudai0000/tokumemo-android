@@ -1,21 +1,29 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
+import android.os.AsyncTask
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.ParcelFileDescriptor.open
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.bumptech.glide.Glide
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
@@ -24,14 +32,20 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
+import java.nio.channels.AsynchronousFileChannel.open
+import java.nio.channels.AsynchronousSocketChannel.open
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private lateinit var viewModel: MainModel
+    private lateinit var weatherWebView: WebView
+    private lateinit var weatherViewModel: MainModel
     private var urlString = ""
 
     lateinit var binding : ActivityMainBinding
@@ -51,8 +65,21 @@ class MainActivity : AppCompatActivity() {
 
         // 天気と時刻を取得
         getWeatherNews()
-        // 結果をtextViewに表示
-//        binding.weatherText.text = resultText
+
+        weatherWebView = findViewById(R.id.weatherIcon)
+        weatherWebView.settings.javaScriptEnabled = true
+        weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
+        weatherWebView.webViewClient = WebViewClient()
+        // 読み込み時にページ横幅を画面幅に無理やり合わせる
+        weatherWebView.getSettings().setLoadWithOverviewMode( true )
+        // ワイドビューポートへの対応
+        weatherWebView.getSettings().setUseWideViewPort( true )
+        // 拡大縮小対応
+        weatherWebView.getSettings().setBuiltInZoomControls(true)
+
+        var iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
+
+        weatherWebView.loadUrl(iconUrl)
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -104,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
+        webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
         // 隠れWebビューここまで
 
         // メニューバー
@@ -278,18 +305,18 @@ class MainActivity : AppCompatActivity() {
             var time = json.getString("dt")
             // 天気を取得
             var descriptionText = weatherList.getString("description")
+            var icon = weatherList.getString("icon")
             var temp = json.getJSONObject("main").getString("temp")
             encryptedSave("dateTime", unixTimeChange(time))
             encryptedSave("dateTimeForText", currentTimeForText)
             encryptedSave("descriptionText", descriptionText)
+            encryptedSave("icon", icon)
             encryptedSave("temp", temp)
-//        var temp = main
+            Log.i("weatherList: ", weatherList.toString())
             resultText += "$currentTimeForText\n徳島市\n$descriptionText $temp℃"
         } else {
             resultText += "${encryptedLoad("dateTimeForText")}\n徳島市\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}℃"
         }
+
     }
-
-
 }
-

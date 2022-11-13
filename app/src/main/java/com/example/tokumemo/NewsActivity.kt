@@ -87,11 +87,11 @@ class NewsActivity : AppCompatActivity() {
                 }
             }
             // 読み込み時にページ横幅を画面幅に無理やり合わせる
-            webView.getSettings().setLoadWithOverviewMode( true );
+            webView.getSettings().setLoadWithOverviewMode( true )
             // ワイドビューポートへの対応
-            webView.getSettings().setUseWideViewPort( true );
+            webView.getSettings().setUseWideViewPort( true )
             // 拡大縮小対応
-            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setBuiltInZoomControls(true)
 
             webView.loadUrl(url)
         }

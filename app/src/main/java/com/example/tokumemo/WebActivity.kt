@@ -84,7 +84,7 @@ class WebActivity : AppCompatActivity() {
                 // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
+                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
                 }
             }
 
@@ -97,7 +97,7 @@ class WebActivity : AppCompatActivity() {
                 // タイムアウトをしていた場合
                 if (viewModel.isTimeout(urlString)) {
                     // ログイン処理を始める
-                    webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
+                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
                 }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
