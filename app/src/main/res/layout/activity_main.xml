@@ -213,6 +213,49 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/email"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="メール"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_email_24"
+                        app:iconGravity="top" />
+
+                    <Button
+                        android:id="@+id/library"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="図書館"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_local_library_24"
+                        app:iconGravity="top" />
+
+                    <Button
+                        android:id="@+id/seikyou"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="生協"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_baseline_local_cafe_24"
+                        app:iconGravity="top" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
                         android:id="@+id/result"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
@@ -247,49 +290,6 @@
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:icon="@drawable/ic_baseline_computer_24"
-                        app:iconGravity="top" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/email"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="メール"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:icon="@drawable/ic_baseline_email_24"
-                        app:iconGravity="top" />
-
-                    <Button
-                        android:id="@+id/library"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="図書館"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:icon="@drawable/ic_baseline_local_library_24"
-                        app:iconGravity="top" />
-
-                    <Button
-                        android:id="@+id/seikyou"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="生協"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:icon="@drawable/ic_baseline_local_cafe_24"
                         app:iconGravity="top" />
                 </LinearLayout>
             </LinearLayout>

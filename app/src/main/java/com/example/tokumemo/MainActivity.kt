@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
+        webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
         // 隠れWebビューここまで
 
         // メニューバー
