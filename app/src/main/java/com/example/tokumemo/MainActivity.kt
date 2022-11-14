@@ -291,11 +291,8 @@ class MainActivity : AppCompatActivity() {
             var str = br.readText()
             //json形式のデータとして識別
             var json = JSONObject(str)
-            // hourlyの配列を取得
-//        var hourly = json.getJSONArray("hourly")
 
             // 天気予報を取得
-//        var firstObject = hourly.getJSONObject(0)
             var weatherList = json.getJSONArray("weather").getJSONObject(0)
             // unixtime形式で保持されている時刻を取得
             var time = json.getString("dt")
