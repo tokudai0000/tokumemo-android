@@ -75,8 +75,6 @@ class MainActivity : AppCompatActivity() {
         weatherWebView.getSettings().setLoadWithOverviewMode( true )
         // ワイドビューポートへの対応
         weatherWebView.getSettings().setUseWideViewPort( true )
-        // 拡大縮小対応
-        weatherWebView.getSettings().setBuiltInZoomControls(true)
 
         var iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
 
