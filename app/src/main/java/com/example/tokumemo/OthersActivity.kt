@@ -100,6 +100,7 @@ class OthersActivity : AppCompatActivity() {
         back.setOnClickListener{
             settingsScreen.visibility = View.VISIBLE
             title.visibility = View.VISIBLE
+
             // 「このアプリについて」から戻るときはwebviewは関係ないのでif文で処理
             if (aboutThisAppText.visibility == View.INVISIBLE){
                 webView.visibility = View.GONE
@@ -112,14 +113,7 @@ class OthersActivity : AppCompatActivity() {
 
     private fun openWeb(url: String) {
 
-        val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
-        val title = findViewById<TextView>(R.id.settings_title)
-        val bar = findViewById<ConstraintLayout>(R.id.backBar)
-
-        settingsScreen.visibility = View.INVISIBLE
-        title.visibility = View.INVISIBLE
-        bar.visibility = View.VISIBLE
-
+        webMode()
 
         webView = findViewById(R.id.web)
         webView.settings.javaScriptEnabled = true
@@ -141,5 +135,15 @@ class OthersActivity : AppCompatActivity() {
         webView.getSettings().setBuiltInZoomControls(true);
 
         webView.loadUrl(url)
+    }
+
+    private fun webMode(){
+        val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
+        val title = findViewById<TextView>(R.id.settings_title)
+        val bar = findViewById<ConstraintLayout>(R.id.backBar)
+
+        settingsScreen.visibility = View.INVISIBLE
+        title.visibility = View.INVISIBLE
+        bar.visibility = View.VISIBLE
     }
 }

@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
     private var resultText = ""
+    // 徳島大学本部の所在地の緯度経度
     private var placeLat = 34.07003444012803
     private var placeLon = 134.55981101249947
 
@@ -100,8 +101,6 @@ class MainActivity : AppCompatActivity() {
                             // パスワード登録画面を表示
                             val intent = Intent(applicationContext, PasswordActivity::class.java)
                             startActivity(intent)
-                            // 戻ってきた時、startForPasswordActivityを呼び出す
-//                          startForPasswordActivity.launch(intent)
                         }
                         else if (DataManager.canExecuteJavascript) {
                             val cAccount = encryptedLoad("KEY_cAccount")
@@ -130,7 +129,6 @@ class MainActivity : AppCompatActivity() {
                 binding.weatherText.text = resultText
             }
         }
-
         webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
         // 隠れWebビューここまで
 
