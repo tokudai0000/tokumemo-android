@@ -1,29 +1,19 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
-import android.os.AsyncTask
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.ParcelFileDescriptor.open
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.bumptech.glide.Glide
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
@@ -32,12 +22,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
-import java.nio.channels.AsynchronousFileChannel.open
-import java.nio.channels.AsynchronousSocketChannel.open
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -153,51 +139,121 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        // キャリアセンターを押したとき
-        val Button0 = findViewById<Button>(R.id.carrierCenter)
-        Button0.setOnClickListener{
-            goWeb("0")
+        // 教務システムを押したとき
+        val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
+        Button2.setOnClickListener{
+            goWeb("2")
         }
         // マナバを押したとき
         val Button1 = findViewById<Button>(R.id.manaba)
         Button1.setOnClickListener{
             goWeb("1")
         }
-        // 教務システムを押したとき
-        val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
-        Button2.setOnClickListener{
-            goWeb("2")
-        }
         // メールを押したとき
         val Button3 = findViewById<Button>(R.id.email)
         Button3.setOnClickListener{
             goWeb("3")
         }
-        // 図書館を押したとき
+        // 図書館カレンダーを押したとき
+        val libraryCarender = findViewById<Button>(R.id.libraryCarender)
+        libraryCarender.setOnClickListener{
+            goWeb("9")
+        }
+        // 図書検索を押したとき
         val Button4 = findViewById<Button>(R.id.library)
         Button4.setOnClickListener{
             goWeb("4")
+        }
+        // 図書貸出延長を押したとき
+        val libraryExtension = findViewById<Button>(R.id.libraryExtension)
+        libraryExtension.setOnClickListener{
+            goWeb("10")
         }
         // 生協を押したとき
         val Button5 = findViewById<Button>(R.id.seikyou)
         Button5.setOnClickListener{
             goWeb("5")
         }
-        // 成績を押したとき
-        val Button6 = findViewById<Button>(R.id.result)
-        Button6.setOnClickListener{
-            goWeb("6")
-        }
         // 時間割を押したとき
         val Button7 = findViewById<Button>(R.id.timetable)
         Button7.setOnClickListener{
             goWeb("7")
+        }
+        // 総合認証ポータルを押したとき
+        val portal = findViewById<Button>(R.id.portal)
+        portal.setOnClickListener{
+            goWeb("20")
+        }
+        // 今学期の成績を押したとき
+        val Button6 = findViewById<Button>(R.id.result)
+        Button6.setOnClickListener{
+            goWeb("6")
+        }
+        // 全学期の成績を押したとき
+        val resultAll = findViewById<Button>(R.id.resultAll)
+        resultAll.setOnClickListener{
+            goWeb("12")
         }
         // シラバスを押したとき
         val Button8 = findViewById<Button>(R.id.syllabus)
         Button8.setOnClickListener{
             goWeb("8")
         }
+        // キャリアセンターを押したとき
+        val Button0 = findViewById<Button>(R.id.careerCenter)
+        Button0.setOnClickListener{
+            goWeb("0")
+        }
+        // 大学サイトを押したとき
+        val univWebsite = findViewById<Button>(R.id.univWebsite)
+        univWebsite.setOnClickListener{
+            goWeb("21")
+        }
+        // 図書館サイトを押したとき
+        val libraryHome = findViewById<Button>(R.id.libraryHome)
+        libraryHome.setOnClickListener{
+                goWeb("13")
+            }
+        // 本購入を押したとき
+        val bookPurchase = findViewById<Button>(R.id.bookPurchase)
+        bookPurchase.setOnClickListener{
+                goWeb("14")
+            }
+        // 出欠を押したとき
+        val attendance = findViewById<Button>(R.id.attendance)
+        attendance.setOnClickListener{
+                goWeb("22")
+            }
+        // 授業アンケートを押したとき
+        val questionnaire = findViewById<Button>(R.id.questionnaire)
+        questionnaire.setOnClickListener{
+                goWeb("23")
+            }
+        // LMS一覧を押したとき
+        val LMS = findViewById<Button>(R.id.LMS)
+        LMS.setOnClickListener{
+                goWeb("15")
+            }
+        // 常三島図書館HPを押したとき
+        val libraryHomeJosanjima = findViewById<Button>(R.id.libraryHomeJosanjima)
+        libraryHomeJosanjima.setOnClickListener{
+                goWeb("16")
+            }
+        // 蔵本図書館HPを押したとき
+        val libraryHomeKuramoto = findViewById<Button>(R.id.libraryHomeKuramoto)
+        libraryHomeKuramoto.setOnClickListener{
+                goWeb("17")
+            }
+        // 教務システム_PCを押したとき
+        val academicAffairsSystemPC = findViewById<Button>(R.id.academicAffairsSystemPC)
+        academicAffairsSystemPC.setOnClickListener{
+                goWeb("18")
+            }
+        // マナバ_モバイルを押したとき
+        val manabaMob = findViewById<Button>(R.id.manabaMob)
+        manabaMob.setOnClickListener{
+                goWeb("19")
+            }
     }
 
 
