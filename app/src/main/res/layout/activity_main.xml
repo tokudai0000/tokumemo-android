@@ -243,13 +243,14 @@
                         android:translationZ="2dp">
 
                         <TextView
-                            android:id="@+id/weatherText"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView9"
+                            android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:text="天気を取得中"
+                            android:layout_marginBottom="2dp"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:text="現在の徳島市"
                             android:textSize="10sp" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -261,7 +262,6 @@
                                 android:id="@+id/weatherButton2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginBottom="8dp"
                                 android:background="@android:color/transparent"
                                 android:translationZ="4dp"
                                 app:layout_constraintBottom_toBottomOf="parent" />
@@ -271,7 +271,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="8dp"
                                 android:foregroundGravity="center"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="1:1"
@@ -279,6 +278,19 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 tools:ignore="MissingConstraints" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/weatherText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            android:foregroundGravity="center"
+                            android:gravity="center"
+                            android:text="天気を取得中"
+                            android:textSize="10sp" />
 
                     </LinearLayout>
 

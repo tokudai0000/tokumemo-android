@@ -168,15 +168,15 @@
         <TextView
             android:id="@+id/settings_about_password"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="@string/settings_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="4"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
             android:orientation="vertical">
 
             <ScrollView

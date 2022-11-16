@@ -4,7 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="settings_text">パスワードを入力する理由\n安全な理由</string>
+    <string name="settings_text">このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。</string>
     <string name="studentCard_text">学生証の情報はスマホ内部に保存されるため、\n外部に通信されることは一切ありません。</string>
     <string name="about_this_app">
         「トクメモ＋」は徳島大学イノベーションプロジェクトの『アプリ開発プロジェクト』が企画、設計、制作を行いました。\n

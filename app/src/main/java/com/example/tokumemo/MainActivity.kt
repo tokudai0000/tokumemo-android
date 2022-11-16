@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     // 徳島大学本部の所在地の緯度経度
     private var placeLat = 34.07003444012803
     private var placeLon = 134.55981101249947
+    private var iconUrl = ""
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId")
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 天気情報を表示
+        // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -69,10 +70,6 @@ class MainActivity : AppCompatActivity() {
         weatherWebView.getSettings().setLoadWithOverviewMode( true )
         // ワイドビューポートへの対応
         weatherWebView.getSettings().setUseWideViewPort( true )
-
-        var iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
-
-        weatherWebView.loadUrl(iconUrl)
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -119,6 +116,8 @@ class MainActivity : AppCompatActivity() {
 
                 // ついでに天気情報を更新しておく
                 binding.weatherText.text = resultText
+                iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
+                weatherWebView.loadUrl(iconUrl)
             }
         }
         webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
@@ -388,7 +387,7 @@ class MainActivity : AppCompatActivity() {
             //json形式のデータとして識別
             var json = JSONObject(str)
 
-            // 天気予報を取得
+            // 天気を取得
             var weatherList = json.getJSONArray("weather").getJSONObject(0)
             // unixtime形式で保持されている時刻を取得
             var time = json.getString("dt")
@@ -402,9 +401,9 @@ class MainActivity : AppCompatActivity() {
             encryptedSave("icon", icon)
             encryptedSave("temp", temp)
             Log.i("weatherList: ", weatherList.toString())
-            resultText += "$currentTimeForText\n徳島市\n$descriptionText $temp℃"
+            resultText += "$descriptionText\n$temp℃"
         } else {
-            resultText += "${encryptedLoad("dateTimeForText")}\n徳島市\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}℃"
+            resultText += "${encryptedLoad("descriptionText")}\n${encryptedLoad("temp")}℃"
         }
 
     }
