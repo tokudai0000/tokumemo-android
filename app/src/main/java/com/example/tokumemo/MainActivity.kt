@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -25,6 +25,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -137,6 +138,15 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, OthersActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        // 天気を押したとき
+        val weather = findViewById<Button>(R.id.weatherButton)
+        weather.setOnClickListener{
+            goWeb("24")
+        }
+        weatherWebView.setOnClickListener{
+            goWeb("24")
         }
 
         // 教務システムを押したとき
@@ -256,7 +266,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {
         val cAccount = encryptedLoad("KEY_cAccount")
@@ -327,7 +336,7 @@ class MainActivity : AppCompatActivity() {
         val currentTime = sdf.format(Date())
 
         if (currentTime != encryptedLoad("dateTime")) {
-            val sdfForText = SimpleDateFormat("yyyy/MM/dd現在")
+            val sdfForText = SimpleDateFormat("yyyy/MM/dd")
             val currentTimeForText = sdfForText.format(Date())
             // 結果を初期化
             resultText = ""

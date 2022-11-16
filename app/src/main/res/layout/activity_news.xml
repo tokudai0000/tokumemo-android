@@ -65,12 +65,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/news"
@@ -95,12 +95,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Review"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/others"
@@ -110,12 +110,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Others"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

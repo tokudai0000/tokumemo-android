@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:background="@drawable/border"
+        android:backgroundTint="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -39,12 +40,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="News"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/review"
@@ -54,12 +55,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Review"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/others"
@@ -69,12 +70,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Others"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
     </LinearLayout>
 
     <WebView
@@ -137,21 +138,48 @@
                     android:layout_weight="2.2">
 
                     <Button
-                        android:id="@+id/weatherText"
+                        android:id="@+id/weatherButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="天気を取得中"
                         android:textColor="@color/black"
                         android:textSize="10sp" />
 
-                    <WebView
-                        android:id="@+id/weatherIcon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="bottom|center"
-                        android:layout_marginBottom="8dp"
-                        android:translationZ="2dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:translationZ="2dp">
+
+                        <TextView
+                            android:id="@+id/weatherText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:text="天気を取得中"
+                            android:textSize="10sp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <WebView
+                                android:id="@+id/weatherIcon"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="bottom|center"
+                                android:layout_marginBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="1:1"
+                                tools:ignore="MissingConstraints"
+                                tools:layout_editor_absoluteX="42dp" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
                 </FrameLayout>
 
                 <Button
