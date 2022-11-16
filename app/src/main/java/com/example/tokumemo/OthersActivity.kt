@@ -31,7 +31,7 @@ class OthersActivity : AppCompatActivity() {
         val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
         val title = findViewById<TextView>(R.id.settings_title)
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
-        val back = findViewById<Button>(R.id.backButton2)
+        val back = findViewById<Button>(R.id.backButton)
         val aboutThisAppText = findViewById<ScrollView>(R.id.aboutThisAppText)
 
         // メニューバー

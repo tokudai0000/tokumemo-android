@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/backButton2"
+            android:id="@+id/backButton"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="100dp"
             android:layout_height="40dp"
@@ -88,12 +88,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/news"
@@ -103,12 +103,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="News"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/review"
@@ -118,12 +118,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:text="Review"
-            android:textColor="@color/gray"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/gray" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/others"
@@ -168,15 +168,15 @@
         <TextView
             android:id="@+id/settings_about_password"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="@string/settings_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_weight="4"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
             android:orientation="vertical">
 
             <ScrollView

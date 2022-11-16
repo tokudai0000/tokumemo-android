@@ -65,7 +65,7 @@ class PasswordActivity : AppCompatActivity() {
         val message = findViewById<TextView>(R.id.message)
 
         registerButton.setOnClickListener {
-            val cAccountText = editCAccount.text.toString()
+            val studentNumber = editCAccount.text.toString()
             val passwordText = editPassword.text.toString()
 
             message.text = "" // 初期値に戻す
@@ -73,18 +73,18 @@ class PasswordActivity : AppCompatActivity() {
             when {
                 // 入力値が正常なデータか検証
 
-                cAccountText.isEmpty() -> {
-                    message.text = "Cアカウントが空欄です"
+                studentNumber.isEmpty() -> {
+                    message.text = "学籍番号が空欄です"
                 }
 
-                // cアカウントの先頭はcから始まる(isEmptyで検証してる為、エラーが起きない)
-                cAccountText.substring(0, 1) != "c" -> {
-                    message.text = "cアカウント例(c100100100)"
+                // cアカウントはエラー
+                studentNumber.substring(0, 1) == "c" -> {
+                    message.text = "学籍番号を入力してください(例：1234567890)"
                 }
 
-                // cアカウントは10桁(よく@tokushima-u.ac.jpとつけるユーザーがいる為の対策)
-                cAccountText.length > 10 -> {
-                    message.text = "cアカウント例(c100100100)"
+                // 桁数
+                studentNumber.length != 10 -> {
+                    message.text = "10桁の学籍番号を入力してください(例：1234567890)"
                 }
 
                 passwordText.isEmpty() -> {
@@ -93,7 +93,9 @@ class PasswordActivity : AppCompatActivity() {
 
                 else -> {
                     // 登録
-                    encryptedSave("KEY_cAccount", cAccountText)
+                    var cAccount = "c" + studentNumber.dropLast(1)
+                    encryptedSave("KEY_cAccount", cAccount)
+                    encryptedSave("KEY_studentNumber", studentNumber)
                     encryptedSave("KEY_password", passwordText)
                     // MainActivityで再ログインの処理を行わせる
                     val intent = Intent()
@@ -102,7 +104,7 @@ class PasswordActivity : AppCompatActivity() {
                 }
             }
             // パスワード未設定時のテスト用
-//            encryptedSave("KEY_cAccount", cAccountText)
+//            encryptedSave("KEY_cAccount", studentNumber)
 //            encryptedSave("KEY_password", passwordText)
 //            // MainActivityで再ログインの処理を行わせる
 //            val intent = Intent()
@@ -117,7 +119,7 @@ class PasswordActivity : AppCompatActivity() {
 
             // テキストが変更された直後(入力が確定された後)に呼び出される
             override fun afterTextChanged(s: Editable?) {
-                cAccountLabel.text = "Cアカウント　${editCAccount.text.toString().length}/10"
+                cAccountLabel.text = "学籍番号　${editCAccount.text.toString().length}/10"
             }
         })
         editPassword.addTextChangedListener(object : TextWatcher {

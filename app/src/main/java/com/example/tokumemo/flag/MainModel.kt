@@ -122,6 +122,10 @@ class MainModel: ViewModel() {
             23 -> {
                 url = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"
             }
+            // 天気予報
+            24 -> {
+                url = "https://www.nhk.or.jp/kishou-saigai/city/weather/36201003620100/#anaten-area-name"
+            }
             else -> {}
         }
 

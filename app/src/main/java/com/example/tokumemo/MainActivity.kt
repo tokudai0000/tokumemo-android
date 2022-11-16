@@ -4,19 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,6 +32,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     // 徳島大学本部の所在地の緯度経度
     private var placeLat = 34.07003444012803
     private var placeLon = 134.55981101249947
+    private var iconUrl = ""
 
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId")
@@ -46,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 天気情報を表示
+        // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,10 +70,6 @@ class MainActivity : AppCompatActivity() {
         weatherWebView.getSettings().setLoadWithOverviewMode( true )
         // ワイドビューポートへの対応
         weatherWebView.getSettings().setUseWideViewPort( true )
-
-        var iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
-
-        weatherWebView.loadUrl(iconUrl)
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -111,10 +116,35 @@ class MainActivity : AppCompatActivity() {
 
                 // ついでに天気情報を更新しておく
                 binding.weatherText.text = resultText
+                iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
+                weatherWebView.loadUrl(iconUrl)
             }
         }
         webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
         // 隠れWebビューここまで
+
+        // 学生証バーコード生成
+        val barCode = findViewById<ImageView>(R.id.barCode)
+        val createBarCode = findViewById<Button>(R.id.studentCard)
+        var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
+//        生成ボタンのクリックイベントを設定
+        createBarCode.setOnClickListener {
+            studentCardView.visibility = View.VISIBLE
+            val multiFormatWriter = MultiFormatWriter()
+            try {
+                val bitMatrix =
+                    multiFormatWriter.encode(encryptedLoad("KEY_studentNumber")+"0", BarcodeFormat.CODABAR, 500, 200)
+                Log.i("学籍番号＋0：", encryptedLoad("KEY_studentNumber")+"0")
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+                barCode.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+            }
+        }
+        val back = findViewById<Button>(R.id.backButton)
+        back.setOnClickListener{
+            studentCardView.visibility = View.INVISIBLE
+        }
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
@@ -137,6 +167,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, OthersActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        // 天気を押したとき
+        val weather = findViewById<Button>(R.id.weatherButton)
+        val weatherIcon = findViewById<Button>(R.id.weatherButton2)
+        weather.setOnClickListener{
+            goWeb("24")
+        }
+        weatherIcon.setOnClickListener{
+            goWeb("24")
         }
 
         // 教務システムを押したとき
@@ -256,7 +296,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {
         val cAccount = encryptedLoad("KEY_cAccount")
@@ -327,7 +366,7 @@ class MainActivity : AppCompatActivity() {
         val currentTime = sdf.format(Date())
 
         if (currentTime != encryptedLoad("dateTime")) {
-            val sdfForText = SimpleDateFormat("yyyy/MM/dd現在")
+            val sdfForText = SimpleDateFormat("yyyy/MM/dd")
             val currentTimeForText = sdfForText.format(Date())
             // 結果を初期化
             resultText = ""
@@ -348,7 +387,7 @@ class MainActivity : AppCompatActivity() {
             //json形式のデータとして識別
             var json = JSONObject(str)
 
-            // 天気予報を取得
+            // 天気を取得
             var weatherList = json.getJSONArray("weather").getJSONObject(0)
             // unixtime形式で保持されている時刻を取得
             var time = json.getString("dt")
@@ -362,9 +401,9 @@ class MainActivity : AppCompatActivity() {
             encryptedSave("icon", icon)
             encryptedSave("temp", temp)
             Log.i("weatherList: ", weatherList.toString())
-            resultText += "$currentTimeForText\n徳島市\n$descriptionText $temp℃"
+            resultText += "$descriptionText\n$temp℃"
         } else {
-            resultText += "${encryptedLoad("dateTimeForText")}\n徳島市\n${encryptedLoad("descriptionText")} ${encryptedLoad("temp")}℃"
+            resultText += "${encryptedLoad("descriptionText")}\n${encryptedLoad("temp")}℃"
         }
 
     }
