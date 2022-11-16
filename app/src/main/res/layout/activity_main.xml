@@ -166,6 +166,13 @@
                             android:layout_height="0dp"
                             android:layout_weight="1">
 
+                            <Button
+                                android:id="@+id/weatherButton2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:translationZ="4dp" />
+
                             <WebView
                                 android:id="@+id/weatherIcon"
                                 android:layout_width="0dp"
@@ -189,7 +196,8 @@
                     android:layout_marginRight="8dp"
                     android:layout_weight="0.8"
                     android:text="学生証"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

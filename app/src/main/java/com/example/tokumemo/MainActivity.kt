@@ -142,10 +142,11 @@ class MainActivity : AppCompatActivity() {
 
         // 天気を押したとき
         val weather = findViewById<Button>(R.id.weatherButton)
+        val weatherIcon = findViewById<Button>(R.id.weatherButton2)
         weather.setOnClickListener{
             goWeb("24")
         }
-        weatherWebView.setOnClickListener{
+        weatherIcon.setOnClickListener{
             goWeb("24")
         }
 
