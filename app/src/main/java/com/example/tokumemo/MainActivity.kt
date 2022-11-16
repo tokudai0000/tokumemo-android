@@ -6,17 +6,24 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.flag.MainModel
 import com.example.tokumemo.manager.DataManager
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -116,6 +123,29 @@ class MainActivity : AppCompatActivity() {
         }
         webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
         // 隠れWebビューここまで
+
+        // 学生証バーコード生成
+        val barCode = findViewById<ImageView>(R.id.barCode)
+        val createBarCode = findViewById<Button>(R.id.studentCard)
+        var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
+//        生成ボタンのクリックイベントを設定
+        createBarCode.setOnClickListener {
+            studentCardView.visibility = View.VISIBLE
+            val multiFormatWriter = MultiFormatWriter()
+            try {
+                val bitMatrix =
+                    multiFormatWriter.encode(encryptedLoad("KEY_studentNumber")+"0", BarcodeFormat.CODABAR, 500, 200)
+                Log.i("学籍番号＋0：", encryptedLoad("KEY_studentNumber")+"0")
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+                barCode.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+            }
+        }
+        val back = findViewById<Button>(R.id.backButton)
+        back.setOnClickListener{
+            studentCardView.visibility = View.INVISIBLE
+        }
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
