@@ -6,41 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/gray">
 
-    <ScrollView
-        android:id="@+id/aboutThisAppText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="54dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="64dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/about_this_app" />
-        </LinearLayout>
-    </ScrollView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/backBar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white"
+        android:translationZ="2dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,15 +32,56 @@
             app:iconSize="32dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <WebView
-        android:id="@+id/web"
+    <ScrollView
+        android:id="@+id/aboutThisAppText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="54dp"
-        android:visibility="gone"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:translationZ="2dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/about_this_app" />
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/webPageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="54dp"
+        android:translationZ="2dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <WebView
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            tools:layout_editor_absoluteY="40dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/nav"
