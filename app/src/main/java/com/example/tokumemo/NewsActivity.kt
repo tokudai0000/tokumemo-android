@@ -2,26 +2,21 @@ package com.example.tokumemo
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.webkit.WebViewFragment
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
-import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.databinding.ActivityNewsBinding
 import com.example.tokumemo.flag.MainModel
-import com.example.tokumemo.manager.DataManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -54,38 +49,29 @@ class NewsActivity : AppCompatActivity() {
         linkArray = arrayOf("")
         val listView = findViewById<ListView>(R.id.newsList)
 
+        // ニュース取得
         Thread{
             getNews()
         }.start()
 
         Thread.sleep(1000)
-
+        val newsView = findViewById<ConstraintLayout>(R.id.newsView)
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleArray)
         listView.adapter = adapter
 
-        // ニュース閉じるボタンを非表示にしておく
-        val Back = findViewById<Button>(R.id.backButton)
-        Back.visibility = View.INVISIBLE
-
         // 選んだニュースを表示
         listView.setOnItemClickListener { parent, view, position, id ->
-            // 一覧を非表示、戻るボタンを表示、Webビューを表示
-            listView.visibility = View.INVISIBLE
-            Back.visibility = View.VISIBLE
+            // newsView表示
+            newsView.visibility = View.VISIBLE
 
             var url = linkArray[position].toString()
+            Log.i("URL", url)
             webView = findViewById(R.id.webNews)
             webView.settings.javaScriptEnabled = true
             viewModel = ViewModelProvider(this).get(MainModel::class.java)
 
             // 検索アプリで開かない
-            webView.webViewClient = object : WebViewClient(){
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    super.onPageFinished(view, url)
-                    // webビューを表示モードに
-                    webView.visibility = View.VISIBLE
-                }
-            }
+            webView.webViewClient = WebViewClient()
             // 読み込み時にページ横幅を画面幅に無理やり合わせる
             webView.getSettings().setLoadWithOverviewMode( true )
             // ワイドビューポートへの対応
@@ -94,6 +80,11 @@ class NewsActivity : AppCompatActivity() {
             webView.getSettings().setBuiltInZoomControls(true)
 
             webView.loadUrl(url)
+        }
+
+        val Back = findViewById<Button>(R.id.backButton)
+        Back.setOnClickListener{
+            newsView.visibility = View.INVISIBLE
         }
 
         // メニューバー
@@ -116,12 +107,6 @@ class NewsActivity : AppCompatActivity() {
             val intent = Intent(this, OthersActivity::class.java)
             startActivity(intent)
             finish()
-        }
-
-        Back.setOnClickListener{
-            listView.visibility = View.VISIBLE
-            Back.visibility = View.INVISIBLE
-            webView.visibility = View.INVISIBLE
         }
     }
 

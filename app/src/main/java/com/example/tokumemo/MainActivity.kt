@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     // 徳島大学本部の所在地の緯度経度
     private var placeLat = 34.07003444012803
     private var placeLon = 134.55981101249947
+
     private var iconUrl = ""
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -56,20 +57,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // 天気と時刻を取得
+        // 天気を取得
         getWeatherNews()
-
-        weatherWebView = findViewById(R.id.weatherIcon)
-        weatherWebView.settings.javaScriptEnabled = true
-        weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
-        weatherWebView.webViewClient = WebViewClient()
-        // 読み込み時にページ横幅を画面幅に無理やり合わせる
-        weatherWebView.getSettings().setLoadWithOverviewMode( true )
-        // ワイドビューポートへの対応
-        weatherWebView.getSettings().setUseWideViewPort( true )
+        initWeatherWebIcon()
 
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
@@ -124,27 +117,7 @@ class MainActivity : AppCompatActivity() {
         // 隠れWebビューここまで
 
         // 学生証バーコード生成
-        val barCode = findViewById<ImageView>(R.id.barCode)
-        val createBarCode = findViewById<Button>(R.id.studentCard)
-        var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
-//        生成ボタンのクリックイベントを設定
-        createBarCode.setOnClickListener {
-            studentCardView.visibility = View.VISIBLE
-            val multiFormatWriter = MultiFormatWriter()
-            try {
-                val bitMatrix =
-                    multiFormatWriter.encode(encryptedLoad("KEY_studentNumber")+"0", BarcodeFormat.CODABAR, 500, 200)
-                Log.i("学籍番号＋0：", encryptedLoad("KEY_studentNumber")+"0")
-                val barcodeEncoder = BarcodeEncoder()
-                val bitmap = barcodeEncoder.createBitmap(bitMatrix)
-                barCode.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-            }
-        }
-        val back = findViewById<Button>(R.id.backButton)
-        back.setOnClickListener{
-            studentCardView.visibility = View.INVISIBLE
-        }
+        createStudentCard()
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
@@ -406,5 +379,39 @@ class MainActivity : AppCompatActivity() {
             resultText += "${encryptedLoad("descriptionText")}\n${encryptedLoad("temp")}℃"
         }
 
+    }
+
+    private fun initWeatherWebIcon(){
+        weatherWebView = findViewById(R.id.weatherIcon)
+        weatherWebView.settings.javaScriptEnabled = true
+        weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
+        weatherWebView.webViewClient = WebViewClient()
+        // 読み込み時にページ横幅を画面幅に無理やり合わせる
+        weatherWebView.getSettings().setLoadWithOverviewMode( true )
+        // ワイドビューポートへの対応
+        weatherWebView.getSettings().setUseWideViewPort( true )
+    }
+
+    private fun createStudentCard(){
+        val barCode = findViewById<ImageView>(R.id.barCode)
+        val createBarCode = findViewById<Button>(R.id.studentCard)
+        var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
+//        生成ボタンのクリックイベントを設定
+        createBarCode.setOnClickListener {
+            studentCardView.visibility = View.VISIBLE
+            val multiFormatWriter = MultiFormatWriter()
+            try {
+                val bitMatrix =
+                    multiFormatWriter.encode(encryptedLoad("KEY_studentNumber")+"0", BarcodeFormat.CODABAR, 500, 200)
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+                barCode.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+            }
+        }
+        val back = findViewById<Button>(R.id.backButton)
+        back.setOnClickListener{
+            studentCardView.visibility = View.INVISIBLE
+        }
     }
 }
