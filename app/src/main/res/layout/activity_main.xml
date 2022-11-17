@@ -42,7 +42,8 @@
                 android:gravity="top"
                 android:text="完了"
                 app:icon="@drawable/ic_baseline_backspace_24"
-                app:iconSize="32dp" />
+                app:iconSize="32dp"
+                tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -185,14 +186,15 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/logo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="2"
-                android:text="ロゴなど" />
+                android:backgroundTint="@color/orange"
+                android:src="@mipmap/ic_launcher_foreground" />
 
             <LinearLayout
                 android:layout_width="0dp"
