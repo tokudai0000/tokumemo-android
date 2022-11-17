@@ -31,6 +31,7 @@ class OthersActivity : AppCompatActivity() {
         val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
         val title = findViewById<TextView>(R.id.settings_title)
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
+        val webPageView = findViewById<ConstraintLayout>(R.id.webPageView)
         val back = findViewById<Button>(R.id.backButton)
         val aboutThisAppText = findViewById<ScrollView>(R.id.aboutThisAppText)
 
@@ -90,8 +91,6 @@ class OthersActivity : AppCompatActivity() {
         // このアプリについてを押したとき
         val aboutThisApp = findViewById<Button>(R.id.aboutThisApp)
         aboutThisApp.setOnClickListener{
-            settingsScreen.visibility = View.INVISIBLE
-            title.visibility = View.INVISIBLE
             bar.visibility = View.VISIBLE
             aboutThisAppText.visibility = View.VISIBLE
         }
@@ -101,17 +100,16 @@ class OthersActivity : AppCompatActivity() {
             settingsScreen.visibility = View.VISIBLE
             title.visibility = View.VISIBLE
 
-            // 「このアプリについて」から戻るときはwebviewは関係ないのでif文で処理
-            if (aboutThisAppText.visibility == View.INVISIBLE){
-                webView.visibility = View.GONE
-            }
-
             aboutThisAppText.visibility = View.INVISIBLE
+            webPageView.visibility = View.INVISIBLE
+
             bar.visibility = View.INVISIBLE
         }
     }
 
     private fun openWeb(url: String) {
+        val webPageView = findViewById<ConstraintLayout>(R.id.webPageView)
+        val bar = findViewById<ConstraintLayout>(R.id.backBar)
 
         webMode()
 
@@ -124,7 +122,8 @@ class OthersActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 // webビューを表示モードに
-                webView.visibility = View.VISIBLE
+                webPageView.visibility = View.VISIBLE
+                bar.visibility = View.VISIBLE
             }
         }
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
