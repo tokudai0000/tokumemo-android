@@ -64,6 +64,12 @@ class OthersActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // お問い合わせを押したとき
+        val inquiry = findViewById<Button>(R.id.inquiry)
+        inquiry.setOnClickListener{
+            openWeb("https://docs.google.com/forms/d/e/1FAIpQLScYRhlWY9IjqWOrvnWJ0bJ_yPQZpXy4PPShWb68092t2klzeg/viewform")
+        }
+
         // 公式SNSを押したとき
         val sns = findViewById<Button>(R.id.sns)
         sns.setOnClickListener{
@@ -86,6 +92,12 @@ class OthersActivity : AppCompatActivity() {
         val privacyPolicy = findViewById<Button>(R.id.privacyPolicy)
         privacyPolicy.setOnClickListener{
             openWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt")
+        }
+
+        // ソースコードを押したとき
+        val sourceCode = findViewById<Button>(R.id.sourceCode)
+        sourceCode.setOnClickListener{
+            openWeb("https://github.com/tokudai0000/TokumemoAndroid/tree/master")
         }
 
         // このアプリについてを押したとき
