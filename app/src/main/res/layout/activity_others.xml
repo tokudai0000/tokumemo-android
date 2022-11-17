@@ -278,6 +278,17 @@
                         app:icon="@drawable/ic_baseline_navigate_next_24"
                         app:iconGravity="end"
                         app:iconTint="@color/gray" />
+
+                    <Button
+                        android:id="@+id/sourceCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:text="ソースコード"
+                        android:textColor="@color/black"
+                        app:icon="@drawable/ic_baseline_navigate_next_24"
+                        app:iconGravity="end"
+                        app:iconTint="@color/gray" />
                 </LinearLayout>
             </ScrollView>
 
