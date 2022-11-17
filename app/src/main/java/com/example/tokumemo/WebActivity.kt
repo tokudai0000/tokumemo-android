@@ -32,7 +32,6 @@ class WebActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             DataManager.canExecuteJavascript = true
-            webFinish()
             finish()
         }
 
@@ -71,7 +70,7 @@ class WebActivity : AppCompatActivity() {
     private fun webViewSetup() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
-        viewModel = ViewModelProvider(this).get(MainModel::class.java)
+        viewModel = ViewModelProvider(this)[MainModel::class.java]
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
@@ -137,22 +136,14 @@ class WebActivity : AppCompatActivity() {
         }
 
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
-        webView.getSettings().setLoadWithOverviewMode( true );
+        webView.settings.loadWithOverviewMode = true
         // ワイドビューポートへの対応
-        webView.getSettings().setUseWideViewPort( true );
+        webView.settings.useWideViewPort = true
         // 拡大縮小対応
-        webView.getSettings().setBuiltInZoomControls(true);
+        webView.settings.builtInZoomControls = true
 
         webViewLoadUrl()
     }
-
-    // PasswordActivityで登録ボタンを押した場合、再度ログイン処理を行う
-//    private val startForPasswordActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            // ログイン処理を行う
-//            webView.loadUrl("https://my.ait.tokushima-u.ac.jp/portal/")
-//        }
-//    }
 
     // ハスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {
@@ -179,19 +170,5 @@ class WebActivity : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return prefs.getString(KEY, "")!! // nilの場合は空白を返す
-    }
-
-    private fun webFinish(){
-        webView.stopLoading()
-        webView.clearCache(true)
-        webView.clearHistory()
-        try {
-            Thread.sleep(100)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        webView.setWebChromeClient(null)
-        unregisterForContextMenu(webView)
-        webView.destroy()
     }
 }

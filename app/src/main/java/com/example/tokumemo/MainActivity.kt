@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         // 隠れWebビューここから（ここで先にログイン処理のみしておく）
         webView = findViewById(R.id.loginView)
         webView.settings.javaScriptEnabled = true
-        viewModel = ViewModelProvider(this).get(MainModel::class.java)
+        viewModel = ViewModelProvider(this)[MainModel::class.java]
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){

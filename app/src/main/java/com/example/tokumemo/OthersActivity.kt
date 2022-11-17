@@ -115,7 +115,7 @@ class OthersActivity : AppCompatActivity() {
 
         webView = findViewById(R.id.web)
         webView.settings.javaScriptEnabled = true
-        viewModel = ViewModelProvider(this).get(MainModel::class.java)
+        viewModel = ViewModelProvider(this)[MainModel::class.java]
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
@@ -127,11 +127,11 @@ class OthersActivity : AppCompatActivity() {
             }
         }
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
-        webView.getSettings().setLoadWithOverviewMode( true );
+        webView.settings.loadWithOverviewMode = true
         // ワイドビューポートへの対応
-        webView.getSettings().setUseWideViewPort( true );
+        webView.settings.useWideViewPort = true
         // 拡大縮小対応
-        webView.getSettings().setBuiltInZoomControls(true);
+        webView.settings.builtInZoomControls = true
 
         webView.loadUrl(url)
     }
