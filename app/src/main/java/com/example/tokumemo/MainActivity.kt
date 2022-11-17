@@ -392,6 +392,7 @@ class MainActivity : AppCompatActivity() {
         weatherWebView.getSettings().setUseWideViewPort( true )
     }
 
+    @SuppressLint("SetTextI18n")
     private fun createStudentCard(){
         val barCode = findViewById<ImageView>(R.id.barCode)
         val createBarCode = findViewById<Button>(R.id.studentCard)
@@ -406,6 +407,8 @@ class MainActivity : AppCompatActivity() {
                 val barcodeEncoder = BarcodeEncoder()
                 val bitmap = barcodeEncoder.createBitmap(bitMatrix)
                 barCode.setImageBitmap(bitmap)
+
+                binding.studentCardCode.text = "A"+encryptedLoad("KEY_studentNumber")+"0A"
             } catch (e: Exception) {
             }
         }
