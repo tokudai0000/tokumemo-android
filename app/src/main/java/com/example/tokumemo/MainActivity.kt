@@ -12,7 +12,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,9 +24,7 @@ import com.example.tokumemo.manager.DataManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private var iconUrl = ""
 
     @RequiresApi(Build.VERSION_CODES.N)
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -269,8 +266,12 @@ class MainActivity : AppCompatActivity() {
                 goWeb("19")
             }
 
-        val dialog = FirstDialogFragment()
-        dialog.show(supportFragmentManager, "simple")
+        // 初回起動時に利用規約ダイアログを表示
+        if (encryptedLoad("isFirstTime") == "") {
+            val dialog = FirstDialogFragment()
+            dialog.show(supportFragmentManager, "simple")
+            encryptedSave("isFirstTime", "false")
+        }
     }
 
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
@@ -329,14 +330,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     // unixtimeからフォーマットの日付に変換
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.N)
     private fun unixTimeChange(unixTime: String): String {
-        var sdf = SimpleDateFormat("yyyy/MM/dd HH")
-        var nowTime = Date(unixTime.toInt() * 1000L)
+        val sdf = SimpleDateFormat("yyyy/MM/dd HH")
+        val nowTime = Date(unixTime.toInt() * 1000L)
         return sdf.format(nowTime)
     }
 
     // 天気を取得
+    @OptIn(DelicateCoroutinesApi::class)
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getWeatherNews(): Job = GlobalScope.launch {
         val sdf = SimpleDateFormat("yyyy/MM/dd HH")
@@ -348,30 +352,32 @@ class MainActivity : AppCompatActivity() {
             // 結果を初期化
             resultText = ""
             // APIを使う際に必要なKEY
-            var API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+            val API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
             // URL。場所と言語・API_KEYを添付
-            var API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
+            val API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
                     "units=metric&" +
                     "lat=" + placeLat + "&" +
                     "lon=" + placeLon + "&" +
                     "lang=" + "ja" + "&" +
                     "APPID=" + API_KEY
-            var url = URL(API_URL)
+            val url = URL(API_URL)
             //APIから情報を取得する.
-            var br = BufferedReader(InputStreamReader(url.openStream()))
+            val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                url.openStream()
+            }))
             // 所得した情報を文字列化
-            var str = br.readText()
+            val str = br.readText()
             //json形式のデータとして識別
-            var json = JSONObject(str)
+            val json = JSONObject(str)
 
             // 天気を取得
-            var weatherList = json.getJSONArray("weather").getJSONObject(0)
+            val weatherList = json.getJSONArray("weather").getJSONObject(0)
             // unixtime形式で保持されている時刻を取得
-            var time = json.getString("dt")
+            val time = json.getString("dt")
             // 天気を取得
-            var descriptionText = weatherList.getString("description")
-            var icon = weatherList.getString("icon")
-            var temp = json.getJSONObject("main").getString("temp")
+            val descriptionText = weatherList.getString("description")
+            val icon = weatherList.getString("icon")
+            val temp = json.getJSONObject("main").getString("temp")
             encryptedSave("dateTime", unixTimeChange(time))
             encryptedSave("dateTimeForText", currentTimeForText)
             encryptedSave("descriptionText", descriptionText)
@@ -385,15 +391,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWeatherWebIcon(){
         weatherWebView = findViewById(R.id.weatherIcon)
         weatherWebView.settings.javaScriptEnabled = true
         weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
         weatherWebView.webViewClient = WebViewClient()
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
-        weatherWebView.getSettings().setLoadWithOverviewMode( true )
+        weatherWebView.settings.loadWithOverviewMode = true
         // ワイドビューポートへの対応
-        weatherWebView.getSettings().setUseWideViewPort( true )
+        weatherWebView.settings.useWideViewPort = true
     }
 
     @SuppressLint("SetTextI18n")
@@ -413,7 +420,7 @@ class MainActivity : AppCompatActivity() {
                 barCode.setImageBitmap(bitmap)
 
                 binding.studentCardCode.text = "A"+encryptedLoad("KEY_studentNumber")+"0A"
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
         val back = findViewById<Button>(R.id.backButton)
