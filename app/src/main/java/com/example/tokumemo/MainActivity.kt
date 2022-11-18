@@ -1,5 +1,6 @@
 package com.example.tokumemo
 
+import FirstDialogFragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
@@ -267,6 +268,9 @@ class MainActivity : AppCompatActivity() {
         manabaMob.setOnClickListener{
                 goWeb("19")
             }
+
+        val dialog = FirstDialogFragment()
+        dialog.show(supportFragmentManager, "simple")
     }
 
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
