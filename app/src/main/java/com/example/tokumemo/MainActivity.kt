@@ -2,6 +2,7 @@ package com.example.tokumemo
 
 import FirstDialogFragment
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
@@ -13,6 +14,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -168,8 +170,24 @@ class MainActivity : AppCompatActivity() {
         // 図書館カレンダーを押したとき
         val libraryCarender = findViewById<Button>(R.id.libraryCarender)
         libraryCarender.setOnClickListener{
-            goWeb("9")
+            // ダイアログの表示
+            val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this, R.style.FirstDialogStyle)
+            alertDialog.setTitle("図書館の所在地")
+//            alertDialog.setMessage("メッセージ")
+            alertDialog.setPositiveButton("常三島",
+                DialogInterface.OnClickListener { dialog, whichButton ->
+                    goWeb("9")
+                })
+            alertDialog.setNegativeButton("蔵本",
+                DialogInterface.OnClickListener { dialog, whichButton ->
+                    goWeb("10")
+                })
+            alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
+                // キャンセルの処理
+            })
+            alertDialog.show()
         }
+
         // 図書検索を押したとき
         val Button4 = findViewById<Button>(R.id.library)
         Button4.setOnClickListener{
