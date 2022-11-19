@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
     private var iconUrl = ""
 
+    override fun onBackPressed() {
+        // Android戻るボタン無効
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,36 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/newsView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="54dp"
-        android:layout_marginBottom="54dp"
-        android:translationZ="2dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="64dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="-6dp"
-            app:icon="@drawable/ic_baseline_backspace_24"
-            app:iconSize="40dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="347dp" />
-
-        <WebView
-            android:id="@+id/webNews"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteY="54dp">
-
-        </WebView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"

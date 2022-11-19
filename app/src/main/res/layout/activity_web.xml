@@ -21,12 +21,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:text="Home"
-            android:textColor="@color/blue"
+            android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
-            app:iconTint="@color/blue" />
+            app:iconTint="@color/darkGray" />
 
         <Button
             android:id="@+id/news"
