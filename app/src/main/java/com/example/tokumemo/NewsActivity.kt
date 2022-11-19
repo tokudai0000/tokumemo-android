@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.tokumemo.databinding.ActivityNewsBinding
 import com.example.tokumemo.flag.MainModel
+import com.example.tokumemo.manager.DataManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -66,20 +67,21 @@ class NewsActivity : AppCompatActivity() {
 
             var url = linkArray[position].toString()
             Log.i("URL", url)
-            webView = findViewById(R.id.webNews)
-            webView.settings.javaScriptEnabled = true
-            viewModel = ViewModelProvider(this)[MainModel::class.java]
-
-            // 検索アプリで開かない
-            webView.webViewClient = WebViewClient()
-            // 読み込み時にページ横幅を画面幅に無理やり合わせる
-            webView.settings.loadWithOverviewMode = true
-            // ワイドビューポートへの対応
-            webView.settings.useWideViewPort = true
-            // 拡大縮小対応
-            webView.settings.builtInZoomControls = true
-
-            webView.loadUrl(url)
+//            webView = findViewById(R.id.webNews)
+//            webView.settings.javaScriptEnabled = true
+//            viewModel = ViewModelProvider(this)[MainModel::class.java]
+//
+//            // 検索アプリで開かない
+//            webView.webViewClient = WebViewClient()
+//            // 読み込み時にページ横幅を画面幅に無理やり合わせる
+//            webView.settings.loadWithOverviewMode = true
+//            // ワイドビューポートへの対応
+//            webView.settings.useWideViewPort = true
+//            // 拡大縮小対応
+//            webView.settings.builtInZoomControls = true
+//
+//            webView.loadUrl(url)
+            goWeb(url)
         }
 
         val Back = findViewById<Button>(R.id.backButton)
@@ -142,5 +144,15 @@ class NewsActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // 押されたWebサイトにとぶ
+    private fun goWeb(pageId: String) {
+        val intent = Intent(this, WebActivity::class.java)
+        // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+        intent.putExtra("PAGE_KEY",pageId)
+        // 自動入力のフラグを上げる
+        DataManager.canExecuteJavascript = true
+        startActivity(intent)
     }
 }
