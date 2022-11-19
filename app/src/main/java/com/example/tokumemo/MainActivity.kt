@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
     private var iconUrl = ""
 
+    override fun onBackPressed() {
+        // Android戻るボタン無効
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,17 +159,17 @@ class MainActivity : AppCompatActivity() {
         // 教務システムを押したとき
         val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
         Button2.setOnClickListener{
-            goWeb("2")
+            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
         }
         // マナバを押したとき
         val Button1 = findViewById<Button>(R.id.manaba)
         Button1.setOnClickListener{
-            goWeb("1")
+            goWeb("https://manaba.lms.tokushima-u.ac.jp/ct/home")
         }
         // メールを押したとき
         val Button3 = findViewById<Button>(R.id.email)
         Button3.setOnClickListener{
-            goWeb("3")
+            goWeb("https://outlook.office365.com/mail/")
         }
         // 図書館カレンダーを押したとき
         val libraryCarender = findViewById<Button>(R.id.libraryCarender)
@@ -176,11 +180,11 @@ class MainActivity : AppCompatActivity() {
 //            alertDialog.setMessage("メッセージ")
             alertDialog.setPositiveButton("常三島",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    goWeb("9")
+                    goWeb("https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2022.pdf")
                 })
             alertDialog.setNegativeButton("蔵本",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    goWeb("10")
+                    goWeb("https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_2022.pdf")
                 })
             alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
                 // キャンセルの処理
@@ -191,97 +195,97 @@ class MainActivity : AppCompatActivity() {
         // 図書検索を押したとき
         val Button4 = findViewById<Button>(R.id.library)
         Button4.setOnClickListener{
-            goWeb("4")
+            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/top")
         }
         // 図書貸出延長を押したとき
         val libraryExtension = findViewById<Button>(R.id.libraryExtension)
         libraryExtension.setOnClickListener{
-            goWeb("10")
+            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings")
         }
         // 生協を押したとき
         val Button5 = findViewById<Button>(R.id.seikyou)
         Button5.setOnClickListener{
-            goWeb("5")
+            goWeb("https://vsign.jp/tokudai/maruco")
         }
         // 時間割を押したとき
         val Button7 = findViewById<Button>(R.id.timetable)
         Button7.setOnClickListener{
-            goWeb("7")
+            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
         }
         // 総合認証ポータルを押したとき
         val portal = findViewById<Button>(R.id.portal)
         portal.setOnClickListener{
-            goWeb("20")
+            goWeb("https://my.ait.tokushima-u.ac.jp/portal/")
         }
         // 今学期の成績を押したとき
         val Button6 = findViewById<Button>(R.id.result)
         Button6.setOnClickListener{
-            goWeb("6")
+            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Results.aspx")
         }
         // 全学期の成績を押したとき
         val resultAll = findViewById<Button>(R.id.resultAll)
         resultAll.setOnClickListener{
-            goWeb("12")
+            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx")
         }
         // シラバスを押したとき
         val Button8 = findViewById<Button>(R.id.syllabus)
         Button8.setOnClickListener{
-            goWeb("8")
+            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
         }
         // キャリアセンターを押したとき
         val Button0 = findViewById<Button>(R.id.careerCenter)
         Button0.setOnClickListener{
-            goWeb("0")
+            goWeb("https://www.tokudai-syusyoku.com/index.php")
         }
         // 大学サイトを押したとき
         val univWebsite = findViewById<Button>(R.id.univWebsite)
         univWebsite.setOnClickListener{
-            goWeb("21")
+            goWeb("https://www.tokushima-u.ac.jp/")
         }
         // 図書館サイトを押したとき
         val libraryHome = findViewById<Button>(R.id.libraryHome)
         libraryHome.setOnClickListener{
-                goWeb("13")
+                goWeb("https://opac.lib.tokushima-u.ac.jp/drupal/")
             }
         // 本購入を押したとき
         val bookPurchase = findViewById<Button>(R.id.bookPurchase)
         bookPurchase.setOnClickListener{
-                goWeb("14")
+                goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new")
             }
         // 出欠を押したとき
         val attendance = findViewById<Button>(R.id.attendance)
         attendance.setOnClickListener{
-                goWeb("22")
+                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx")
             }
         // 授業アンケートを押したとき
         val questionnaire = findViewById<Button>(R.id.questionnaire)
         questionnaire.setOnClickListener{
-                goWeb("23")
+                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx")
             }
         // LMS一覧を押したとき
         val LMS = findViewById<Button>(R.id.LMS)
         LMS.setOnClickListener{
-                goWeb("15")
+                goWeb("https://uls01.ulc.tokushima-u.ac.jp/info/index.html")
             }
         // 常三島図書館HPを押したとき
         val libraryHomeJosanjima = findViewById<Button>(R.id.libraryHomeJosanjima)
         libraryHomeJosanjima.setOnClickListener{
-                goWeb("16")
+                goWeb("https://www.lib.tokushima-u.ac.jp/")
             }
         // 蔵本図書館HPを押したとき
         val libraryHomeKuramoto = findViewById<Button>(R.id.libraryHomeKuramoto)
         libraryHomeKuramoto.setOnClickListener{
-                goWeb("17")
+                goWeb("https://www.lib.tokushima-u.ac.jp/kura.shtml")
             }
         // 教務システム_PCを押したとき
         val academicAffairsSystemPC = findViewById<Button>(R.id.academicAffairsSystemPC)
         academicAffairsSystemPC.setOnClickListener{
-                goWeb("18")
+                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx")
             }
         // マナバ_モバイルを押したとき
         val manabaMob = findViewById<Button>(R.id.manabaMob)
         manabaMob.setOnClickListener{
-                goWeb("19")
+                goWeb("https://manaba.lms.tokushima-u.ac.jp/s/home_summary")
             }
 
         // 初回起動時に利用規約ダイアログを表示

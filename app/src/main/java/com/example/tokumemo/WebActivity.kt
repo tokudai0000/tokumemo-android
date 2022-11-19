@@ -54,19 +54,13 @@ class WebActivity : AppCompatActivity() {
 
     // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く
     private fun webViewLoadUrl() {
-        // MainActivityからデータを受け取る
-        // どのWebサイトを開こうとしているかをIdで判別
-        var receivedData = intent.getStringExtra("PAGE_KEY")
-        var pageId = 99
-        // 整数型に変換
-        if (receivedData != null) {
-            pageId = receivedData.toInt()
-        }
-
-        webView.loadUrl(viewModel.isAnyWebsite(pageId))
+        // MainActivityからURLを受け取る
+        val receivedURL = intent.getStringExtra("PAGE_KEY").toString()
+        webView.loadUrl(receivedURL)
     }
 
     // WebViewの設定
+    @SuppressLint("SetJavaScriptEnabled")
     private fun webViewSetup() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
