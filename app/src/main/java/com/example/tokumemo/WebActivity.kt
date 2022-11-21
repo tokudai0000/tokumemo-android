@@ -9,6 +9,7 @@ import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -137,6 +138,8 @@ class WebActivity : AppCompatActivity() {
                                 val dialog = RequireCorrectPasswordDialog()
                                 dialog.show(supportFragmentManager, "simple")
                             }
+                        } else if (DataManager.jsCount == -1) {
+                            Toast.makeText(applicationContext, "トクメモ＋ゲストユーザーなのでパスワード自動入力を行いませんでした。", Toast.LENGTH_LONG).show()
                         }
                     }
                     else -> {}
