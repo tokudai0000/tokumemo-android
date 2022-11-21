@@ -169,7 +169,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/homeScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="54dp"

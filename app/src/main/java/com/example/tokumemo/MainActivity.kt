@@ -13,6 +13,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -168,10 +169,10 @@ class MainActivity : AppCompatActivity() {
         val weather = findViewById<Button>(R.id.weatherButton)
         val weatherIcon = findViewById<Button>(R.id.weatherButton2)
         weather.setOnClickListener{
-            goWeb("24")
+            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
         }
         weatherIcon.setOnClickListener{
-            goWeb("24")
+            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
         }
 
         // 教務システムを押したとき
@@ -438,14 +439,17 @@ class MainActivity : AppCompatActivity() {
         weatherWebView.settings.useWideViewPort = true
     }
 
+    // 学生証を表示
     @SuppressLint("SetTextI18n")
     private fun createStudentCard(){
         val barCode = findViewById<ImageView>(R.id.barCode)
         val createBarCode = findViewById<Button>(R.id.studentCard)
+        val homeScreen = findViewById<LinearLayout>(R.id.homeScreen)
         var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
 //        生成ボタンのクリックイベントを設定
         createBarCode.setOnClickListener {
             studentCardView.visibility = View.VISIBLE
+            homeScreen.visibility = View.INVISIBLE
             val multiFormatWriter = MultiFormatWriter()
             try {
                 val bitMatrix =
@@ -461,6 +465,7 @@ class MainActivity : AppCompatActivity() {
         val back = findViewById<Button>(R.id.backButton)
         back.setOnClickListener{
             studentCardView.visibility = View.INVISIBLE
+            homeScreen.visibility = View.VISIBLE
         }
     }
 }
