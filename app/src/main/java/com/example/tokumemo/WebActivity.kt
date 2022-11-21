@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -156,6 +157,18 @@ class WebActivity : AppCompatActivity() {
         webView.settings.builtInZoomControls = true
 
         webViewLoadUrl()
+    }
+
+    // 端末の戻るボタンが押されたとき
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // 戻るボタンが押される かつ webviewで前に戻ることができるとき
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            // 前のページに戻る
+            webView.goBack()
+            return true
+        }
+
+        return super.onKeyDown(keyCode, event)
     }
 
     // ハスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
