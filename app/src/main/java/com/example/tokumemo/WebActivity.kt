@@ -1,9 +1,11 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -25,6 +27,14 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
+
+        // テストユーザーの場合はjsCountを-1にしておく
+        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
+            DataManager.jsCount = -1
+            Log.i("jsCount", DataManager.jsCount.toString())
+        } else {
+            DataManager.jsCount = 0
+        }
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
@@ -101,26 +111,32 @@ class WebActivity : AppCompatActivity() {
                             // パスワード登録画面を表示
                             val intent = Intent(applicationContext, PasswordActivity::class.java)
                             startActivity(intent)
-                            // 戻ってきた時、startForPasswordActivityを呼び出す
-//                          startForPasswordActivity.launch(intent)
-                        } else if (DataManager.canExecuteJavascript) {
-                            val cAccount = encryptedLoad("KEY_cAccount")
-                            val password = encryptedLoad("KEY_password")
+                            finish()
+                        } else if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
+                            if (DataManager.jsCount < 2) {
+                                Log.i("jsCount", DataManager.jsCount.toString())
+                                DataManager.jsCount += 1
+                                val cAccount = encryptedLoad("KEY_cAccount")
+                                val password = encryptedLoad("KEY_password")
 
-                            webView.evaluateJavascript(
-                                "document.getElementById('username').value= '$cAccount'",
-                                null
-                            )
-                            webView.evaluateJavascript(
-                                "document.getElementById('password').value= '$password'",
-                                null
-                            )
-                            webView.evaluateJavascript(
-                                "document.getElementsByClassName('form-element form-button')[0].click();",
-                                null
-                            )
-                            // フラグを下ろす
-                            DataManager.canExecuteJavascript = false
+                                webView.evaluateJavascript(
+                                    "document.getElementById('username').value= '$cAccount'",
+                                    null
+                                )
+                                webView.evaluateJavascript(
+                                    "document.getElementById('password').value= '$password'",
+                                    null
+                                )
+                                webView.evaluateJavascript(
+                                    "document.getElementsByClassName('form-element form-button')[0].click();",
+                                    null
+                                )
+                                // フラグを下ろす
+                                DataManager.canExecuteJavascript = false
+                            } else {
+                                val dialog = RequireCorrectPasswordDialog()
+                                dialog.show(supportFragmentManager, "simple")
+                            }
                         }
                     }
                     else -> {}

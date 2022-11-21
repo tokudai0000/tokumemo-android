@@ -4,7 +4,18 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="password_dialog">
+    トクメモ＋に保存されている学籍番号もしくはパスワードに誤りがある可能性があります。\n
+    Others ⇒ パスワード設定 から正しいパスワードを設定してください。
+    </string>
     <string name="settings_text">このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。</string>
+    <string name="password_text">
+    大学サイトにログインするパスワードを設定してください\n
+    ゲストユーザーとして利用する場合は\n
+    学籍番号：0123456789\n
+    パスワード：0000\n
+    を設定してください
+    </string>
     <string name="studentCard_text">=======♪使い方♪=======\n
     <b>学生バーコードは鑑賞用として\n
     使用してください。</b>\n

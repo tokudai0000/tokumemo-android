@@ -60,6 +60,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 初回起動時に利用規約ダイアログを表示
+        if (encryptedLoad("isFirstTime") != "false") {
+            val dialog = FirstDialogFragment()
+            dialog.show(supportFragmentManager, "simple")
+            encryptedSave("isFirstTime", "false")
+        }
+
         // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -73,6 +80,13 @@ class MainActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         viewModel = ViewModelProvider(this)[MainModel::class.java]
 
+        // テストユーザーの場合はjsCountを-1にしておく
+        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
+            DataManager.jsCount = -1
+        } else {
+            DataManager.jsCount = 0
+        }
+
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -83,27 +97,31 @@ class MainActivity : AppCompatActivity() {
                 when (viewModel.anyJavaScriptExecute(urlString)) {
                     MainModel.JavaScriptType.loginIAS -> {
 
-                        if (shouldShowPasswordView()) {
-                            // パスワード登録画面を表示
-                            val intent = Intent(applicationContext, PasswordActivity::class.java)
-                            startActivity(intent)
-                        }
-                        else if (DataManager.canExecuteJavascript) {
-                            val cAccount = encryptedLoad("KEY_cAccount")
-                            val password = encryptedLoad("KEY_password")
+//                        if (shouldShowPasswordView() && encryptedLoad("isFirstTime") == "false") {
+//                            // パスワード登録画面を表示
+//                            val intent = Intent(applicationContext, PasswordActivity::class.java)
+//                            startActivity(intent)
+//                        }
+                        if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
+                            if (DataManager.jsCount < 2) {
+                                Log.i("jsCount", DataManager.jsCount.toString())
+                                DataManager.jsCount += 1
+                                val cAccount = encryptedLoad("KEY_cAccount")
+                                val password = encryptedLoad("KEY_password")
 
-                            webView.evaluateJavascript(
-                                "document.getElementById('username').value= '$cAccount'",
-                                null
-                            )
-                            webView.evaluateJavascript(
-                                "document.getElementById('password').value= '$password'",
-                                null
-                            )
-                            webView.evaluateJavascript(
-                                "document.getElementsByClassName('form-element form-button')[0].click();",
-                                null
-                            )
+                                webView.evaluateJavascript(
+                                    "document.getElementById('username').value= '$cAccount'",
+                                    null
+                                )
+                                webView.evaluateJavascript(
+                                    "document.getElementById('password').value= '$password'",
+                                    null
+                                )
+                                webView.evaluateJavascript(
+                                    "document.getElementsByClassName('form-element form-button')[0].click();",
+                                    null
+                                )
+                            }
                         }
                     }
                     else -> {}
@@ -287,13 +305,6 @@ class MainActivity : AppCompatActivity() {
         manabaMob.setOnClickListener{
                 goWeb("https://manaba.lms.tokushima-u.ac.jp/s/home_summary")
             }
-
-        // 初回起動時に利用規約ダイアログを表示
-        if (encryptedLoad("isFirstTime") == "") {
-            val dialog = FirstDialogFragment()
-            dialog.show(supportFragmentManager, "simple")
-            encryptedSave("isFirstTime", "false")
-        }
     }
 
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定

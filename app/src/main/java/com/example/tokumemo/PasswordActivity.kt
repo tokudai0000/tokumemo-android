@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.tokumemo.manager.DataManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
@@ -50,11 +51,12 @@ class PasswordActivity : AppCompatActivity() {
         initSetup()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initSetup() {
         // findViewById
         val registerButton = findViewById<Button>(R.id.registerButton)
 
-        val editCAccount = findViewById<EditText>(R.id.editCAccount)
+        val editStudentNumber = findViewById<EditText>(R.id.editStudentNumber)
         val cAccountLabel = findViewById<TextView>(R.id.cAccountLabel)
 //        val cAccountMessageLabel = findViewById<TextView>(R.id.cAccountMessageLabel)
 
@@ -65,7 +67,7 @@ class PasswordActivity : AppCompatActivity() {
         val message = findViewById<TextView>(R.id.message)
 
         registerButton.setOnClickListener {
-            val studentNumber = editCAccount.text.toString()
+            val studentNumber = editStudentNumber.text.toString()
             val passwordText = editPassword.text.toString()
 
             message.text = "" // 初期値に戻す
@@ -93,7 +95,7 @@ class PasswordActivity : AppCompatActivity() {
 
                 else -> {
                     // 登録
-                    var cAccount = "c" + studentNumber.dropLast(1)
+                    val cAccount = "c" + studentNumber.dropLast(1)
                     encryptedSave("KEY_cAccount", cAccount)
                     encryptedSave("KEY_studentNumber", studentNumber)
                     encryptedSave("KEY_password", passwordText)
@@ -113,13 +115,13 @@ class PasswordActivity : AppCompatActivity() {
         }
 
         // 入力文字数のカウント、そして表示を行う
-        editCAccount.addTextChangedListener(object : TextWatcher {
+        editStudentNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             // テキストが変更された直後(入力が確定された後)に呼び出される
             override fun afterTextChanged(s: Editable?) {
-                cAccountLabel.text = "学籍番号　${editCAccount.text.toString().length}/10"
+                cAccountLabel.text = "学籍番号　${editStudentNumber.text.toString().length}/10"
             }
         })
         editPassword.addTextChangedListener(object : TextWatcher {
@@ -131,7 +133,7 @@ class PasswordActivity : AppCompatActivity() {
         })
 
         // 保存しているデータを入力フィールドに表示
-        editCAccount.setText(encryptedLoad("KEY_cAccount"))
+        editStudentNumber.setText(encryptedLoad("KEY_studentNumber"))
         editPassword.setText(encryptedLoad("KEY_password"))
     }
 

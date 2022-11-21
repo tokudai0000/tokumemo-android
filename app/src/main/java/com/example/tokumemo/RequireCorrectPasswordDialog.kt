@@ -1,15 +1,12 @@
+package com.example.tokumemo
+
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import com.example.tokumemo.MainActivity
-import com.example.tokumemo.R
 
-class FirstDialogFragment: DialogFragment() {
+class RequireCorrectPasswordDialog: DialogFragment() {
 
     // ダイアログ外タップ無効
     @Deprecated("Deprecated in Java")
@@ -23,8 +20,8 @@ class FirstDialogFragment: DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it, R.style.FirstDialogStyle)
-            builder.setMessage(R.string.first_dialog)
-                .setPositiveButton("同意する",
+            builder.setMessage(R.string.password_dialog)
+                .setPositiveButton("OK",
                     DialogInterface.OnClickListener { dialog, id ->
 
                     })
