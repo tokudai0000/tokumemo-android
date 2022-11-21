@@ -198,11 +198,13 @@ class MainActivity : AppCompatActivity() {
 //            alertDialog.setMessage("メッセージ")
             alertDialog.setPositiveButton("常三島",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    goWeb("https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2022.pdf")
+                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2022.pdf&embedded=true"
+                    goWeb(libraryURL)
                 })
             alertDialog.setNegativeButton("蔵本",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    goWeb("https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_2022.pdf")
+                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_2022.pdf&embedded=true"
+                    goWeb(libraryURL)
                 })
             alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
                 // キャンセルの処理
