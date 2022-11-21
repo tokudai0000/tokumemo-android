@@ -41,6 +41,13 @@ class PasswordActivity : AppCompatActivity() {
             finish()
         }
 
+        val Review = findViewById<Button>(R.id.review)
+        Review.setOnClickListener{
+            val intent = Intent(this, ReviewActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val Others = findViewById<Button>(R.id.others)
         Others.setOnClickListener{
             val intent = Intent(this, OthersActivity::class.java)

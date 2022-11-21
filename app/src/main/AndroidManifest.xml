@@ -38,6 +38,7 @@
         </activity>
         <activity android:name=".WebActivity" android:screenOrientation="portrait" />
         <activity android:name=".NewsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ReviewActivity" android:screenOrientation="portrait" />
         <activity android:name=".PasswordActivity" android:screenOrientation="portrait" />
         <activity android:name=".OthersActivity" android:screenOrientation="portrait" />
     </application>
