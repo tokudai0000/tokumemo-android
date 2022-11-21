@@ -2,9 +2,11 @@ package com.example.tokumemo
 
 import FirstDialogFragment
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     private var placeLon = 134.55981101249947
 
     private var iconUrl = ""
+    private var isConnectToNetwork = false
 
     override fun onBackPressed() {
         // Android戻るボタン無効
@@ -61,85 +64,96 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // ネット接続できているか
+        // ConnectivityManagerの取得
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // NetworkCapabilitiesの取得
+        // 引数にcm.activeNetworkを指定し、現在アクティブなデフォルトネットワークに対応するNetworkオブジェクトを渡している
+        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+        if (capabilities != null) {
+            isConnectToNetwork = true
+        }
+
         // 初回起動時に利用規約ダイアログを表示
         if (encryptedLoad("isFirstTime") != "false") {
             val dialog = FirstDialogFragment()
             dialog.show(supportFragmentManager, "simple")
             encryptedSave("isFirstTime", "false")
         }
+        if (isConnectToNetwork){
+            // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
 
-        // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            // 天気を取得
+            getWeatherNews()
+            initWeatherWebIcon()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        // 天気を取得
-        getWeatherNews()
-        initWeatherWebIcon()
+            // 隠れWebビューここから（ここで先にログイン処理のみしておく）
+            webView = findViewById(R.id.loginView)
+            webView.settings.javaScriptEnabled = true
+            viewModel = ViewModelProvider(this)[MainModel::class.java]
 
-        // 隠れWebビューここから（ここで先にログイン処理のみしておく）
-        webView = findViewById(R.id.loginView)
-        webView.settings.javaScriptEnabled = true
-        viewModel = ViewModelProvider(this)[MainModel::class.java]
+            // テストユーザーの場合はjsCountを-1にしておく
+    //        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
+    //            DataManager.jsCount = -1
+    //        } else {
+    //            DataManager.jsCount = 0
+    //        }
+            DataManager.jsCount = 0
 
-        // テストユーザーの場合はjsCountを-1にしておく
-//        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
-//            DataManager.jsCount = -1
-//        } else {
-//            DataManager.jsCount = 0
-//        }
-        DataManager.jsCount = 0
+            // 検索アプリで開かない
+            webView.webViewClient = object : WebViewClient(){
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    if (url != null) {
+                        urlString = url
+                    }
 
-        // 検索アプリで開かない
-        webView.webViewClient = object : WebViewClient(){
-            override fun onPageFinished(view: WebView?, url: String?) {
-                if (url != null) {
-                    urlString = url
-                }
+                    when (viewModel.anyJavaScriptExecute(urlString)) {
+                        MainModel.JavaScriptType.loginIAS -> {
 
-                when (viewModel.anyJavaScriptExecute(urlString)) {
-                    MainModel.JavaScriptType.loginIAS -> {
+    //                        if (shouldShowPasswordView() && encryptedLoad("isFirstTime") == "false") {
+    //                            // パスワード登録画面を表示
+    //                            val intent = Intent(applicationContext, PasswordActivity::class.java)
+    //                            startActivity(intent)
+    //                        }
+                            if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
+                                if (DataManager.jsCount < 2) {
+                                    Log.i("jsCount", DataManager.jsCount.toString())
+                                    DataManager.jsCount += 1
+                                    val cAccount = encryptedLoad("KEY_cAccount")
+                                    val password = encryptedLoad("KEY_password")
 
-//                        if (shouldShowPasswordView() && encryptedLoad("isFirstTime") == "false") {
-//                            // パスワード登録画面を表示
-//                            val intent = Intent(applicationContext, PasswordActivity::class.java)
-//                            startActivity(intent)
-//                        }
-                        if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
-                            if (DataManager.jsCount < 2) {
-                                Log.i("jsCount", DataManager.jsCount.toString())
-                                DataManager.jsCount += 1
-                                val cAccount = encryptedLoad("KEY_cAccount")
-                                val password = encryptedLoad("KEY_password")
-
-                                webView.evaluateJavascript(
-                                    "document.getElementById('username').value= '$cAccount'",
-                                    null
-                                )
-                                webView.evaluateJavascript(
-                                    "document.getElementById('password').value= '$password'",
-                                    null
-                                )
-                                webView.evaluateJavascript(
-                                    "document.getElementsByClassName('form-element form-button')[0].click();",
-                                    null
-                                )
+                                    webView.evaluateJavascript(
+                                        "document.getElementById('username').value= '$cAccount'",
+                                        null
+                                    )
+                                    webView.evaluateJavascript(
+                                        "document.getElementById('password').value= '$password'",
+                                        null
+                                    )
+                                    webView.evaluateJavascript(
+                                        "document.getElementsByClassName('form-element form-button')[0].click();",
+                                        null
+                                    )
+                                }
                             }
                         }
+                        else -> {}
                     }
-                    else -> {}
+
+                    super.onPageFinished(view, url)
+
+                    // ついでに天気情報を更新しておく
+                    binding.weatherText.text = resultText
+                    iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
+                    weatherWebView.loadUrl(iconUrl)
                 }
-
-                super.onPageFinished(view, url)
-
-                // ついでに天気情報を更新しておく
-                binding.weatherText.text = resultText
-                iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
-                weatherWebView.loadUrl(iconUrl)
             }
+            webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
+            // 隠れWebビューここまで
         }
-        webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
-        // 隠れWebビューここまで
-
+        
         // 学生証バーコード生成
         createStudentCard()
 
