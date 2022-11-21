@@ -82,11 +82,12 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainModel::class.java]
 
         // テストユーザーの場合はjsCountを-1にしておく
-        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
-            DataManager.jsCount = -1
-        } else {
-            DataManager.jsCount = 0
-        }
+//        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
+//            DataManager.jsCount = -1
+//        } else {
+//            DataManager.jsCount = 0
+//        }
+        DataManager.jsCount = 0
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
