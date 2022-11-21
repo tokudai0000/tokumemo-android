@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Tokumemo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- 常にライトモード -->
+    <style name="Theme.Tokumemo" parent="Theme.MaterialComponents.Light.DarkActionBar">>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
