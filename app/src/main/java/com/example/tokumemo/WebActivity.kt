@@ -1,16 +1,22 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -24,19 +30,32 @@ class WebActivity : AppCompatActivity() {
     private lateinit var viewModel: MainModel
 
     private var urlString = ""
+    private var isConnectToNetwork = false
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
 
-        // テストユーザーの場合はjsCountを-1にしておく
-        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
-            DataManager.jsCount = -1
-            Log.i("jsCount", DataManager.jsCount.toString())
-        } else {
-            DataManager.jsCount = 0
+        // ネット接続できているか
+        // ConnectivityManagerの取得
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // NetworkCapabilitiesの取得
+        // 引数にcm.activeNetworkを指定し、現在アクティブなデフォルトネットワークに対応するNetworkオブジェクトを渡している
+        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+        if (capabilities != null) {
+            isConnectToNetwork = true
         }
+
+        // テストユーザーの場合はjsCountを-1にしておく
+//        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
+//            DataManager.jsCount = -1
+//            Log.i("jsCount", DataManager.jsCount.toString())
+//        } else {
+//            DataManager.jsCount = 0
+//        }
+        DataManager.jsCount = 0
 
         // メニューバー
         val Home = findViewById<Button>(R.id.home)
@@ -68,7 +87,12 @@ class WebActivity : AppCompatActivity() {
             finish()
         }
 
-        webViewSetup()
+        if (isConnectToNetwork){
+            webViewSetup()
+        } else {
+            val text = findViewById<TextView>(R.id.text)
+            text.visibility = View.VISIBLE
+        }
     }
 
     // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く

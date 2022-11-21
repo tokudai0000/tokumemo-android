@@ -1,7 +1,9 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +32,7 @@ class NewsActivity : AppCompatActivity() {
     lateinit var binding : ActivityNewsBinding
     private lateinit var titleArray: Array<String>
     private lateinit var linkArray: Array<String>
+    private var isConnectToNetwork = false
 
     override fun onBackPressed() {
         // Android戻るボタン無効
@@ -41,6 +44,16 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
+        // ネット接続できているか
+        // ConnectivityManagerの取得
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // NetworkCapabilitiesの取得
+        // 引数にcm.activeNetworkを指定し、現在アクティブなデフォルトネットワークに対応するNetworkオブジェクトを渡している
+        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+        if (capabilities != null) {
+            isConnectToNetwork = true
+        }
+
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -49,19 +62,27 @@ class NewsActivity : AppCompatActivity() {
         val listView = findViewById<ListView>(R.id.newsList)
 
         // ニュース取得
-        Thread{
-            getNews()
-        }.start()
+        if (isConnectToNetwork) {
+            Thread {
+                getNews()
+            }.start()
 
-        Thread.sleep(1000)
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleArray)
-        listView.adapter = adapter
+            Thread.sleep(1000)
+            val adapter =
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleArray)
+            listView.adapter = adapter
 
-        // 選んだニュースを表示
-        listView.setOnItemClickListener { parent, view, position, id ->
+            // 選んだニュースを表示
+            listView.setOnItemClickListener { parent, view, position, id ->
 
-            val url = linkArray[position]
-            goWeb(url)
+                val url = linkArray[position]
+                goWeb(url)
+            }
+        } else {
+            titleArray = arrayOf("ネットが接続されていません。")
+            val adapter =
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleArray)
+            listView.adapter = adapter
         }
 
         // メニューバー
