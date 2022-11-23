@@ -59,10 +59,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled")
+    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val currentYearSdf = SimpleDateFormat("yyyy")
+        val currentYear = currentYearSdf.format(Date())
+        val currentMonthSdf = SimpleDateFormat("MM")
+        val currentMonth = currentMonthSdf.format(Date())
 
         // ネット接続できているか
         // ConnectivityManagerの取得
@@ -215,18 +220,23 @@ class MainActivity : AppCompatActivity() {
         // 図書館カレンダーを押したとき
         val libraryCarender = findViewById<Button>(R.id.libraryCarender)
         libraryCarender.setOnClickListener{
+            val term = if (currentMonth.toInt() <= 3){
+                (currentYear.toInt()-1).toString()
+            }else{
+                currentYear
+            }
             // ダイアログの表示
             val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this, R.style.FirstDialogStyle)
             alertDialog.setTitle("図書館の所在地")
 //            alertDialog.setMessage("メッセージ")
             alertDialog.setPositiveButton("常三島",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2022.pdf&embedded=true"
+                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$term.pdf&embedded=true"
                     goWeb(libraryURL)
                 })
             alertDialog.setNegativeButton("蔵本",
                 DialogInterface.OnClickListener { dialog, whichButton ->
-                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_2022.pdf&embedded=true"
+                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$term.pdf&embedded=true"
                     goWeb(libraryURL)
                 })
             alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
@@ -263,7 +273,13 @@ class MainActivity : AppCompatActivity() {
         // 今学期の成績を押したとき
         val Button6 = findViewById<Button>(R.id.result)
         Button6.setOnClickListener{
-            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Results.aspx")
+            var resultURL = ""
+            resultURL = if (currentMonth.toInt() <= 3){
+                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=" + (currentYear.toInt()-1).toString()
+            }else{
+                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=$currentYear"
+            }
+            goWeb(resultURL)
         }
         // 全学期の成績を押したとき
         val resultAll = findViewById<Button>(R.id.resultAll)
