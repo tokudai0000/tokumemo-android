@@ -483,7 +483,7 @@ class MainActivity : AppCompatActivity() {
         val barCode = findViewById<ImageView>(R.id.barCode)
         val createBarCode = findViewById<Button>(R.id.studentCard)
         val homeScreen = findViewById<LinearLayout>(R.id.homeScreen)
-        var studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
+        val studentCardView = findViewById<ConstraintLayout>(R.id.studentCardView)
 //        生成ボタンのクリックイベントを設定
         createBarCode.setOnClickListener {
             studentCardView.visibility = View.VISIBLE
