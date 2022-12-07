@@ -98,6 +98,7 @@
             android:textColor="@color/blue"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_home_nav_24"
+
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/blue" />
@@ -113,6 +114,7 @@
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_article_24"
+
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/darkGray" />
@@ -128,6 +130,7 @@
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"
+
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/darkGray" />
@@ -143,6 +146,7 @@
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"
+
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/darkGray" />
@@ -315,13 +319,12 @@
                         <Button
                             android:id="@+id/academicAffairsSystem"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text0"
@@ -343,13 +346,12 @@
                         <Button
                             android:id="@+id/manaba"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_manaba_24"
-                            app:iconGravity="top" />
+                            app:icon="@drawable/ic_manaba_24" />
 
                         <TextView
                             android:id="@+id/text1"
@@ -371,13 +373,12 @@
                         <Button
                             android:id="@+id/email"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_email_24"
-                            app:iconGravity="top" />
+                            app:icon="@drawable/ic_baseline_email_24" />
 
                         <TextView
                             android:id="@+id/text2"
@@ -407,13 +408,13 @@
                         <Button
                             android:id="@+id/libraryCarender"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text3"
@@ -435,13 +436,13 @@
                         <Button
                             android:id="@+id/library"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text4"
@@ -463,13 +464,13 @@
                         <Button
                             android:id="@+id/libraryExtension"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text5"
@@ -499,13 +500,13 @@
                         <Button
                             android:id="@+id/seikyou"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_cafe_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text6"
@@ -527,13 +528,13 @@
                         <Button
                             android:id="@+id/timetable"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_time_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text7"
@@ -555,13 +556,13 @@
                         <Button
                             android:id="@+id/portal"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text8"
@@ -591,13 +592,13 @@
                         <Button
                             android:id="@+id/result"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_result_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text9"
@@ -619,13 +620,13 @@
                         <Button
                             android:id="@+id/resultAll"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_result_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text10"
@@ -647,13 +648,13 @@
                         <Button
                             android:id="@+id/syllabus"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_computer_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text11"
@@ -683,13 +684,13 @@
                         <Button
                             android:id="@+id/careerCenter"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text12"
@@ -711,13 +712,13 @@
                         <Button
                             android:id="@+id/univWebsite"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text13"
@@ -739,13 +740,13 @@
                         <Button
                             android:id="@+id/libraryHome"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text14"
@@ -775,13 +776,13 @@
                         <Button
                             android:id="@+id/bookPurchase"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text15"
@@ -803,13 +804,13 @@
                         <Button
                             android:id="@+id/attendance"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_manaba_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text16"
@@ -831,13 +832,13 @@
                         <Button
                             android:id="@+id/questionnaire"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_manaba_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text17"
@@ -867,13 +868,13 @@
                         <Button
                             android:id="@+id/LMS"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text18"
@@ -895,13 +896,13 @@
                         <Button
                             android:id="@+id/libraryHomeJosanjima"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text19"
@@ -923,13 +924,13 @@
                         <Button
                             android:id="@+id/libraryHomeKuramoto"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_baseline_local_library_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text20"
@@ -959,13 +960,13 @@
                         <Button
                             android:id="@+id/academicAffairsSystemPC"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_school_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text21"
@@ -987,13 +988,13 @@
                         <Button
                             android:id="@+id/manabaMob"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:icon="@drawable/ic_manaba_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text22"
@@ -1015,14 +1016,14 @@
                         <Button
                             android:id="@+id/dummy"
                             style="@style/Widget.AppCompat.Button"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             android:visibility="invisible"
                             app:icon="@drawable/ic_baseline_email_24"
-                            app:iconGravity="top" />
+                             />
 
                         <TextView
                             android:id="@+id/text23"
