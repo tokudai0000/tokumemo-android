@@ -26,6 +26,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_menu_24" />
 
+    <Button
+        android:id="@+id/back"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:autoText="false"
+        android:background="@color/gray"
+        android:backgroundTint="@color/gray"
+        android:gravity="top"
+        android:text="完了"
+        android:textSize="10sp"
+        app:icon="@drawable/ic_baseline_backspace_24"
+        app:iconSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/menuList"
         android:layout_width="256dp"

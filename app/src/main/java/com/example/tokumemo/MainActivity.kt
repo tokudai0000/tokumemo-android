@@ -17,7 +17,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -500,7 +499,7 @@ class MainActivity : AppCompatActivity() {
             } catch (_: Exception) {
             }
         }
-        val back = findViewById<Button>(R.id.backButton)
+        val back = findViewById<Button>(R.id.back)
         back.setOnClickListener{
             studentCardView.visibility = View.INVISIBLE
             homeScreen.visibility = View.VISIBLE

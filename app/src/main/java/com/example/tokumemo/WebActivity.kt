@@ -115,33 +115,8 @@ class WebActivity : AppCompatActivity() {
             }
         }
 
-        // メニューバー
-        val Home = findViewById<Button>(R.id.home)
-        Home.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            DataManager.canExecuteJavascript = true
-            finish()
-        }
-
-        val News = findViewById<Button>(R.id.news)
-        News.setOnClickListener{
-            val intent = Intent(this, NewsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val Review = findViewById<Button>(R.id.review)
-        Review.setOnClickListener{
-            val intent = Intent(this, ReviewActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val Others = findViewById<Button>(R.id.others)
-        Others.setOnClickListener{
-            val intent = Intent(this, OthersActivity::class.java)
-            startActivity(intent)
+        val back = findViewById<Button>(R.id.back)
+        back.setOnClickListener{
             finish()
         }
 
