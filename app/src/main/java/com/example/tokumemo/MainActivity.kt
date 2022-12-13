@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
-import com.example.tokumemo.flag.MainModel
+import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private var iconUrl = ""
     private var isConnectToNetwork = false
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Android戻るボタン無効
     }

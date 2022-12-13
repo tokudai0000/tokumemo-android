@@ -20,7 +20,7 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:exported="true"
             android:parentActivityName=".WebActivity">
             <meta-data
@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:exported="true">
 <!--            初期画面に設定-->
             <intent-filter>
@@ -37,11 +37,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebActivity" android:screenOrientation="portrait" />
-        <activity android:name=".NewsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ReviewActivity" android:screenOrientation="portrait" />
-        <activity android:name=".PasswordActivity" android:screenOrientation="portrait" />
-        <activity android:name=".OthersActivity" android:screenOrientation="portrait" />
+        <activity android:name=".WebActivity" android:screenOrientation="fullSensor" />
+        <activity android:name=".NewsActivity" android:screenOrientation="fullSensor" />
+        <activity android:name=".ReviewActivity" android:screenOrientation="fullSensor" />
+        <activity android:name=".PasswordActivity" android:screenOrientation="fullSensor" />
+        <activity android:name=".OthersActivity" android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

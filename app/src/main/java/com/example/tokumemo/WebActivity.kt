@@ -2,7 +2,6 @@ package com.example.tokumemo
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
@@ -17,10 +16,9 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.flag.MainModel
+import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
 
 class WebActivity : AppCompatActivity() {
