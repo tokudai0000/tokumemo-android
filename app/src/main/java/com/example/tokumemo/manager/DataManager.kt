@@ -8,5 +8,7 @@ public final class DataManager {
         /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう
         public var canExecuteJavascript = true
         var jsCount = 0
+        // 広告画像の数
+        var imageNumber = 2
     }
 }

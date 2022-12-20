@@ -191,13 +191,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/logo"
+                android:id="@+id/image"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="2"
                 android:backgroundTint="@color/orange"
+                android:scaleType="centerInside"
                 android:src="@mipmap/ic_launcher_foreground" />
 
             <LinearLayout

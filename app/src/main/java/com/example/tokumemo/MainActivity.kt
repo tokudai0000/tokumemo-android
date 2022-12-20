@@ -14,6 +14,7 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
@@ -25,6 +26,7 @@ import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
+import com.example.tokumemo.GetImage
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -93,6 +95,20 @@ class MainActivity : AppCompatActivity() {
             // 天気を取得
             getWeatherNews()
             initWeatherWebIcon()
+
+            // 広告画像貼り付け
+            var imageNum = 0
+            if (encryptedLoad("loginCount") != ""){
+                imageNum = encryptedLoad("loginCount").toInt()
+            }
+            if (imageNum < 100){
+                encryptedSave("loginCount", (imageNum+1).toString())
+            } else {
+                encryptedSave("loginCount", "0")
+            }
+            val imageButton = findViewById<ImageButton>(R.id.image)
+            val imageTask:GetImage = GetImage(imageButton)
+            imageTask.execute("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/" + (imageNum%DataManager.imageNumber).toString() + ".png")
 
             // 隠れWebビューここから（ここで先にログイン処理のみしておく）
             webView = findViewById(R.id.loginView)
@@ -469,7 +485,7 @@ class MainActivity : AppCompatActivity() {
     private fun initWeatherWebIcon(){
         weatherWebView = findViewById(R.id.weatherIcon)
         weatherWebView.settings.javaScriptEnabled = true
-        weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
+        weatherViewModel = ViewModelProvider(this)[MainModel::class.java]
         weatherWebView.webViewClient = WebViewClient()
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
         weatherWebView.settings.loadWithOverviewMode = true
