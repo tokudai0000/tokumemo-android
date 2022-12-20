@@ -33,9 +33,11 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +56,13 @@ class MainActivity : AppCompatActivity() {
 
     private var iconUrl = ""
     private var isConnectToNetwork = false
+
+    // 表示する広告番号
+    private var imageNum = 0
+    // 表示する広告のURL
+    private var adURL = ""
+    // 広告画像の数
+    var adNumber = ""
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -97,18 +106,18 @@ class MainActivity : AppCompatActivity() {
             initWeatherWebIcon()
 
             // 広告画像貼り付け
-            var imageNum = 0
-            if (encryptedLoad("loginCount") != ""){
-                imageNum = encryptedLoad("loginCount").toInt()
-            }
-            if (imageNum < 100){
-                encryptedSave("loginCount", (imageNum+1).toString())
-            } else {
-                encryptedSave("loginCount", "0")
+            if (encryptedLoad("imageNum") != ""){
+                imageNum = encryptedLoad("imageNum").toInt()
             }
             val imageButton = findViewById<ImageButton>(R.id.image)
-            val imageTask:GetImage = GetImage(imageButton)
-            imageTask.execute("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/" + (imageNum%DataManager.imageNumber).toString() + ".png")
+
+            Thread {
+                getAd()
+            }.start()
+
+            imageButton.setOnClickListener{
+                goWeb(adURL)
+            }
 
             // 隠れWebビューここから（ここで先にログイン処理のみしておく）
             webView = findViewById(R.id.loginView)
@@ -520,6 +529,33 @@ class MainActivity : AppCompatActivity() {
         back.setOnClickListener{
             studentCardView.visibility = View.INVISIBLE
             homeScreen.visibility = View.VISIBLE
+        }
+    }
+
+    // 広告URLの生成
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun getAd(): Job = GlobalScope.launch {
+        val imageButton = findViewById<ImageButton>(R.id.image)
+        val imageTask:GetImage = GetImage(imageButton)
+        imageTask.execute("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/$imageNum.png")
+
+        val url = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/$imageNum.txt")
+        val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+            url.openStream()
+        }))
+
+        val number = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")
+        val br2 = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+            number.openStream()
+        }))
+        // 所得した情報を文字列化
+        adURL = br.readText()
+        adNumber = br2.readText()
+
+        if (imageNum+1 < adNumber.replace("[\n\r]".toRegex(), "").toInt()){
+            encryptedSave("imageNum", (imageNum+1).toString())
+        }else{
+            encryptedSave("imageNum", "0")
         }
     }
 }
