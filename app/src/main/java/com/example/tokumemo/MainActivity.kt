@@ -26,18 +26,15 @@ import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
-import com.example.tokumemo.GetImage
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
-import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
