@@ -68,7 +68,7 @@ class OthersActivity : AppCompatActivity() {
         // お問い合わせを押したとき
         val inquiry = findViewById<Button>(R.id.inquiry)
         inquiry.setOnClickListener{
-            goWeb("https://docs.google.com/forms/d/e/1FAIpQLSdSGiPPUujUmtH70WO1rJZQ6vm8T9qVF_a99aO0gz5fjIMBhw/viewform")
+            goWeb("https://docs.google.com/forms/d/e/1FAIpQLScYRhlWY9IjqWOrvnWJ0bJ_yPQZpXy4PPShWb68092t2klzeg/viewform")
         }
 
         // 公式SNSを押したとき
