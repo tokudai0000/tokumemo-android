@@ -2,7 +2,6 @@ package com.example.tokumemo
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
@@ -13,15 +12,13 @@ import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.flag.MainModel
+import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
 
 class WebActivity : AppCompatActivity() {
@@ -32,8 +29,12 @@ class WebActivity : AppCompatActivity() {
     private var urlString = ""
     private var isConnectToNetwork = false
 
+//    class ViewHolderList (item: View) : RecyclerView.ViewHolder(item) {
+//        val characterList: TextView = item.findViewById(R.id.menuTitle)
+//    }
+
     @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
@@ -57,33 +58,63 @@ class WebActivity : AppCompatActivity() {
 //        }
         DataManager.jsCount = 0
 
-        // メニューバー
-        val Home = findViewById<Button>(R.id.home)
-        Home.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            DataManager.canExecuteJavascript = true
-            finish()
+        // 配列の生成
+        val menuArray = arrayOf("ホーム", " - 教務事務システム", " - manaba", " - メール", " - 時間割", "News", "Others")
+        val listView = findViewById<ListView>(R.id.menuList)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray)
+        listView.adapter = adapter
+
+        val menuButton = findViewById<ImageButton>(R.id.menuButton)
+        menuButton.setOnClickListener{
+            if (listView.visibility == View.GONE){
+                listView.visibility = View.VISIBLE
+            }else{
+                listView.visibility = View.GONE
+            }
         }
 
-        val News = findViewById<Button>(R.id.news)
-        News.setOnClickListener{
-            val intent = Intent(this, NewsActivity::class.java)
-            startActivity(intent)
-            finish()
+        listView.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> {//ホーム
+                    listView.visibility = View.GONE
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    DataManager.canExecuteJavascript = true
+                    finish()
+                }
+                1 -> {//教務システム
+                    listView.visibility = View.GONE
+                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
+                }
+                2 -> {//manaba
+                    listView.visibility = View.GONE
+                    webView.loadUrl("https://manaba.lms.tokushima-u.ac.jp/ct/home")
+                }
+                3 -> {//メール
+                    listView.visibility = View.GONE
+                    webView.loadUrl("https://outlook.office365.com/mail/")
+                }
+                4 -> {//時間割
+                    listView.visibility = View.GONE
+                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
+                }
+                5 -> {//ニュース
+                    listView.visibility = View.GONE
+                    val intent = Intent(this, NewsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                6 -> {//Others
+                    listView.visibility = View.GONE
+                    val intent = Intent(this, OthersActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
 
-        val Review = findViewById<Button>(R.id.review)
-        Review.setOnClickListener{
-            val intent = Intent(this, ReviewActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val Others = findViewById<Button>(R.id.others)
-        Others.setOnClickListener{
-            val intent = Intent(this, OthersActivity::class.java)
-            startActivity(intent)
+        val back = findViewById<Button>(R.id.back)
+        back.setOnClickListener{
             finish()
         }
 

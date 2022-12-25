@@ -1,7 +1,6 @@
-package com.example.tokumemo.flag
+package com.example.tokumemo.manager
 
 import androidx.lifecycle.ViewModel
-import com.example.tokumemo.manager.DataManager
 
 class MainModel: ViewModel() {
 

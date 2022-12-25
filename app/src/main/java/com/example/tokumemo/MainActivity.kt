@@ -14,17 +14,17 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
-import com.example.tokumemo.flag.MainModel
+import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -54,6 +54,14 @@ class MainActivity : AppCompatActivity() {
     private var iconUrl = ""
     private var isConnectToNetwork = false
 
+    // 表示する広告番号
+    private var imageNum = 0
+    // 表示する広告のURL
+    private var adURL = ""
+    // 広告画像の数
+    var adNumber = ""
+
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Android戻るボタン無効
     }
@@ -93,6 +101,20 @@ class MainActivity : AppCompatActivity() {
             // 天気を取得
             getWeatherNews()
             initWeatherWebIcon()
+
+            // 広告画像貼り付け
+            if (encryptedLoad("imageNum") != ""){
+                imageNum = encryptedLoad("imageNum").toInt()
+            }
+            val imageButton = findViewById<ImageButton>(R.id.image)
+
+            Thread {
+                getAd()
+            }.start()
+
+            imageButton.setOnClickListener{
+                goWeb(adURL)
+            }
 
             // 隠れWebビューここから（ここで先にログイン処理のみしておく）
             webView = findViewById(R.id.loginView)
@@ -469,7 +491,7 @@ class MainActivity : AppCompatActivity() {
     private fun initWeatherWebIcon(){
         weatherWebView = findViewById(R.id.weatherIcon)
         weatherWebView.settings.javaScriptEnabled = true
-        weatherViewModel = ViewModelProvider(this).get(MainModel::class.java)
+        weatherViewModel = ViewModelProvider(this)[MainModel::class.java]
         weatherWebView.webViewClient = WebViewClient()
         // 読み込み時にページ横幅を画面幅に無理やり合わせる
         weatherWebView.settings.loadWithOverviewMode = true
@@ -500,10 +522,37 @@ class MainActivity : AppCompatActivity() {
             } catch (_: Exception) {
             }
         }
-        val back = findViewById<Button>(R.id.backButton)
+        val back = findViewById<Button>(R.id.back)
         back.setOnClickListener{
             studentCardView.visibility = View.INVISIBLE
             homeScreen.visibility = View.VISIBLE
+        }
+    }
+
+    // 広告URLの生成
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun getAd(): Job = GlobalScope.launch {
+        val imageButton = findViewById<ImageButton>(R.id.image)
+        val imageTask:GetImage = GetImage(imageButton)
+        imageTask.execute("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/$imageNum.png")
+
+        val url = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/$imageNum.txt")
+        val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+            url.openStream()
+        }))
+
+        val number = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")
+        val br2 = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+            number.openStream()
+        }))
+        // 所得した情報を文字列化
+        adURL = br.readText()
+        adNumber = br2.readText()
+
+        if (imageNum+1 < adNumber.replace("[\n\r]".toRegex(), "").toInt()){
+            encryptedSave("imageNum", (imageNum+1).toString())
+        }else{
+            encryptedSave("imageNum", "0")
         }
     }
 }
