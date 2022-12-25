@@ -107,7 +107,6 @@ class MainActivity : AppCompatActivity() {
                 imageNum = encryptedLoad("imageNum").toInt()
             }
             val imageButton = findViewById<ImageButton>(R.id.image)
-
             Thread {
                 getAd()
             }.start()
@@ -121,12 +120,6 @@ class MainActivity : AppCompatActivity() {
             webView.settings.javaScriptEnabled = true
             viewModel = ViewModelProvider(this)[MainModel::class.java]
 
-            // テストユーザーの場合はjsCountを-1にしておく
-    //        if (encryptedLoad("KEY_studentNumber") == "0123456789" && encryptedLoad("KEY_password") == "0000"){
-    //            DataManager.jsCount = -1
-    //        } else {
-    //            DataManager.jsCount = 0
-    //        }
             DataManager.jsCount = 0
 
             // 検索アプリで開かない
@@ -139,11 +132,6 @@ class MainActivity : AppCompatActivity() {
                     when (viewModel.anyJavaScriptExecute(urlString)) {
                         MainModel.JavaScriptType.loginIAS -> {
 
-    //                        if (shouldShowPasswordView() && encryptedLoad("isFirstTime") == "false") {
-    //                            // パスワード登録画面を表示
-    //                            val intent = Intent(applicationContext, PasswordActivity::class.java)
-    //                            startActivity(intent)
-    //                        }
                             if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
                                 if (DataManager.jsCount < 2) {
                                     Log.i("jsCount", DataManager.jsCount.toString())
