@@ -32,6 +32,8 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.*
@@ -60,6 +62,8 @@ class MainActivity : AppCompatActivity() {
     private var adURL = ""
     // 広告画像の数
     var adNumber = ""
+    // 広告の有無
+    var adExistence = true
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -107,12 +111,13 @@ class MainActivity : AppCompatActivity() {
                 imageNum = encryptedLoad("imageNum").toInt()
             }
             val imageButton = findViewById<ImageButton>(R.id.image)
-            Thread {
-                getAd()
-            }.start()
+
+            getAd()
 
             imageButton.setOnClickListener{
-                goWeb(adURL)
+                if (adExistence){
+                    goWeb(adURL)
+                }
             }
 
             // 隠れWebビューここから（ここで先にログイン処理のみしておく）
@@ -519,28 +524,54 @@ class MainActivity : AppCompatActivity() {
 
     // 広告URLの生成
     @OptIn(DelicateCoroutinesApi::class)
-    private fun getAd(): Job = GlobalScope.launch {
+    private fun getAd(): Job = GlobalScope.launch getAd@{
         val imageButton = findViewById<ImageButton>(R.id.image)
         val imageTask:GetImage = GetImage(imageButton)
-        imageTask.execute("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/$imageNum.png")
+        var imageUrl: URL
+        try {
+            imageUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Image/$imageNum.png")
+            var urlConfirm = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                imageUrl.openStream()
+            }))
+        } catch (e: FileNotFoundException){
+            try {
+                encryptedSave("imageNum", "0")
+                imageNum = encryptedLoad("imageNum").toInt()
+                imageUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Image/0.png")
+                var urlConfirm = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                    imageUrl.openStream()
+                }))
+            } catch (e: FileNotFoundException){
+                encryptedSave("imageNum", "0")
+                adExistence = false
+                return@getAd
+            }
 
-        val url = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/$imageNum.txt")
-        val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
-            url.openStream()
-        }))
-
-        val number = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")
-        val br2 = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
-            number.openStream()
-        }))
-        // 所得した情報を文字列化
-        adURL = br.readText()
-        adNumber = br2.readText()
-
-        if (imageNum+1 < adNumber.replace("[\n\r]".toRegex(), "").toInt()){
-            encryptedSave("imageNum", (imageNum+1).toString())
-        }else{
-            encryptedSave("imageNum", "0")
         }
+        imageTask.execute(imageUrl.toString())
+        var urlUrl: URL
+        var br: BufferedReader
+        try {
+            urlUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/$imageNum.txt")
+            br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                urlUrl.openStream()
+            }))
+        } catch (e: FileNotFoundException){
+            try {
+                encryptedSave("imageNum", "0")
+                imageNum = encryptedLoad("imageNum").toInt()
+                urlUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/0.txt")
+                br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                    urlUrl.openStream()
+                }))
+            } catch (e: FileNotFoundException){
+                encryptedSave("imageNum", "0")
+                adExistence = false
+                return@getAd
+            }
+        }
+        // urlを文字列化
+        adURL = br.readText()
+        encryptedSave("imageNum", (imageNum+1).toString())
     }
 }
