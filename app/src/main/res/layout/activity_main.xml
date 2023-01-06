@@ -186,20 +186,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/image"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="2"
-                android:backgroundTint="@color/orange"
-                android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher_foreground" />
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <ImageButton
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/orange"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher_foreground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,1.414:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -297,8 +305,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -414,8 +421,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text3"
@@ -442,8 +448,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text4"
@@ -470,8 +475,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text5"
@@ -506,8 +510,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_cafe_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_cafe_24" />
 
                         <TextView
                             android:id="@+id/text6"
@@ -534,8 +537,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_time_24"
-                             />
+                            app:icon="@drawable/ic_baseline_time_24" />
 
                         <TextView
                             android:id="@+id/text7"
@@ -562,8 +564,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                             />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text8"
@@ -598,8 +599,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_result_24"
-                             />
+                            app:icon="@drawable/ic_baseline_result_24" />
 
                         <TextView
                             android:id="@+id/text9"
@@ -626,8 +626,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_result_24"
-                             />
+                            app:icon="@drawable/ic_baseline_result_24" />
 
                         <TextView
                             android:id="@+id/text10"
@@ -654,8 +653,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_computer_24"
-                             />
+                            app:icon="@drawable/ic_baseline_computer_24" />
 
                         <TextView
                             android:id="@+id/text11"
@@ -690,8 +688,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                             />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text12"
@@ -718,8 +715,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                             />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text13"
@@ -746,8 +742,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text14"
@@ -782,8 +777,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text15"
@@ -810,8 +804,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_manaba_24"
-                             />
+                            app:icon="@drawable/ic_manaba_24" />
 
                         <TextView
                             android:id="@+id/text16"
@@ -838,8 +831,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_manaba_24"
-                             />
+                            app:icon="@drawable/ic_manaba_24" />
 
                         <TextView
                             android:id="@+id/text17"
@@ -874,8 +866,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                             />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text18"
@@ -902,8 +893,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text19"
@@ -930,8 +920,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_baseline_local_library_24"
-                             />
+                            app:icon="@drawable/ic_baseline_local_library_24" />
 
                         <TextView
                             android:id="@+id/text20"
@@ -966,8 +955,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_school_24"
-                             />
+                            app:icon="@drawable/ic_school_24" />
 
                         <TextView
                             android:id="@+id/text21"
@@ -994,8 +982,7 @@
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            app:icon="@drawable/ic_manaba_24"
-                             />
+                            app:icon="@drawable/ic_manaba_24" />
 
                         <TextView
                             android:id="@+id/text22"
@@ -1023,8 +1010,7 @@
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             android:visibility="invisible"
-                            app:icon="@drawable/ic_baseline_email_24"
-                             />
+                            app:icon="@drawable/ic_baseline_email_24" />
 
                         <TextView
                             android:id="@+id/text23"
