@@ -199,9 +199,9 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        val others = findViewById<Button>(R.id.others)
-        others.setOnClickListener{
-            val intent = Intent(this, OthersActivity::class.java)
+        val settings = findViewById<Button>(R.id.settings)
+        settings.setOnClickListener{
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -24,8 +24,8 @@
         android:autoText="false"
         android:background="@color/gray"
         android:backgroundTint="@color/gray"
-        android:gravity="top"
-        android:text="団体一覧トップ"
+        android:gravity="center"
+        android:text="一覧トップ"
         android:textSize="10sp"
         app:iconSize="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
@@ -113,13 +113,13 @@
             app:iconTint="@color/blue" />
 
         <Button
-            android:id="@+id/others"
+            android:id="@+id/settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:text="Others"
+            android:text="Settings"
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"

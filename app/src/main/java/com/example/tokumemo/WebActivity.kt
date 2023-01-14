@@ -59,7 +59,7 @@ class WebActivity : AppCompatActivity() {
         DataManager.jsCount = 0
 
         // 配列の生成
-        val menuArray = arrayOf("ホーム", " - 教務事務システム", " - manaba", " - メール", " - 時間割", "News", "Others")
+        val menuArray = arrayOf("ホーム", " - 教務事務システム", " - manaba", " - メール", " - 時間割", "News", "Settings")
         val listView = findViewById<ListView>(R.id.menuList)
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray)
         listView.adapter = adapter
@@ -104,9 +104,9 @@ class WebActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                6 -> {//Others
+                6 -> {//Settings
                     listView.visibility = View.GONE
-                    val intent = Intent(this, OthersActivity::class.java)
+                    val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.tokumemo.manager.DataManager
 
-class OthersActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         // Android戻るボタン無効
@@ -21,7 +21,7 @@ class OthersActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_others)
+        setContentView(R.layout.activity_settings)
 
         val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
         val title = findViewById<TextView>(R.id.settings_title)
@@ -51,9 +51,9 @@ class OthersActivity : AppCompatActivity() {
             finish()
         }
 
-        val others = findViewById<Button>(R.id.others)
-        others.setOnClickListener{
-            val intent = Intent(this, OthersActivity::class.java)
+        val settings = findViewById<Button>(R.id.settings)
+        settings.setOnClickListener{
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             finish()
         }

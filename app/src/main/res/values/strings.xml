@@ -6,7 +6,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="password_dialog">
     トクメモ＋に保存されている学籍番号もしくはパスワードに誤りがある可能性があります。\n
-    Others ⇒ パスワード設定 から正しいパスワードを設定してください。
+    Settings ⇒ パスワード設定 から正しいパスワードを設定してください。
     </string>
     <string name="settings_text">このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。</string>
     <string name="password_text">

@@ -41,7 +41,7 @@
         <activity android:name=".NewsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ClubListActivity" android:screenOrientation="portrait" />
         <activity android:name=".PasswordActivity" android:screenOrientation="portrait" />
-        <activity android:name=".OthersActivity" android:screenOrientation="portrait" />
+        <activity android:name=".SettingsActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>
