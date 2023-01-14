@@ -32,7 +32,6 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.net.URL
@@ -178,30 +177,30 @@ class MainActivity : AppCompatActivity() {
         createStudentCard()
 
         // メニューバー
-        val Home = findViewById<Button>(R.id.home)
-        Home.setOnClickListener{
+        val home = findViewById<Button>(R.id.home)
+        home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             DataManager.canExecuteJavascript = true
             finish()
         }
 
-        val News = findViewById<Button>(R.id.news)
-        News.setOnClickListener{
+        val news = findViewById<Button>(R.id.news)
+        news.setOnClickListener{
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Review = findViewById<Button>(R.id.review)
-        Review.setOnClickListener{
-            val intent = Intent(this, ReviewActivity::class.java)
+        val clubList = findViewById<Button>(R.id.review)
+        clubList.setOnClickListener{
+            val intent = Intent(this, ClubListActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Others = findViewById<Button>(R.id.others)
-        Others.setOnClickListener{
+        val others = findViewById<Button>(R.id.others)
+        others.setOnClickListener{
             val intent = Intent(this, OthersActivity::class.java)
             startActivity(intent)
             finish()

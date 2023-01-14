@@ -73,7 +73,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:text="Review"
+            android:text="ClubList"
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_star_border_24"

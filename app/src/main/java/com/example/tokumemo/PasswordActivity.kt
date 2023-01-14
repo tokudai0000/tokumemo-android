@@ -6,18 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.manager.DataManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 
 class PasswordActivity : AppCompatActivity() {
 
@@ -27,29 +21,29 @@ class PasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_password)
 
         // メニューバー
-        val Home = findViewById<Button>(R.id.home)
-        Home.setOnClickListener{
+        val home = findViewById<Button>(R.id.home)
+        home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val News = findViewById<Button>(R.id.news)
-        News.setOnClickListener{
+        val news = findViewById<Button>(R.id.news)
+        news.setOnClickListener{
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Review = findViewById<Button>(R.id.review)
-        Review.setOnClickListener{
-            val intent = Intent(this, ReviewActivity::class.java)
+        val clubList = findViewById<Button>(R.id.review)
+        clubList.setOnClickListener{
+            val intent = Intent(this, ClubListActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Others = findViewById<Button>(R.id.others)
-        Others.setOnClickListener{
+        val others = findViewById<Button>(R.id.others)
+        others.setOnClickListener{
             val intent = Intent(this, OthersActivity::class.java)
             startActivity(intent)
             finish()
