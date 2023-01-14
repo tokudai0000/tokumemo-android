@@ -11,7 +11,7 @@
         android:layout_height="54dp"
         android:background="@color/blue"
         android:gravity="center"
-        android:text="ClubList"
+        android:text="部活・サークル紹介"
         android:textColor="@color/white"
         android:textStyle="bold"
         tools:ignore="MissingConstraints" />
@@ -107,7 +107,7 @@
             android:text="ClubList"
             android:textColor="@color/blue"
             android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_star_border_24"
+            app:icon="@drawable/ic_baseline_sports_handball_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/blue" />
