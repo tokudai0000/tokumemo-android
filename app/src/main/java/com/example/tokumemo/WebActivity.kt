@@ -20,6 +20,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
+import java.io.FileNotFoundException
 
 class WebActivity : AppCompatActivity() {
 
@@ -121,8 +122,8 @@ class WebActivity : AppCompatActivity() {
         if (isConnectToNetwork){
             webViewSetup()
         } else {
-            val text = findViewById<TextView>(R.id.text)
-            text.visibility = View.VISIBLE
+            val noNetWorkText = findViewById<TextView>(R.id.noNetWorkText)
+            noNetWorkText.visibility = View.VISIBLE
         }
     }
 

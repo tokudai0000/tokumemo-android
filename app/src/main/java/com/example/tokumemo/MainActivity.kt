@@ -435,44 +435,49 @@ class MainActivity : AppCompatActivity() {
         val currentTime = sdf.format(Date())
 
         if (currentTime != encryptedLoad("dateTime")) {
-            val sdfForText = SimpleDateFormat("yyyy/MM/dd")
-            val currentTimeForText = sdfForText.format(Date())
-            // 結果を初期化
-            resultText = ""
-            // APIを使う際に必要なKEY
-            val API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
-            // URL。場所と言語・API_KEYを添付
-            val API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
-                    "units=metric&" +
-                    "lat=" + placeLat + "&" +
-                    "lon=" + placeLon + "&" +
-                    "lang=" + "ja" + "&" +
-                    "APPID=" + API_KEY
-            val url = URL(API_URL)
-            //APIから情報を取得する.
-            val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
-                url.openStream()
-            }))
-            // 所得した情報を文字列化
-            val str = br.readText()
-            //json形式のデータとして識別
-            val json = JSONObject(str)
+            try {
+                val sdfForText = SimpleDateFormat("yyyy/MM/dd")
+                val currentTimeForText = sdfForText.format(Date())
+                // 結果を初期化
+                resultText = ""
+                // APIを使う際に必要なKEY
+                val API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+                // URL。場所と言語・API_KEYを添付
+                val API_URL = "https://api.openweathermap.org/data/2.5/weather?" +
+                        "units=metric&" +
+                        "lat=" + placeLat + "&" +
+                        "lon=" + placeLon + "&" +
+                        "lang=" + "ja" + "&" +
+                        "APPID=" + API_KEY
+                val url = URL(API_URL)
+                //APIから情報を取得する.
+                val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                    url.openStream()
+                }))
+                // 所得した情報を文字列化
+                val str = br.readText()
+                //json形式のデータとして識別
+                val json = JSONObject(str)
 
-            // 天気を取得
-            val weatherList = json.getJSONArray("weather").getJSONObject(0)
-            // unixtime形式で保持されている時刻を取得
-            val time = json.getString("dt")
-            // 天気を取得
-            val descriptionText = weatherList.getString("description")
-            val icon = weatherList.getString("icon")
-            val temp = json.getJSONObject("main").getString("temp")
-            encryptedSave("dateTime", unixTimeChange(time))
-            encryptedSave("dateTimeForText", currentTimeForText)
-            encryptedSave("descriptionText", descriptionText)
-            encryptedSave("icon", icon)
-            encryptedSave("temp", temp)
-            Log.i("weatherList: ", weatherList.toString())
-            resultText += "$descriptionText\n$temp℃"
+                // 天気を取得
+                val weatherList = json.getJSONArray("weather").getJSONObject(0)
+                // unixtime形式で保持されている時刻を取得
+                val time = json.getString("dt")
+                // 天気を取得
+                val descriptionText = weatherList.getString("description")
+                val icon = weatherList.getString("icon")
+                val temp = json.getJSONObject("main").getString("temp")
+                encryptedSave("dateTime", unixTimeChange(time))
+                encryptedSave("dateTimeForText", currentTimeForText)
+                encryptedSave("descriptionText", descriptionText)
+                encryptedSave("icon", icon)
+                encryptedSave("temp", temp)
+                Log.i("weatherList: ", weatherList.toString())
+                resultText += "$descriptionText\n$temp℃"
+            } catch (e: Exception) {
+                resultText += "申し訳ございません。\n現在天気を取得できません。"
+            }
+
         } else {
             resultText += "${encryptedLoad("descriptionText")}\n${encryptedLoad("temp")}℃"
         }
@@ -529,6 +534,7 @@ class MainActivity : AppCompatActivity() {
         var imageUrl: URL
         try {
             imageUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Image/$imageNum.png")
+            // URLが有効かを確かめるだけ
             var urlConfirm = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
                 imageUrl.openStream()
             }))
@@ -537,6 +543,7 @@ class MainActivity : AppCompatActivity() {
                 encryptedSave("imageNum", "0")
                 imageNum = encryptedLoad("imageNum").toInt()
                 imageUrl = URL("https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Image/0.png")
+                // URLが有効かを確かめるだけ
                 var urlConfirm = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
                     imageUrl.openStream()
                 }))

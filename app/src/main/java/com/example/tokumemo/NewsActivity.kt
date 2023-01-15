@@ -13,9 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tokumemo.databinding.ActivityNewsBinding
 import com.example.tokumemo.manager.DataManager
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -109,36 +107,42 @@ class NewsActivity : AppCompatActivity() {
     }
 
     // ニュース取得
+    @OptIn(DelicateCoroutinesApi::class)
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getNews(): Job = GlobalScope.launch {
         titleArray = arrayOf("ニュースを取得できませんでした。「NEWS」をもう一度タップして更新してください。")
-        linkArray = arrayOf("")
-        // 結果を初期化
-        // URL。場所と言語・API_KEYを添付
-        val API_URL = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
-        val url = URL(API_URL)
-        //APIから情報を取得する.
-        val br = BufferedReader(InputStreamReader(url.openStream()))
-        // 所得した情報を文字列化
-        val str = br.readText()
-        //json形式のデータとして識別
-        val json = JSONObject(str)
+        linkArray = arrayOf("") // 結果を初期化
+        try {
+            // URL。場所と言語・API_KEYを添付
+            val API_URL = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
+            val url = URL(API_URL)
+            //APIから情報を取得する.
+            val br = BufferedReader(InputStreamReader(withContext(Dispatchers.IO) {
+                url.openStream()
+            }))
+            // 所得した情報を文字列化
+            val str = br.readText()
+            //json形式のデータとして識別
+            val json = JSONObject(str)
 
-        val itemListNum = json.getJSONArray("items").length()
+            val itemListNum = json.getJSONArray("items").length()
 
-        if (itemListNum >= 1) {
-            for (i in 0..itemListNum - 1) {
-                val itemList = json.getJSONArray("items").getJSONObject(i.toInt())
-                val title = itemList.getString("title")
-                val link = itemList.getString("link")
-                if (i == 1){
-                    titleArray[0] = title
-                    linkArray[0] = link
-                }else{
-                    titleArray += title
-                    linkArray += link
+            if (itemListNum >= 1) {
+                for (i in 0 until itemListNum) {
+                    val itemList = json.getJSONArray("items").getJSONObject(i.toInt())
+                    val title = itemList.getString("title")
+                    val link = itemList.getString("link")
+                    if (i == 1){
+                        titleArray[0] = title
+                        linkArray[0] = link
+                    }else{
+                        titleArray += title
+                        linkArray += link
+                    }
                 }
             }
+        } catch (e: Exception) {
+            titleArray[0] = "申し訳ございません、現在ニュースを取得できません。"
         }
     }
 

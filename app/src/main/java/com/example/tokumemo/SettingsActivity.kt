@@ -14,6 +14,7 @@ import com.example.tokumemo.manager.DataManager
 
 class SettingsActivity : AppCompatActivity() {
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Android戻るボタン無効
     }
@@ -27,7 +28,6 @@ class SettingsActivity : AppCompatActivity() {
         val title = findViewById<TextView>(R.id.settings_title)
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
         val back = findViewById<Button>(R.id.back)
-        val aboutThisAppText = findViewById<ScrollView>(R.id.aboutThisAppText)
 
         // メニューバー
         val home = findViewById<Button>(R.id.home)
@@ -86,13 +86,13 @@ class SettingsActivity : AppCompatActivity() {
         // 利用規約を押したとき
         val termsOfService = findViewById<Button>(R.id.termsOfService)
         termsOfService.setOnClickListener{
-            goWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt")
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt")
         }
 
         // プライバシーポリシーを押したとき
         val privacyPolicy = findViewById<Button>(R.id.privacyPolicy)
         privacyPolicy.setOnClickListener{
-            goWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt")
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt")
         }
 
         // ソースコードを押したとき
@@ -104,17 +104,7 @@ class SettingsActivity : AppCompatActivity() {
         // このアプリについてを押したとき
         val aboutThisApp = findViewById<Button>(R.id.aboutThisApp)
         aboutThisApp.setOnClickListener{
-            bar.visibility = View.VISIBLE
-            aboutThisAppText.visibility = View.VISIBLE
-        }
-
-        // 戻るボタンを押したとき
-        back.setOnClickListener{
-            settingsScreen.visibility = View.VISIBLE
-            title.visibility = View.VISIBLE
-
-            aboutThisAppText.visibility = View.INVISIBLE
-            bar.visibility = View.INVISIBLE
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TokumemoExplanation.txt")
         }
     }
 
