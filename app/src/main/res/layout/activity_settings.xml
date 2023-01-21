@@ -6,64 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/gray">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/backBar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:translationZ="2dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/back"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:autoText="false"
-            android:background="@color/gray"
-            android:backgroundTint="@color/gray"
-            android:gravity="top"
-            android:text="完了"
-            app:icon="@drawable/ic_baseline_backspace_24"
-            app:iconSize="32dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:id="@+id/aboutThisAppText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="54dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        android:translationZ="2dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/about_this_app" />
-        </LinearLayout>
-    </ScrollView>
-
     <LinearLayout
         android:id="@+id/nav"
         android:layout_width="match_parent"
@@ -110,22 +52,22 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:text="Review"
+            android:text="ClubList"
             android:textColor="@color/darkGray"
             android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_star_border_24"
+            app:icon="@drawable/ic_baseline_sports_handball_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/darkGray" />
 
         <Button
-            android:id="@+id/others"
+            android:id="@+id/settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/blue"
-            android:text="Others"
+            android:text="Settings"
             android:textColor="@color/blue"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"

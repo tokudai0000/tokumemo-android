@@ -98,22 +98,22 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:text="Review"
+            android:text="ClubList"
             android:textColor="@color/darkGray"
             android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_star_border_24"
+            app:icon="@drawable/ic_baseline_sports_handball_24"
             app:iconGravity="top"
             app:iconPadding="-2dp"
             app:iconTint="@color/darkGray" />
 
         <Button
-            android:id="@+id/others"
+            android:id="@+id/settings"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
-            android:text="Others"
+            android:text="Settings"
             android:textColor="@color/darkGray"
             android:textSize="8sp"
             app:icon="@drawable/ic_baseline_manage_accounts_24"
@@ -123,7 +123,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/noNetWorkText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ネットが接続されていません"

@@ -16,6 +16,6 @@
     <item
         android:id="@+id/others"
         android:icon="@drawable/ic_baseline_manage_accounts_24"
-        android:title="Others" />
+        android:title="Settings" />
 
 </menu>

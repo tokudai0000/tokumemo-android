@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.tokumemo.manager.DataManager
 
-class OthersActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Android戻るボタン無効
     }
@@ -21,39 +22,38 @@ class OthersActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_others)
+        setContentView(R.layout.activity_settings)
 
         val settingsScreen = findViewById<LinearLayout>(R.id.settings_screen)
         val title = findViewById<TextView>(R.id.settings_title)
         val bar = findViewById<ConstraintLayout>(R.id.backBar)
         val back = findViewById<Button>(R.id.back)
-        val aboutThisAppText = findViewById<ScrollView>(R.id.aboutThisAppText)
 
         // メニューバー
-        val Home = findViewById<Button>(R.id.home)
-        Home.setOnClickListener{
+        val home = findViewById<Button>(R.id.home)
+        home.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val News = findViewById<Button>(R.id.news)
-        News.setOnClickListener{
+        val news = findViewById<Button>(R.id.news)
+        news.setOnClickListener{
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Review = findViewById<Button>(R.id.review)
-        Review.setOnClickListener{
-            val intent = Intent(this, ReviewActivity::class.java)
+        val clubList = findViewById<Button>(R.id.review)
+        clubList.setOnClickListener{
+            val intent = Intent(this, ClubListActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val Others = findViewById<Button>(R.id.others)
-        Others.setOnClickListener{
-            val intent = Intent(this, OthersActivity::class.java)
+        val settings = findViewById<Button>(R.id.settings)
+        settings.setOnClickListener{
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -86,13 +86,13 @@ class OthersActivity : AppCompatActivity() {
         // 利用規約を押したとき
         val termsOfService = findViewById<Button>(R.id.termsOfService)
         termsOfService.setOnClickListener{
-            goWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt")
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt")
         }
 
         // プライバシーポリシーを押したとき
         val privacyPolicy = findViewById<Button>(R.id.privacyPolicy)
         privacyPolicy.setOnClickListener{
-            goWeb("https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt")
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt")
         }
 
         // ソースコードを押したとき
@@ -104,17 +104,7 @@ class OthersActivity : AppCompatActivity() {
         // このアプリについてを押したとき
         val aboutThisApp = findViewById<Button>(R.id.aboutThisApp)
         aboutThisApp.setOnClickListener{
-            bar.visibility = View.VISIBLE
-            aboutThisAppText.visibility = View.VISIBLE
-        }
-
-        // 戻るボタンを押したとき
-        back.setOnClickListener{
-            settingsScreen.visibility = View.VISIBLE
-            title.visibility = View.VISIBLE
-
-            aboutThisAppText.visibility = View.INVISIBLE
-            bar.visibility = View.INVISIBLE
+            goWeb("https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TokumemoExplanation.txt")
         }
     }
 
