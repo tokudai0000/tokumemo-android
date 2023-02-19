@@ -77,7 +77,7 @@ class PasswordActivity : AppCompatActivity() {
                 // 入力値が正常なデータか検証
 
                 studentNumber.isEmpty() -> {
-                    message.text = "学籍番号が空欄です"
+                    message.text = "学生番号が空欄です"
                 }
 
                 // cアカウントはエラー
@@ -85,10 +85,10 @@ class PasswordActivity : AppCompatActivity() {
                     message.text = "学籍番号を入力してください(例：1234567890)"
                 }
 
-                // 桁数
-                studentNumber.length != 10 -> {
-                    message.text = "10桁の学籍番号を入力してください(例：1234567890)"
-                }
+//                // 桁数（先生は9桁）
+//                studentNumber.length != 9 && studentNumber.length != 10 -> {
+//                    message.text = "桁数が正しくありません"
+//                }
 
                 passwordText.isEmpty() -> {
                     message.text = "パスワードが空欄です"
@@ -96,7 +96,12 @@ class PasswordActivity : AppCompatActivity() {
 
                 else -> {
                     // 登録
-                    val cAccount = "c" + studentNumber.dropLast(1)
+                    var cAccount = ""
+                    cAccount = if (studentNumber.length == 10) {
+                        "c" + studentNumber.dropLast(1)
+                    }else {
+                        "c$studentNumber"
+                    }
                     encryptedSave("KEY_cAccount", cAccount)
                     encryptedSave("KEY_studentNumber", studentNumber)
                     encryptedSave("KEY_password", passwordText)
