@@ -59,4 +59,12 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // MaterialComponentsのBottomNavigationを使うため
+    implementation 'com.google.android.material:material:1.8.0'
+
+    // Navigationを使うため
+    def nav_version = '2.0.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
