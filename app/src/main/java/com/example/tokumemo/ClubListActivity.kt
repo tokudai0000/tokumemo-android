@@ -69,7 +69,7 @@ class ClubListActivity : AppCompatActivity() {
             finish()
         }
 
-        val clubList = findViewById<Button>(R.id.review)
+        val clubList = findViewById<Button>(R.id.clubLists)
         clubList.setOnClickListener{
             val intent = Intent(this, ClubListActivity::class.java)
             startActivity(intent)
