@@ -21,11 +21,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.databinding.ActivityMainBinding
 import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -69,297 +75,301 @@ class MainActivity : AppCompatActivity() {
         // Android戻るボタン無効
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled", "SimpleDateFormat")
+//    @RequiresApi(Build.VERSION_CODES.N)
+//    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val currentYearSdf = SimpleDateFormat("yyyy")
-        val currentYear = currentYearSdf.format(Date())
-        val currentMonthSdf = SimpleDateFormat("MM")
-        val currentMonth = currentMonthSdf.format(Date())
+        val bottom_navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val navController = findNavController(R.id.nav_host_fragment)
+        setupWithNavController(bottom_navigation, navController)
 
-        // ネット接続できているか
-        // ConnectivityManagerの取得
-        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        // NetworkCapabilitiesの取得
-        // 引数にcm.activeNetworkを指定し、現在アクティブなデフォルトネットワークに対応するNetworkオブジェクトを渡している
-        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
-        if (capabilities != null) {
-            isConnectToNetwork = true
-        }
-
-        // 初回起動時に利用規約ダイアログを表示
-        if (encryptedLoad("isFirstTime") != "false") {
-            val dialog = FirstDialogFragment()
-            dialog.show(supportFragmentManager, "simple")
-            encryptedSave("isFirstTime", "false")
-        }
-        if (isConnectToNetwork){
-            // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
-
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-            // 天気を取得
-            getWeatherNews()
-            initWeatherWebIcon()
-
-            // 広告画像貼り付け
-            if (encryptedLoad("imageNum") != ""){
-                imageNum = encryptedLoad("imageNum").toInt()
-            }
-            val imageButton = findViewById<ImageButton>(R.id.image)
-
-            getAd()
-
-            imageButton.setOnClickListener{
-                if (adExistence){
-                    goWeb(adURL)
-                }
-            }
-
-            // 隠れWebビューここから（ここで先にログイン処理のみしておく）
-            webView = findViewById(R.id.loginView)
-            webView.settings.javaScriptEnabled = true
-            viewModel = ViewModelProvider(this)[MainModel::class.java]
-
-            DataManager.jsCount = 0
-
-            // 検索アプリで開かない
-            webView.webViewClient = object : WebViewClient(){
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    if (url != null) {
-                        urlString = url
-                    }
-
-                    when (viewModel.anyJavaScriptExecute(urlString)) {
-                        MainModel.JavaScriptType.loginIAS -> {
-
-                            if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
-                                if (DataManager.jsCount < 2) {
-                                    Log.i("jsCount", DataManager.jsCount.toString())
-                                    DataManager.jsCount += 1
-                                    val cAccount = encryptedLoad("KEY_cAccount")
-                                    val password = encryptedLoad("KEY_password")
-
-                                    webView.evaluateJavascript(
-                                        "document.getElementById('username').value= '$cAccount'",
-                                        null
-                                    )
-                                    webView.evaluateJavascript(
-                                        "document.getElementById('password').value= '$password'",
-                                        null
-                                    )
-                                    webView.evaluateJavascript(
-                                        "document.getElementsByClassName('form-element form-button')[0].click();",
-                                        null
-                                    )
-                                }
-                            }
-                        }
-                        else -> {}
-                    }
-
-                    super.onPageFinished(view, url)
-
-                    // ついでに天気情報を更新しておく
-                    binding.weatherText.text = resultText
-                    iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
-                    weatherWebView.loadUrl(iconUrl)
-                }
-            }
-            webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
-            // 隠れWebビューここまで
-        }
-        
-        // 学生証バーコード生成
-        createStudentCard()
-
-        // メニューバー
-//        val home = findViewById<Button>(R.id.home)
-//        home.setOnClickListener{
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            DataManager.canExecuteJavascript = true
-//            finish()
+//        val currentYearSdf = SimpleDateFormat("yyyy")
+//        val currentYear = currentYearSdf.format(Date())
+//        val currentMonthSdf = SimpleDateFormat("MM")
+//        val currentMonth = currentMonthSdf.format(Date())
+//
+//        // ネット接続できているか
+//        // ConnectivityManagerの取得
+//        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        // NetworkCapabilitiesの取得
+//        // 引数にcm.activeNetworkを指定し、現在アクティブなデフォルトネットワークに対応するNetworkオブジェクトを渡している
+//        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+//        if (capabilities != null) {
+//            isConnectToNetwork = true
 //        }
 //
-//        val news = findViewById<Button>(R.id.news)
-//        news.setOnClickListener{
-//            val intent = Intent(this, NewsActivity::class.java)
-//            startActivity(intent)
-//            finish()
+//        // 初回起動時に利用規約ダイアログを表示
+//        if (encryptedLoad("isFirstTime") != "false") {
+//            val dialog = FirstDialogFragment()
+//            dialog.show(supportFragmentManager, "simple")
+//            encryptedSave("isFirstTime", "false")
+//        }
+//        if (isConnectToNetwork){
+//            // 天気情報表示準備(実際に表示するのは隠れWebビューのonPageFinishedの最後あたり)
+//
+//            binding = ActivityMainBinding.inflate(layoutInflater)
+//            setContentView(binding.root)
+//            // 天気を取得
+//            getWeatherNews()
+//            initWeatherWebIcon()
+//
+//            // 広告画像貼り付け
+//            if (encryptedLoad("imageNum") != ""){
+//                imageNum = encryptedLoad("imageNum").toInt()
+//            }
+//            val imageButton = findViewById<ImageButton>(R.id.image)
+//
+//            getAd()
+//
+//            imageButton.setOnClickListener{
+//                if (adExistence){
+//                    goWeb(adURL)
+//                }
+//            }
+//
+//            // 隠れWebビューここから（ここで先にログイン処理のみしておく）
+//            webView = findViewById(R.id.loginView)
+//            webView.settings.javaScriptEnabled = true
+//            viewModel = ViewModelProvider(this)[MainModel::class.java]
+//
+//            DataManager.jsCount = 0
+//
+//            // 検索アプリで開かない
+//            webView.webViewClient = object : WebViewClient(){
+//                override fun onPageFinished(view: WebView?, url: String?) {
+//                    if (url != null) {
+//                        urlString = url
+//                    }
+//
+//                    when (viewModel.anyJavaScriptExecute(urlString)) {
+//                        MainModel.JavaScriptType.loginIAS -> {
+//
+//                            if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
+//                                if (DataManager.jsCount < 2) {
+//                                    Log.i("jsCount", DataManager.jsCount.toString())
+//                                    DataManager.jsCount += 1
+//                                    val cAccount = encryptedLoad("KEY_cAccount")
+//                                    val password = encryptedLoad("KEY_password")
+//
+//                                    webView.evaluateJavascript(
+//                                        "document.getElementById('username').value= '$cAccount'",
+//                                        null
+//                                    )
+//                                    webView.evaluateJavascript(
+//                                        "document.getElementById('password').value= '$password'",
+//                                        null
+//                                    )
+//                                    webView.evaluateJavascript(
+//                                        "document.getElementsByClassName('form-element form-button')[0].click();",
+//                                        null
+//                                    )
+//                                }
+//                            }
+//                        }
+//                        else -> {}
+//                    }
+//
+//                    super.onPageFinished(view, url)
+//
+//                    // ついでに天気情報を更新しておく
+//                    binding.weatherText.text = resultText
+//                    iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
+//                    weatherWebView.loadUrl(iconUrl)
+//                }
+//            }
+//            webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
+//            // 隠れWebビューここまで
 //        }
 //
-//        val clubList = findViewById<Button>(R.id.review)
-//        clubList.setOnClickListener{
-//            val intent = Intent(this, ClubListActivity::class.java)
-//            startActivity(intent)
-//            finish()
+//        // 学生証バーコード生成
+//        createStudentCard()
+//
+//        // メニューバー
+////        val home = findViewById<Button>(R.id.home)
+////        home.setOnClickListener{
+////            val intent = Intent(this, MainActivity::class.java)
+////            startActivity(intent)
+////            DataManager.canExecuteJavascript = true
+////            finish()
+////        }
+////
+////        val news = findViewById<Button>(R.id.news)
+////        news.setOnClickListener{
+////            val intent = Intent(this, NewsActivity::class.java)
+////            startActivity(intent)
+////            finish()
+////        }
+////
+////        val clubList = findViewById<Button>(R.id.review)
+////        clubList.setOnClickListener{
+////            val intent = Intent(this, ClubListActivity::class.java)
+////            startActivity(intent)
+////            finish()
+////        }
+////
+////        val settings = findViewById<Button>(R.id.settings)
+////        settings.setOnClickListener{
+////            val intent = Intent(this, SettingsActivity::class.java)
+////            startActivity(intent)
+////            finish()
+////        }
+//
+//        // 天気を押したとき
+//        val weather = findViewById<Button>(R.id.weatherButton)
+//        val weatherIcon = findViewById<Button>(R.id.weatherButton2)
+//        weather.setOnClickListener{
+//            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
+//        }
+//        weatherIcon.setOnClickListener{
+//            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
 //        }
 //
-//        val settings = findViewById<Button>(R.id.settings)
-//        settings.setOnClickListener{
-//            val intent = Intent(this, SettingsActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-
-        // 天気を押したとき
-        val weather = findViewById<Button>(R.id.weatherButton)
-        val weatherIcon = findViewById<Button>(R.id.weatherButton2)
-        weather.setOnClickListener{
-            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
-        }
-        weatherIcon.setOnClickListener{
-            goWeb("https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100")
-        }
-
-//        // 教務システムを押したとき
-//        val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
-//        Button2.setOnClickListener{
-//            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
-//        }
-//        // マナバを押したとき
-//        val Button1 = findViewById<Button>(R.id.manaba)
-//        Button1.setOnClickListener{
-//            goWeb("https://manaba.lms.tokushima-u.ac.jp/ct/home")
-//        }
-//        // メールを押したとき
-//        val Button3 = findViewById<Button>(R.id.email)
-//        Button3.setOnClickListener{
-//            goWeb("https://outlook.office365.com/mail/")
-//        }
-//        // 図書館カレンダーを押したとき
-//        val libraryCarender = findViewById<Button>(R.id.libraryCarender)
-//        libraryCarender.setOnClickListener{
-//            val term = if (currentMonth.toInt() <= 3){
-//                (currentYear.toInt()-1).toString()
-//            }else{
-//                currentYear
-//            }
-//            // ダイアログの表示
-//            val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this, R.style.FirstDialogStyle)
-//            alertDialog.setTitle("図書館の所在地")
-////            alertDialog.setMessage("メッセージ")
-//            alertDialog.setPositiveButton("常三島",
-//                DialogInterface.OnClickListener { dialog, whichButton ->
-//                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$term.pdf&embedded=true"
-//                    goWeb(libraryURL)
-//                })
-//            alertDialog.setNegativeButton("蔵本",
-//                DialogInterface.OnClickListener { dialog, whichButton ->
-//                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$term.pdf&embedded=true"
-//                    goWeb(libraryURL)
-//                })
-//            alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
-//                // キャンセルの処理
-//            })
-//            alertDialog.show()
-//        }
-//
-//        // 図書検索を押したとき
-//        val Button4 = findViewById<Button>(R.id.library)
-//        Button4.setOnClickListener{
-//            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/top")
-//        }
-//        // 図書貸出延長を押したとき
-//        val libraryExtension = findViewById<Button>(R.id.libraryExtension)
-//        libraryExtension.setOnClickListener{
-//            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings")
-//        }
-//        // 生協を押したとき
-//        val Button5 = findViewById<Button>(R.id.seikyou)
-//        Button5.setOnClickListener{
-//            goWeb("https://vsign.jp/tokudai/maruco")
-//        }
-//        // 時間割を押したとき
-//        val Button7 = findViewById<Button>(R.id.timetable)
-//        Button7.setOnClickListener{
-//            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
-//        }
-//        // 総合認証ポータルを押したとき
-//        val portal = findViewById<Button>(R.id.portal)
-//        portal.setOnClickListener{
-//            goWeb("https://my.ait.tokushima-u.ac.jp/portal/")
-//        }
-//        // 今学期の成績を押したとき
-//        val Button6 = findViewById<Button>(R.id.result)
-//        Button6.setOnClickListener{
-//            var resultURL = ""
-//            resultURL = if (currentMonth.toInt() <= 3){
-//                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=" + (currentYear.toInt()-1).toString()
-//            }else{
-//                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=$currentYear"
-//            }
-//            goWeb(resultURL)
-//        }
-//        // 全学期の成績を押したとき
-//        val resultAll = findViewById<Button>(R.id.resultAll)
-//        resultAll.setOnClickListener{
-//            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx")
-//        }
-//        // シラバスを押したとき
-//        val Button8 = findViewById<Button>(R.id.syllabus)
-//        Button8.setOnClickListener{
-//            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
-//        }
-//        // キャリアセンターを押したとき
-//        val Button0 = findViewById<Button>(R.id.careerCenter)
-//        Button0.setOnClickListener{
-//            goWeb("https://www.tokudai-syusyoku.com/index.php")
-//        }
-//        // 大学サイトを押したとき
-//        val univWebsite = findViewById<Button>(R.id.univWebsite)
-//        univWebsite.setOnClickListener{
-//            goWeb("https://www.tokushima-u.ac.jp/")
-//        }
-//        // 図書館サイトを押したとき
-//        val libraryHome = findViewById<Button>(R.id.libraryHome)
-//        libraryHome.setOnClickListener{
-//                goWeb("https://opac.lib.tokushima-u.ac.jp/drupal/")
-//            }
-//        // 本購入を押したとき
-//        val bookPurchase = findViewById<Button>(R.id.bookPurchase)
-//        bookPurchase.setOnClickListener{
-//                goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new")
-//            }
-//        // 出欠を押したとき
-//        val attendance = findViewById<Button>(R.id.attendance)
-//        attendance.setOnClickListener{
-//                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx")
-//            }
-//        // 授業アンケートを押したとき
-//        val questionnaire = findViewById<Button>(R.id.questionnaire)
-//        questionnaire.setOnClickListener{
-//                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx")
-//            }
-//        // LMS一覧を押したとき
-//        val LMS = findViewById<Button>(R.id.LMS)
-//        LMS.setOnClickListener{
-//                goWeb("https://uls01.ulc.tokushima-u.ac.jp/info/index.html")
-//            }
-//        // 常三島図書館HPを押したとき
-//        val libraryHomeJosanjima = findViewById<Button>(R.id.libraryHomeJosanjima)
-//        libraryHomeJosanjima.setOnClickListener{
-//                goWeb("https://www.lib.tokushima-u.ac.jp/")
-//            }
-//        // 蔵本図書館HPを押したとき
-//        val libraryHomeKuramoto = findViewById<Button>(R.id.libraryHomeKuramoto)
-//        libraryHomeKuramoto.setOnClickListener{
-//                goWeb("https://www.lib.tokushima-u.ac.jp/kura.shtml")
-//            }
-//        // 教務システム_PCを押したとき
-//        val academicAffairsSystemPC = findViewById<Button>(R.id.academicAffairsSystemPC)
-//        academicAffairsSystemPC.setOnClickListener{
-//                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx")
-//            }
-//        // マナバ_モバイルを押したとき
-//        val manabaMob = findViewById<Button>(R.id.manabaMob)
-//        manabaMob.setOnClickListener{
-//                goWeb("https://manaba.lms.tokushima-u.ac.jp/s/home_summary")
-//            }
+////        // 教務システムを押したとき
+////        val Button2 = findViewById<Button>(R.id.academicAffairsSystem)
+////        Button2.setOnClickListener{
+////            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
+////        }
+////        // マナバを押したとき
+////        val Button1 = findViewById<Button>(R.id.manaba)
+////        Button1.setOnClickListener{
+////            goWeb("https://manaba.lms.tokushima-u.ac.jp/ct/home")
+////        }
+////        // メールを押したとき
+////        val Button3 = findViewById<Button>(R.id.email)
+////        Button3.setOnClickListener{
+////            goWeb("https://outlook.office365.com/mail/")
+////        }
+////        // 図書館カレンダーを押したとき
+////        val libraryCarender = findViewById<Button>(R.id.libraryCarender)
+////        libraryCarender.setOnClickListener{
+////            val term = if (currentMonth.toInt() <= 3){
+////                (currentYear.toInt()-1).toString()
+////            }else{
+////                currentYear
+////            }
+////            // ダイアログの表示
+////            val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this, R.style.FirstDialogStyle)
+////            alertDialog.setTitle("図書館の所在地")
+//////            alertDialog.setMessage("メッセージ")
+////            alertDialog.setPositiveButton("常三島",
+////                DialogInterface.OnClickListener { dialog, whichButton ->
+////                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$term.pdf&embedded=true"
+////                    goWeb(libraryURL)
+////                })
+////            alertDialog.setNegativeButton("蔵本",
+////                DialogInterface.OnClickListener { dialog, whichButton ->
+////                    val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$term.pdf&embedded=true"
+////                    goWeb(libraryURL)
+////                })
+////            alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
+////                // キャンセルの処理
+////            })
+////            alertDialog.show()
+////        }
+////
+////        // 図書検索を押したとき
+////        val Button4 = findViewById<Button>(R.id.library)
+////        Button4.setOnClickListener{
+////            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/top")
+////        }
+////        // 図書貸出延長を押したとき
+////        val libraryExtension = findViewById<Button>(R.id.libraryExtension)
+////        libraryExtension.setOnClickListener{
+////            goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings")
+////        }
+////        // 生協を押したとき
+////        val Button5 = findViewById<Button>(R.id.seikyou)
+////        Button5.setOnClickListener{
+////            goWeb("https://vsign.jp/tokudai/maruco")
+////        }
+////        // 時間割を押したとき
+////        val Button7 = findViewById<Button>(R.id.timetable)
+////        Button7.setOnClickListener{
+////            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
+////        }
+////        // 総合認証ポータルを押したとき
+////        val portal = findViewById<Button>(R.id.portal)
+////        portal.setOnClickListener{
+////            goWeb("https://my.ait.tokushima-u.ac.jp/portal/")
+////        }
+////        // 今学期の成績を押したとき
+////        val Button6 = findViewById<Button>(R.id.result)
+////        Button6.setOnClickListener{
+////            var resultURL = ""
+////            resultURL = if (currentMonth.toInt() <= 3){
+////                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=" + (currentYear.toInt()-1).toString()
+////            }else{
+////                "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=$currentYear"
+////            }
+////            goWeb(resultURL)
+////        }
+////        // 全学期の成績を押したとき
+////        val resultAll = findViewById<Button>(R.id.resultAll)
+////        resultAll.setOnClickListener{
+////            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx")
+////        }
+////        // シラバスを押したとき
+////        val Button8 = findViewById<Button>(R.id.syllabus)
+////        Button8.setOnClickListener{
+////            goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
+////        }
+////        // キャリアセンターを押したとき
+////        val Button0 = findViewById<Button>(R.id.careerCenter)
+////        Button0.setOnClickListener{
+////            goWeb("https://www.tokudai-syusyoku.com/index.php")
+////        }
+////        // 大学サイトを押したとき
+////        val univWebsite = findViewById<Button>(R.id.univWebsite)
+////        univWebsite.setOnClickListener{
+////            goWeb("https://www.tokushima-u.ac.jp/")
+////        }
+////        // 図書館サイトを押したとき
+////        val libraryHome = findViewById<Button>(R.id.libraryHome)
+////        libraryHome.setOnClickListener{
+////                goWeb("https://opac.lib.tokushima-u.ac.jp/drupal/")
+////            }
+////        // 本購入を押したとき
+////        val bookPurchase = findViewById<Button>(R.id.bookPurchase)
+////        bookPurchase.setOnClickListener{
+////                goWeb("https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new")
+////            }
+////        // 出欠を押したとき
+////        val attendance = findViewById<Button>(R.id.attendance)
+////        attendance.setOnClickListener{
+////                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx")
+////            }
+////        // 授業アンケートを押したとき
+////        val questionnaire = findViewById<Button>(R.id.questionnaire)
+////        questionnaire.setOnClickListener{
+////                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx")
+////            }
+////        // LMS一覧を押したとき
+////        val LMS = findViewById<Button>(R.id.LMS)
+////        LMS.setOnClickListener{
+////                goWeb("https://uls01.ulc.tokushima-u.ac.jp/info/index.html")
+////            }
+////        // 常三島図書館HPを押したとき
+////        val libraryHomeJosanjima = findViewById<Button>(R.id.libraryHomeJosanjima)
+////        libraryHomeJosanjima.setOnClickListener{
+////                goWeb("https://www.lib.tokushima-u.ac.jp/")
+////            }
+////        // 蔵本図書館HPを押したとき
+////        val libraryHomeKuramoto = findViewById<Button>(R.id.libraryHomeKuramoto)
+////        libraryHomeKuramoto.setOnClickListener{
+////                goWeb("https://www.lib.tokushima-u.ac.jp/kura.shtml")
+////            }
+////        // 教務システム_PCを押したとき
+////        val academicAffairsSystemPC = findViewById<Button>(R.id.academicAffairsSystemPC)
+////        academicAffairsSystemPC.setOnClickListener{
+////                goWeb("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx")
+////            }
+////        // マナバ_モバイルを押したとき
+////        val manabaMob = findViewById<Button>(R.id.manabaMob)
+////        manabaMob.setOnClickListener{
+////                goWeb("https://manaba.lms.tokushima-u.ac.jp/s/home_summary")
+////            }
     }
 
     // パスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
