@@ -5,17 +5,17 @@
 
     <fragment android:id="@+id/home"
         android:name="com.example.tokumemo.Home"
-        android:label="Fragment4"/>
+        android:label="Fragment1"/>
 
     <fragment android:id="@+id/news"
         android:name="com.example.tokumemo.News"
-        android:label="Fragment1"/>
+        android:label="Fragment2"/>
 
     <fragment android:id="@+id/clubLists"
         android:name="com.example.tokumemo.ClubLists"
-        android:label="Fragment2"/>
+        android:label="Fragment3"/>
 
     <fragment android:id="@+id/settings"
         android:name="com.example.tokumemo.Settings"
-        android:label="Fragment3"/>
+        android:label="Fragment4"/>
 </navigation>
