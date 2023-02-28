@@ -78,12 +78,13 @@ class MainActivity : AppCompatActivity() {
 //    @RequiresApi(Build.VERSION_CODES.N)
 //    @SuppressLint("MissingInflatedId", "SetJavaScriptEnabled", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    super.onCreate(savedInstanceState)
 
-        val bottom_navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        val navController = findNavController(R.id.nav_host_fragment)
-        setupWithNavController(bottom_navigation, navController)
+    setContentView(R.layout.activity_main)
+
+    val bottom_navigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
+    val navController = findNavController(R.id.nav_host_fragment)
+    setupWithNavController(bottom_navigation, navController)
 
 //        val currentYearSdf = SimpleDateFormat("yyyy")
 //        val currentYear = currentYearSdf.format(Date())
