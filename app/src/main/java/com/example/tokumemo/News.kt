@@ -26,16 +26,16 @@ class News : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_news, container, false)
 
         // 配列の生成
-        titleArray = arrayOf("リスト１", "リスト２", "リスト３", "リスト４", "リスト５",)
+//        titleArray = arrayOf("リスト１", "リスト２", "リスト３", "リスト４", "リスト５",)
 
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.list_view)
 
         // ArrayAdapterの生成
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, titleArray)
+//        val adapter = ArrayAdapter<String>(requireContext(), R.layout.item_layout, titleArray)
 
         // ListViewに、生成したAdapterを設定
-        listView.adapter = adapter
+//        listView.adapter = adapter
 
         Log.d("PRINT", "Applemode中はオレンジボタンは無効1")
 
@@ -51,7 +51,12 @@ class News : Fragment() {
 
 
                     for(i in 0..items.length() - 1 )
-                        titleArray += items.getJSONObject(i)["title"].toString()
+                        if (i == 0) {
+                            titleArray[0] = items.getJSONObject(0)["title"].toString()
+                        }else{
+                            titleArray += items.getJSONObject(i)["title"].toString()
+                        }
+//                        titleArray.add()
 //                    Log.d("PRINT", result.get().obj().toString())
 //                    Log.d("PRINT", result.get().obj().get("items").toString())
 //                    Log.d("PRINT", items.getJSONObject(i)["title"].toString())
@@ -66,10 +71,11 @@ class News : Fragment() {
                 }
             }
             Log.d("PRINT", "Fin")
-            listView.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, titleArray)
+            listView.adapter = ArrayAdapter<String>(requireContext(), R.layout.item_layout, titleArray)
         }
 
         return view
     }
 
 }
+
