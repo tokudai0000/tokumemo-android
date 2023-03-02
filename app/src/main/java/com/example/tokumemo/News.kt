@@ -12,6 +12,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class News : Fragment() {
@@ -44,10 +45,16 @@ class News : Fragment() {
         url.httpGet().responseJson { request, response, result ->
             when (result) {
                 is Result.Success -> {
-                    result.get().obj()
                     Log.d("PRINT", "Success")
+                    titleArray = arrayOf("")
+                    val items:JSONArray = result.get().obj().getJSONArray("items")
 
 
+                    for(i in 0..items.length() - 1 )
+                        titleArray += items.getJSONObject(i)["title"].toString()
+//                    Log.d("PRINT", result.get().obj().toString())
+//                    Log.d("PRINT", result.get().obj().get("items").toString())
+//                    Log.d("PRINT", items.getJSONObject(i)["title"].toString())
                 }
                 is Result.Failure -> {
                     val ex = result.getException()
@@ -59,8 +66,9 @@ class News : Fragment() {
                 }
             }
             Log.d("PRINT", "Fin")
+            listView.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, titleArray)
         }
-        
+
         return view
     }
 
