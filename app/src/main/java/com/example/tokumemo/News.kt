@@ -41,6 +41,8 @@ class News : Fragment() {
                     for(i in 0..items.length() - 1 )
                         titleArray.add(Data().apply {
                             title = items.getJSONObject(i)["title"].toString()
+                            pubDate = items.getJSONObject(i)["pubDate"].toString()
+                            link = items.getJSONObject(i)["link"].toString()
                         })
 
                 }

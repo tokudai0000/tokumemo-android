@@ -18,9 +18,11 @@ class CustomAdapter(context: Context, val items: ArrayList<Data>) : ArrayAdapter
 
         val item = items[position]
         val textView = view?.findViewById<TextView>(R.id.item_title)
+        val pubDate = view?.findViewById<TextView>(R.id.item_text)
         textView?.text = item.title
+        pubDate?.text = item.pubDate
 
         return view!!
     }
-    
+
 }
