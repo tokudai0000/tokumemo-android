@@ -151,8 +151,6 @@ class NewsActivity : AppCompatActivity() {
         val intent = Intent(this, WebActivity::class.java)
         // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
         intent.putExtra("PAGE_KEY",pageId)
-        // 自動入力のフラグを上げる
-        DataManager.canExecuteJavascript = true
         startActivity(intent)
     }
 }
