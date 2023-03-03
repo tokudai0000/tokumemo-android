@@ -60,64 +60,64 @@ class WebActivity : AppCompatActivity() {
         DataManager.jsCount = 0
 
         // 配列の生成
-        val menuArray = arrayOf("ホーム", " - 教務事務システム", " - manaba", " - メール", " - 時間割", "News", "Settings")
-        val listView = findViewById<ListView>(R.id.menuList)
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray)
-        listView.adapter = adapter
+//        val menuArray = arrayOf("ホーム", " - 教務事務システム", " - manaba", " - メール", " - 時間割", "News", "Settings")
+//        val listView = findViewById<ListView>(R.id.menuList)
+//        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray)
+//        listView.adapter = adapter
 
-        val menuButton = findViewById<ImageButton>(R.id.menuButton)
-        menuButton.setOnClickListener{
-            if (listView.visibility == View.GONE){
-                listView.visibility = View.VISIBLE
-            }else{
-                listView.visibility = View.GONE
-            }
-        }
-
-        listView.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 -> {//ホーム
-                    listView.visibility = View.GONE
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    DataManager.canExecuteJavascript = true
-                    finish()
-                }
-                1 -> {//教務システム
-                    listView.visibility = View.GONE
-                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
-                }
-                2 -> {//manaba
-                    listView.visibility = View.GONE
-                    webView.loadUrl("https://manaba.lms.tokushima-u.ac.jp/ct/home")
-                }
-                3 -> {//メール
-                    listView.visibility = View.GONE
-                    webView.loadUrl("https://outlook.office365.com/mail/")
-                }
-                4 -> {//時間割
-                    listView.visibility = View.GONE
-                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
-                }
-                5 -> {//ニュース
-                    listView.visibility = View.GONE
-                    val intent = Intent(this, NewsActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                6 -> {//Settings
-                    listView.visibility = View.GONE
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-
-        val back = findViewById<Button>(R.id.back)
-        back.setOnClickListener{
-            finish()
-        }
+//        val menuButton = findViewById<ImageButton>(R.id.menuButton)
+//        menuButton.setOnClickListener{
+//            if (listView.visibility == View.GONE){
+//                listView.visibility = View.VISIBLE
+//            }else{
+//                listView.visibility = View.GONE
+//            }
+//        }
+//
+//        listView.setOnItemClickListener { parent, view, position, id ->
+//            when (position) {
+//                0 -> {//ホーム
+//                    listView.visibility = View.GONE
+//                    val intent = Intent(this, MainActivity::class.java)
+//                    startActivity(intent)
+//                    DataManager.canExecuteJavascript = true
+//                    finish()
+//                }
+//                1 -> {//教務システム
+//                    listView.visibility = View.GONE
+//                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
+//                }
+//                2 -> {//manaba
+//                    listView.visibility = View.GONE
+//                    webView.loadUrl("https://manaba.lms.tokushima-u.ac.jp/ct/home")
+//                }
+//                3 -> {//メール
+//                    listView.visibility = View.GONE
+//                    webView.loadUrl("https://outlook.office365.com/mail/")
+//                }
+//                4 -> {//時間割
+//                    listView.visibility = View.GONE
+//                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx")
+//                }
+//                5 -> {//ニュース
+//                    listView.visibility = View.GONE
+//                    val intent = Intent(this, NewsActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                6 -> {//Settings
+//                    listView.visibility = View.GONE
+//                    val intent = Intent(this, SettingsActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            }
+//        }
+//
+//        val back = findViewById<Button>(R.id.back)
+//        back.setOnClickListener{
+//            finish()
+//        }
 
         if (isConnectToNetwork){
             webViewSetup()
