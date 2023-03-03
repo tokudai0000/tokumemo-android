@@ -1,6 +1,7 @@
 package com.example.tokumemo
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.SimpleAdapter
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
@@ -17,14 +19,14 @@ import org.json.JSONObject
 
 class News : Fragment() {
 
-    private lateinit var titleArray: Array<String>
+//    private lateinit var titleArray: arrayListOf<Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_news, container, false)
-
+        var titleArray = arrayListOf<Data>()
         // 配列の生成
 //        titleArray = arrayOf("リスト１", "リスト２", "リスト３", "リスト４", "リスト５",)
 
@@ -46,16 +48,19 @@ class News : Fragment() {
             when (result) {
                 is Result.Success -> {
                     Log.d("PRINT", "Success")
-                    titleArray = arrayOf("")
+//                    titleArray = arrayOf("")
                     val items:JSONArray = result.get().obj().getJSONArray("items")
 
-
                     for(i in 0..items.length() - 1 )
-                        if (i == 0) {
-                            titleArray[0] = items.getJSONObject(0)["title"].toString()
-                        }else{
-                            titleArray += items.getJSONObject(i)["title"].toString()
-                        }
+                        titleArray.add(Data().apply {
+                            title = items.getJSONObject(i)["title"].toString()
+                        })
+
+//                        if (i == 0) {
+//                            titleArray[0] = items.getJSONObject(0)["title"].toString()
+//                        }else{
+//                            titleArray += items.getJSONObject(i)["title"].toString()
+//                        }
 //                        titleArray.add()
 //                    Log.d("PRINT", result.get().obj().toString())
 //                    Log.d("PRINT", result.get().obj().get("items").toString())
@@ -71,7 +76,10 @@ class News : Fragment() {
                 }
             }
             Log.d("PRINT", "Fin")
-            listView.adapter = ArrayAdapter<String>(requireContext(), R.layout.item_layout, titleArray)
+//            listView.adapter = ArrayAdapter<Data>(requireContext(), R.layout.item_layout, titleArray)
+            Log.d("PRINT", titleArray[0].title.toString())
+//            listView.adapter = SimpleAdapter(requireContext(), titleArray, R.layout.item_layout)
+            listView.adapter = CustomAdapter(requireContext(), titleArray)
         }
 
         return view
