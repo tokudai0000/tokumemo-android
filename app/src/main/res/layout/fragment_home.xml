@@ -7,6 +7,7 @@
     android:background="@color/back_ground_gray_color">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -142,44 +143,14 @@
 
     </LinearLayout>
 
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="409dp"-->
-    <!--        android:layout_height="200dp"-->
-    <!--        android:autoSizeMaxTextSize="300dp"-->
-    <!--        android:layout_marginStart="12dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:layout_marginEnd="12dp"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/view"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1" />-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/image"-->
-    <!--            android:src="@mipmap/ic_launcher_foreground"-->
-    <!--            android:scaleType="fitCenter"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:background="@color/gray_color"-->
-    <!--            app:layout_constraintDimensionRatio="h,1.414:1"/>-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/view2"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1" />-->
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="200dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:orientation="vertical">-->
-
-    <!--        </LinearLayout>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menu_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
