@@ -36,10 +36,10 @@ enum class MenuListItemType {
 }
 
 data class MenuData(
-    var title: String
-//    var id: MenuListItemType,
-//    var image: String,
-//    var url: String?,
-//    var isLockIconExists: Boolean,
-//    var isHiddon: Boolean
+    var title: String,
+    var id: MenuListItemType,
+    var image: android.graphics.drawable.Drawable,
+    var url: String?,
+    var isLockIconExists: Boolean,
+    var isHiddon: Boolean
 )
