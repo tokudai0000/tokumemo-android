@@ -21,14 +21,34 @@ class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter
         return ViewHolder(view)
     }
 
+    // 1. リスナを格納する変数を定義（lateinitで初期化を遅らせている）
+    private lateinit var listener: OnBookCellClickListener
+
+    // 2. インターフェースを作成
+    interface  OnBookCellClickListener {
+        fun onItemClick(book: MenuData)
+    }
+
+    // 3. リスナーをセット
+    fun setOnBookCellClickListener(listener: OnBookCellClickListener) {
+        // 定義した変数listenerに実行したい処理を引数で渡す（BookListFragmentで渡している）
+        this.listener = listener
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val field = fields[position]
         holder.fieldName.text = field.title
         holder.fieldImage.setImageResource(field.image)
-//        holder.fieldPrefecture.text = field.
+
+        // 4. セルのクリックイベントにリスナをセット
+        holder.itemView.setOnClickListener {
+            // セルがクリックされた時にインターフェースの処理が実行される
+            listener.onItemClick(field)
+        }
     }
 
     override fun getItemCount(): Int {
         return fields.size
     }
+
 }
