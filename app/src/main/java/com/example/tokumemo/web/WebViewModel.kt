@@ -1,9 +1,8 @@
-package com.example.tokumemo.manager
+package com.example.tokumemo.web
 
 import androidx.lifecycle.ViewModel
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import com.example.tokumemo.WebActivity
+import com.example.tokumemo.model.DataManager
+import com.example.tokumemo.model.Url
 
 class WebViewModel: ViewModel() {
     // Safariで開く用として、現在表示しているURLを保存する

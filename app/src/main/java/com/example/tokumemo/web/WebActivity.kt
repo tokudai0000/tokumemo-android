@@ -1,27 +1,21 @@
-package com.example.tokumemo
+package com.example.tokumemo.web
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.manager.MainModel
-import com.example.tokumemo.manager.DataManager
-import com.example.tokumemo.manager.WebViewModel
-import java.io.FileNotFoundException
+import com.example.tokumemo.PasswordActivity
+import com.example.tokumemo.R
+import com.example.tokumemo.RequireCorrectPasswordDialog
+import com.example.tokumemo.model.DataManager
 
 class WebActivity : AppCompatActivity() {
 
@@ -180,7 +174,7 @@ class WebActivity : AppCompatActivity() {
 
         val prefs = EncryptedSharedPreferences.create(
             applicationContext,
-            WebActivity.PREF_NAME,
+            PREF_NAME,
             mainKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

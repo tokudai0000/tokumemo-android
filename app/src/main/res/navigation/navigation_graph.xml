@@ -4,18 +4,18 @@
     app:startDestination="@id/home">
 
     <fragment android:id="@+id/home"
-        android:name="com.example.tokumemo.HomeFragment"
-        android:label="Fragment1"/>
+        android:name="com.example.tokumemo.main.home.HomeFragment"
+        android:label="Home"/>
 
     <fragment android:id="@+id/news"
-        android:name="com.example.tokumemo.NewsFragment"
-        android:label="Fragment2"/>
+        android:name="com.example.tokumemo.main.news.NewsFragment"
+        android:label="News"/>
 
     <fragment android:id="@+id/clubLists"
-        android:name="com.example.tokumemo.ClubListsFragment"
-        android:label="Fragment3"/>
+        android:name="com.example.tokumemo.main.clubLists.ClubListsFragment"
+        android:label="ClubLists"/>
 
     <fragment android:id="@+id/settings"
-        android:name="com.example.tokumemo.Settings"
-        android:label="Fragment4"/>
+        android:name="com.example.tokumemo.main.settings.SettingsFragment"
+        android:label="Settings"/>
 </navigation>

@@ -12,7 +12,8 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tokumemo.databinding.ActivityNewsBinding
-import com.example.tokumemo.manager.DataManager
+import com.example.tokumemo.main.MainActivity
+import com.example.tokumemo.web.WebActivity
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.io.BufferedReader

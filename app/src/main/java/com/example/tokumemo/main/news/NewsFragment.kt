@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.main.news
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import com.example.tokumemo.R
+import com.example.tokumemo.web.WebActivity
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.*

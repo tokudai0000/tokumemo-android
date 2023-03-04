@@ -1,10 +1,11 @@
-package com.example.tokumemo
+package com.example.tokumemo.main.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.tokumemo.R
 
 class SettingsFragment : Fragment() {
     override fun onCreateView(

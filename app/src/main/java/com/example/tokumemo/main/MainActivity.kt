@@ -1,9 +1,10 @@
-package com.example.tokumemo
+package com.example.tokumemo.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.example.tokumemo.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

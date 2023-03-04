@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.main.clubLists
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.tokumemo.R
 
 class ClubListsFragment : Fragment() {
 
