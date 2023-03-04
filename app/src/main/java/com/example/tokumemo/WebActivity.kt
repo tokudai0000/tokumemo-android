@@ -20,12 +20,13 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.tokumemo.manager.MainModel
 import com.example.tokumemo.manager.DataManager
+import com.example.tokumemo.manager.WebViewModel
 import java.io.FileNotFoundException
 
 class WebActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private lateinit var viewModel: MainModel
+    private lateinit var viewModel: WebViewModel
 
     private var urlString = ""
     private var isConnectToNetwork = false
@@ -44,6 +45,7 @@ class WebActivity : AppCompatActivity() {
             webView.reload()
         }
 
+        viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
 
     }
@@ -60,7 +62,12 @@ class WebActivity : AppCompatActivity() {
     private fun webViewSetup() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
-        viewModel = ViewModelProvider(this)[MainModel::class.java]
+        // 読み込み時にページ横幅を画面幅に無理やり合わせる
+//        webView.settings.loadWithOverviewMode = true
+//        // ワイドビューポートへの対応
+//        webView.settings.useWideViewPort = true
+//        // 拡大縮小対応
+//        webView.settings.builtInZoomControls = true
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
@@ -81,10 +88,16 @@ class WebActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 urlString = url!! // fatalError
 
-
                 when (viewModel.anyJavaScriptExecute(urlString)) {
+                    WebViewModel.JavaScriptType.skipReminder -> {
+
+                    }
+                    WebViewModel.JavaScriptType.syllabus -> {
+
+                    }
+
                     // ログイン画面に飛ばされた場合
-                    MainModel.JavaScriptType.loginIAS -> {
+                    WebViewModel.JavaScriptType.loginIAS -> {
 
                         if (shouldShowPasswordView()) {
                             // パスワード登録画面を表示
@@ -120,33 +133,33 @@ class WebActivity : AppCompatActivity() {
                             Toast.makeText(applicationContext, "トクメモ＋ゲストユーザーなのでパスワード自動入力を行いませんでした。", Toast.LENGTH_LONG).show()
                         }
                     }
-                    else -> {}
+                    WebViewModel.JavaScriptType.loginOutlook -> {
+
+                    }
+                    WebViewModel.JavaScriptType.loginCareerCenter -> {
+
+                    }
+                    else -> {
+
+                    }
                 }
                 super.onPageFinished(view, url)
             }
         }
-
-        // 読み込み時にページ横幅を画面幅に無理やり合わせる
-        webView.settings.loadWithOverviewMode = true
-        // ワイドビューポートへの対応
-        webView.settings.useWideViewPort = true
-        // 拡大縮小対応
-        webView.settings.builtInZoomControls = true
-
         webViewLoadUrl()
     }
 
-    // 端末の戻るボタンが押されたとき
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        // 戻るボタンが押される かつ webviewで前に戻ることができるとき
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            // 前のページに戻る
-            webView.goBack()
-            return true
-        }
-
-        return super.onKeyDown(keyCode, event)
-    }
+//    // 端末の戻るボタンが押されたとき
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        // 戻るボタンが押される かつ webviewで前に戻ることができるとき
+//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+//            // 前のページに戻る
+//            webView.goBack()
+//            return true
+//        }
+//
+//        return super.onKeyDown(keyCode, event)
+//    }
 
     // ハスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {

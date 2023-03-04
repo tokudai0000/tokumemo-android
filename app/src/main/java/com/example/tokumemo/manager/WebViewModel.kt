@@ -1,6 +1,9 @@
 package com.example.tokumemo.manager
 
 import androidx.lifecycle.ViewModel
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.example.tokumemo.WebActivity
 
 class WebViewModel: ViewModel() {
     // Safariで開く用として、現在表示しているURLを保存する
@@ -12,59 +15,59 @@ class WebViewModel: ViewModel() {
 
     /// タイムアウトのURLであるか判定
     public fun isTimeout(urlStr: String): Boolean {
-        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
+        return urlStr == Url.universityServiceTimeOut.urlString || urlStr == Url.universityServiceTimeOut2.urlString
     }
 
     /// Safariで開きたいURLであるか判定
-    public func shouldOpenSafari(urlStr: String) -> Bool {
-        for url in safariUrls {
-            if urlStr.contains(url) {
-                return true
-            }
-        }
-        return false
-    }
+//    public func shouldOpenSafari(urlStr: String) -> Bool {
+//        for url in safariUrls {
+//            if urlStr.contains(url) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
 
     /// JavaScriptを動かす種類
-    enum JavaScriptType {
-        case skipReminder // アンケート解答の催促画面
-        case syllabus // シラバスの検索画面
-        case loginIAS // 大学統合認証システム(IAS)のログイン画面
-        case loginOutlook // メール(Outlook)のログイン画面
-        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
-        case none // JavaScriptを動かす必要がない場合
+    enum class JavaScriptType {
+        skipReminder, // アンケート解答の催促画面
+        syllabus, // シラバスの検索画面
+        loginIAS, // 大学統合認証システム(IAS)のログイン画面
+        loginOutlook, // メール(Outlook)のログイン画面
+        loginCareerCenter, // 徳島大学キャリアセンターのログイン画面
+        none // JavaScriptを動かす必要がない場合
     }
     /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
     ///
     /// - Note: canExecuteJavascriptが重要な理由
     ///   ログインに失敗した場合に再度ログインのURLが表示されることになる。
     ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
-    public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
+    public fun anyJavaScriptExecute(urlString: String): JavaScriptType {
         // JavaScriptを実行するフラグが立っていない場合はnoneを返す
-        if dataManager.canExecuteJavascript == false {
-            return .none
+        if (DataManager.canExecuteJavascript == false) {
+            return JavaScriptType.none
         }
         // アンケート解答の催促画面
-        if urlString == Url.skipReminder.string() {
-            return .skipReminder
+        if (urlString == Url.skipReminder.urlString) {
+            return JavaScriptType.skipReminder
         }
         // 大学統合認証システム(IAS)のログイン画面
-        if urlString.contains(Url.universityLogin.string()) {
-            return .loginIAS
+        if (urlString in Url.universityLogin.urlString) {
+            return JavaScriptType.loginIAS
         }
         // シラバスの検索画面
-        if urlString == Url.syllabus.string() {
-            return .syllabus
+        if (urlString == Url.syllabus.urlString) {
+            return JavaScriptType.syllabus
         }
         // メール(Outlook)のログイン画面
-        if urlString.contains(Url.outlookLoginForm.string()) {
-            return .loginOutlook
+        if (urlString in Url.outlookLoginForm.urlString) {
+            return JavaScriptType.loginOutlook
         }
         // 徳島大学キャリアセンターのログイン画面
-        if urlString == Url.tokudaiCareerCenter.string() {
-            return .loginCareerCenter
+        if (urlString == Url.tokudaiCareerCenter.urlString) {
+            return JavaScriptType.loginCareerCenter
         }
         // それ以外なら
-        return .none
+        return JavaScriptType.none
     }
 }

@@ -4,15 +4,15 @@
     app:startDestination="@id/home">
 
     <fragment android:id="@+id/home"
-        android:name="com.example.tokumemo.Home"
+        android:name="com.example.tokumemo.HomeFragment"
         android:label="Fragment1"/>
 
     <fragment android:id="@+id/news"
-        android:name="com.example.tokumemo.News"
+        android:name="com.example.tokumemo.NewsFragment"
         android:label="Fragment2"/>
 
     <fragment android:id="@+id/clubLists"
-        android:name="com.example.tokumemo.ClubLists"
+        android:name="com.example.tokumemo.ClubListsFragment"
         android:label="Fragment3"/>
 
     <fragment android:id="@+id/settings"
