@@ -12,7 +12,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_news, container, false)
+        val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
         return view
     }
