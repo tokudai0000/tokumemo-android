@@ -55,8 +55,8 @@ class WebActivity : AppCompatActivity() {
         webView.loadUrl(receivedURL)
     }
 
-    // WebViewの設定
-    @SuppressLint("SetJavaScriptEnabled")
+
+    @SuppressLint("SetJavaScriptEnabled") // JavaScriptを有効に
     private fun webViewSetup() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
@@ -64,30 +64,23 @@ class WebActivity : AppCompatActivity() {
 
         // 検索アプリで開かない
         webView.webViewClient = object : WebViewClient(){
-            // URLの読み込みが始まった時の処理
+
+            // URLの読み込み開始
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                if (url != null) {
-                    urlString = url
-                }
-                // タイムアウトをしていた場合
-                // 下のonPageFinishedでも実装しているが、タイムアウト検知はできるだけ早い方がいいということでここにも実装
+                url ?: return // アンラップ
+
+                urlString = url
+
+                // タイムアウトの判定
                 if (viewModel.isTimeout(urlString)) {
-                    // ログイン処理を始める
                     webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
                 }
             }
 
-            // URLの読み込みが終わった時の処理
+            // 読み込み完了
             override fun onPageFinished(view: WebView?, url: String?) {
-                if (url != null) {
-                    urlString = url
-                }
+                urlString = url!! // fatalError
 
-                // タイムアウトをしていた場合
-                if (viewModel.isTimeout(urlString)) {
-                    // ログイン処理を始める
-                    webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
-                }
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
                     // ログイン画面に飛ばされた場合
