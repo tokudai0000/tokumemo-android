@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
 
@@ -23,7 +24,7 @@ class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val field = fields[position]
         holder.fieldName.text = field.title
-//        holder.fieldImage.setImageDrawable(field.image)
+        holder.fieldImage.setImageResource(field.image)
 //        holder.fieldPrefecture.text = field.
     }
 
