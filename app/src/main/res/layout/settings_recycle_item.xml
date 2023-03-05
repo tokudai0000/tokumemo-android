@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="44dp">
+
+    <TextView
+        android:id="@+id/field_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:ellipsize="middle"
+        android:fontFamily="sans-serif-black"
+        android:singleLine="true"
+        android:text="琵琶湖"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+</androidx.cardview.widget.CardView>

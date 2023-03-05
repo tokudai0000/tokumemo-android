@@ -19,4 +19,17 @@
         android:textStyle="bold"
         android:gravity="center" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/settings_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/settings_title"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:fadeScrollbars="true"
+        android:fastScrollEnabled="false"
+        android:paddingStart="20dp"
+        android:paddingEnd="10dp" />
+
 </RelativeLayout>
