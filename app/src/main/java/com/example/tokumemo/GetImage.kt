@@ -4,11 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.widget.ImageButton
+import android.widget.ImageView
 import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 
-class GetImage(private val image: ImageButton) :
+class GetImage(private val image: ImageView) :
     AsyncTask<String, Void, Bitmap>() {
     @Deprecated("Deprecated in Java")
     override fun doInBackground(vararg params: String): Bitmap? {

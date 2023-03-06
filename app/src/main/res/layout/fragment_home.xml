@@ -23,16 +23,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="2">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/pr_image_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:backgroundTint="@color/orange"
+                android:backgroundTint="@color/black"
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_launcher_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="h,1.414:1"
+                app:layout_constraintDimensionRatio="w,1:1.414"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

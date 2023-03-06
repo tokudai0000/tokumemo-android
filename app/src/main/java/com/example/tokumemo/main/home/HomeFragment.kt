@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
         Timer().scheduleAtFixedRate(0, 5000) {
             val num = viewModel.selectPRImageNumber()
             if (num != null) {
-                val imageButton = view.findViewById<ImageButton>(R.id.pr_image_button)
+                val imageButton = view.findViewById<ImageView>(R.id.pr_image_button)
                 val imageTask: GetImage = GetImage(imageButton)
                 imageTask.execute(viewModel.prItems[num].imageURL)
             }
