@@ -1,44 +1,47 @@
 package com.example.tokumemo.main.home
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tokumemo.GetImage
 import com.example.tokumemo.R
 import com.example.tokumemo.web.WebActivity
 import kotlinx.coroutines.*
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.FileNotFoundException
 import java.net.URL
+import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
 
-    private var resultText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
+        viewModel.getPRItems()
         listViewInitSetting(view)
-        getPRItems()
+        adImagesRotationTimerON(view)
+
 
         return view
+
     }
 
     private fun listViewInitSetting(view: View) {
@@ -91,31 +94,19 @@ class HomeFragment : Fragment() {
 //        }
 //    }
 
-    private fun getPRItems(): Job = GlobalScope.launch {
-        try {
+    /// 広告を一定時間ごとに読み込ませる処理のスイッチ
+    private fun adImagesRotationTimerON(view: View) {
 
-            val jsonUrl = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
-            val str = URL(jsonUrl).readText()
-            val json = JSONObject(str)
-
-            // Jsonデータから内容物を取得
-            val itemCounts = json.getInt("itemCounts")
-            val items = json.getJSONArray("items")
-
-            for (i in 0..itemCounts-1) {
-                var item = items.getJSONObject(i)
-                var prItem = HomeViewModel.PublicRelations(
-                    imageURL = item.getString("imageURL"),
-                    introduction = item.getString("introduction"),
-                    tappedURL = item.getString("tappedURL"),
-                    organization_name = item.getString("organization_name"),
-                    description = item.getString("description")
-                )
-                viewModel.prItems.add(prItem)
+        // 5000 ms 毎に実行
+        Timer().scheduleAtFixedRate(0, 5000) {
+            val num = viewModel.selectPRImageNumber()
+            if (num != null) {
+                val imageButton = view.findViewById<ImageButton>(R.id.pr_image_button)
+                val imageTask: GetImage = GetImage(imageButton)
+                imageTask.execute(viewModel.prItems[num].imageURL)
             }
-
-        } catch (e: Exception) {
-            // Error
         }
     }
+
+
 }
