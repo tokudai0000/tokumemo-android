@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.tokudai0000.tokumemo"
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 15
         versionName "3.3.1"

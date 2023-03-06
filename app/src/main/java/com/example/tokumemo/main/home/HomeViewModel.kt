@@ -6,6 +6,19 @@ import com.example.tokumemo.R
 import com.example.tokumemo.model.Url
 
 class HomeViewModel: ViewModel() {
+
+    class PublicRelations
+        (var imageURL:String?,
+         var introduction:String?,
+         var tappedURL:String?,
+         var organization_name:String?,
+         var description:String?)
+
+    var prItems = arrayListOf<PublicRelations>()
+
+    var displayPRImagesNumber: Int = -1 // 表示している広告がadItemsに入っている配列番号
+
+
     var initMenuList = listOf(
         MenuData(title="教務事務システム", id=MenuListItemType.courseManagementHomeMobile, image=R.drawable.coursemanagementhome, url=Url.courseManagementMobile.urlString, isLockIconExists=true, isHiddon=false),
         MenuData(title="manaba", id=MenuListItemType.manabaHomePC, image=R.drawable.manaba, url=Url.manabaMobile.urlString, isLockIconExists=true, isHiddon=false),
