@@ -30,31 +30,31 @@ class PRActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_pr)
 
-//        val backButton = findViewById<ImageButton>(R.id.back_button)
-//        backButton.setOnClickListener {
-//            val intent = Intent(this, WebActivity::class.java)
-//            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-//            intent.putExtra("PAGE_KEY",tappedURL)
-//            startActivity(intent)
-//        }
-//
-//        loadPRData()
-//
-//        val imageView = findViewById<ImageView>(R.id.pr_image_view)
-//        val imageTask: GetImage = GetImage(imageView)
-//        imageTask.execute(imageURL)
-//
-//        var text = findViewById<TextView>(R.id.textView5)
-//        text.text = introduction
+        val backButton = findViewById<ImageButton>(R.id.back_button)
+        backButton.setOnClickListener {
+            val intent = Intent(this, WebActivity::class.java)
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY",tappedURL)
+            startActivity(intent)
+        }
+
+        loadPRData()
+
+        val imageView = findViewById<ImageView>(R.id.pr_image_view)
+        val imageTask: GetImage = GetImage(imageView)
+        imageTask.execute(imageURL)
+
+        var text = findViewById<TextView>(R.id.textView5)
+        text.text = introduction
     }
 
     fun loadPRData() {
         // HomeFragemntからURLを受け取る
-        val imageURL = intent.getStringExtra("PR_imageURL").toString()
-        val introduction = intent.getStringExtra("PR_introduction").toString()
-        val description = intent.getStringExtra("PR_description").toString()
-        val tappedURL = intent.getStringExtra("PR_tappedURL").toString()
-        val organization_name = intent.getStringExtra("PR_organization_name").toString()
+        imageURL = intent.getStringExtra("PR_imageURL").toString()
+        introduction = intent.getStringExtra("PR_introduction").toString()
+        description = intent.getStringExtra("PR_description").toString()
+        tappedURL = intent.getStringExtra("PR_tappedURL").toString()
+        organization_name = intent.getStringExtra("PR_organization_name").toString()
     }
 //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
