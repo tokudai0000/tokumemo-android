@@ -96,6 +96,9 @@ enum class Url(val urlString: String) {
     weather("https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"),
 
     /// 徳大学生活動リスト
-    clubList("https://tokudai0000.github.io/club-list/")
+    clubList("https://tokudai0000.github.io/club-list/"),
+
+    /// 徳大ニュース用のRSSをJsonに変換してくれるサイト
+    rss("https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml")
 
 }

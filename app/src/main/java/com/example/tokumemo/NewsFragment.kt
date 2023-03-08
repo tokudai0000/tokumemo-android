@@ -2,12 +2,12 @@ package com.example.tokumemo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import androidx.lifecycle.ViewModelProvider
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.*
@@ -16,56 +16,52 @@ import org.json.JSONObject
 
 class NewsFragment : Fragment() {
 
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var listView: ListView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_news, container, false)
-        var titleArray = arrayListOf<Data>()
 
-        // xmlにて実装したListViewの取得
-        val listView = view.findViewById<ListView>(R.id.list_view)
+        var view =  inflater.inflate(R.layout.fragment_news, container, false)
+        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
+        listView = view.findViewById<ListView>(R.id.list_view)
 
-        // 項目をタップしたときの処理
-        listView.setOnItemClickListener {parent, view, position, id ->
-
-            // 項目のラベルテキストをログに表示
-            Log.i("PRINT", titleArray[position].link.toString())
-
+        listView.setOnItemClickListener {_, _, position, _ ->
             val intent = Intent(requireContext(), WebActivity::class.java)
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-            intent.putExtra("PAGE_KEY",titleArray[position].link.toString())
+            intent.putExtra("PAGE_KEY",viewModel.newsItems[position].link.toString())
             startActivity(intent)
         }
 
-
-        /// リクエストURL
-        val url = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
-
-        url.httpGet().responseJson { request, response, result ->
+        // RSSをJsonに変換してくれるサイトから、データを取得。
+        // 本来はViewModelに記載したいが、通信完了後の書き方を知らないため、後日修正予定
+        val url = Url.rss.urlString
+        url.httpGet().responseJson { _, _, result ->
             when (result) {
-                is Result.Success -> {
-
+                is Result.Success -> { // 通信完了
                     val items:JSONArray = result.get().obj().getJSONArray("items")
 
-                    for(i in 0..items.length() - 1 )
-                        titleArray.add(Data().apply {
+                    for(i in 0 until items.length())
+                        viewModel.newsItems.add(Data().apply {
                             title = items.getJSONObject(i)["title"].toString()
                             pubDate = items.getJSONObject(i)["pubDate"].toString()
                             link = items.getJSONObject(i)["link"].toString()
                         })
 
                 }
-                is Result.Failure -> {
+                is Result.Failure -> { // 通信失敗
+                    // エラーハンドリング未実装
                     val ex = result.getException()
-
                     JSONObject(mapOf("message" to ex.toString()))
                 }
             }
-            listView.adapter = CustomAdapter(requireContext(), titleArray)
+
+            // requireContext() : nullを許容しない
+            listView.adapter = CustomAdapter(requireContext(), viewModel.newsItems)
         }
+
         return view
     }
-
 }
 

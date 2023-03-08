@@ -20,36 +20,36 @@ class PasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
 
-        // メニューバー
-        val home = findViewById<Button>(R.id.home)
-        home.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        // メニューバー
+//        val home = findViewById<Button>(R.id.home)
+//        home.setOnClickListener{
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//
+//        val news = findViewById<Button>(R.id.news)
+//        news.setOnClickListener{
+//            val intent = Intent(this, NewsActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//
+//        val clubList = findViewById<Button>(R.id.clubLists)
+//        clubList.setOnClickListener{
+//            val intent = Intent(this, ClubListActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//
+//        val settings = findViewById<Button>(R.id.settings)
+//        settings.setOnClickListener{
+//            val intent = Intent(this, SettingsActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
-        val news = findViewById<Button>(R.id.news)
-        news.setOnClickListener{
-            val intent = Intent(this, NewsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val clubList = findViewById<Button>(R.id.clubLists)
-        clubList.setOnClickListener{
-            val intent = Intent(this, ClubListActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val settings = findViewById<Button>(R.id.settings)
-        settings.setOnClickListener{
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        initSetup()
+//        initSetup()
     }
 
     @SuppressLint("SetTextI18n")
