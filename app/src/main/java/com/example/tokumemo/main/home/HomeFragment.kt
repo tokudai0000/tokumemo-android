@@ -1,12 +1,18 @@
 package com.example.tokumemo.main.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Image
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +20,12 @@ import com.example.tokumemo.GetImage
 import com.example.tokumemo.R
 import com.example.tokumemo.model.DataManager
 import com.example.tokumemo.web.WebActivity
+import kotlinx.coroutines.*
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -21,19 +33,25 @@ import kotlin.concurrent.scheduleAtFixedRate
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var weatherText: TextView
+    private lateinit var weatherIcon: ImageView
 
+    private var resultText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        weatherText = view.findViewById<TextView>(R.id.weatherText)
+        weatherIcon = view.findViewById<ImageView>(R.id.weatherIcon)
 
         viewModel.getPRItems()
         listViewInitSetting(view)
         adImagesRotationTimerON(view)
+
+        getWeatherNews(view)
 
 
         return view
@@ -91,18 +109,6 @@ class HomeFragment : Fragment() {
                     startActivity(intent)
                 }
             }
-
-
-//            val childFragment = PRActivity()
-//            val transaction = childFragmentManager.beginTransaction()
-//            viewModel.displayPRImagesNumber?.let {
-////                childFragment = viewModel.prItems[it]
-//                viewModel.prItems[it].let {
-//                    childFragment.imageStr = it
-//                }
-//            }
-//
-//            transaction.replace(R.id.child_fragment_container, childFragment).commit()
         }
 
         // 5000 ms 毎に実行
@@ -116,5 +122,39 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // 天気を取得
+    private fun getWeatherNews(view: View): Job = GlobalScope.launch {
+        // 徳島大学本部の所在地の緯度経度
+        var lat = 34.07003444012803
+        var lon = 134.55981101249947
+        // APIを使う際に必要なKEY
+        val API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        // URL。場所と言語・API_KEYを添付
+        val urlStr = "https://api.openweathermap.org/data/2.5/weather?" +
+                "units=metric&" +
+                "lat=" + lat + "&" +
+                "lon=" + lon + "&" +
+                "lang=" + "ja" + "&" +
+                "APPID=" + API_KEY
+
+        try {
+            val str = URL(urlStr).readText()
+            val json = JSONObject(str)
+
+            // 天気を取得
+            val weatherList = json.getJSONArray("weather").getJSONObject(0)
+
+            // 天気を取得
+            val descriptionText = weatherList.getString("description")
+            val icon = weatherList.getString("icon")
+            val temp = json.getJSONObject("main").getString("temp")
+
+            val imageTask: GetImage = GetImage(weatherIcon)
+            imageTask.execute("https://openweathermap.org/img/wn/" + icon + ".png")
+            weatherText.text = "$descriptionText\n$temp℃"
+        } catch (e: Exception) {
+//            weatherText.text = "現在天気を取得できません"
+        }
+    }
 
 }

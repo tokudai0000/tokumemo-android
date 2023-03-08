@@ -72,7 +72,6 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginRight="8dp"
                 android:layout_weight="2.2">
 
                 <Button
@@ -114,12 +113,11 @@
                             android:translationZ="4dp"
                             app:layout_constraintBottom_toBottomOf="parent" />
 
-                        <WebView
+                        <ImageView
                             android:id="@+id/weatherIcon"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:background="#00FFFFFF"
                             android:foregroundGravity="center"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
@@ -150,9 +148,8 @@
                 android:id="@+id/studentCard"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:text="学生証"
+                android:text="意見箱"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
