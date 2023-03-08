@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.example.tokumemo.R
 
 class ClubListsFragment : Fragment() {
 
@@ -20,7 +19,8 @@ class ClubListsFragment : Fragment() {
         val webView = view.findViewById<WebView>(R.id.club_lists_webview)
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
-        webView.loadUrl("https://tokudai0000.github.io/club-list/")
+        webView.loadUrl(Url.clubList.urlString)
+
         return view
     }
 
