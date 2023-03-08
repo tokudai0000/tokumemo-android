@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -32,11 +33,17 @@ class PRActivity : AppCompatActivity() {
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
+            finish()
+        }
+
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
             // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
             intent.putExtra("PAGE_KEY",tappedURL)
             startActivity(intent)
         }
+
 
         loadPRData()
 
