@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.GetImage
 import com.example.tokumemo.R
 import com.example.tokumemo.model.DataManager
+import com.example.tokumemo.model.Url
 import com.example.tokumemo.web.WebActivity
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -36,6 +38,7 @@ class HomeFragment : Fragment() {
     private lateinit var weatherText: TextView
     private lateinit var weatherIcon: ImageView
 
+
     private var resultText = ""
 
     override fun onCreateView(
@@ -46,6 +49,13 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         weatherText = view.findViewById<TextView>(R.id.weatherText)
         weatherIcon = view.findViewById<ImageView>(R.id.weatherIcon)
+        val studentCardButton = view.findViewById<Button>(R.id.studentCard)
+        studentCardButton.setOnClickListener {
+            val intent = Intent(requireContext(), WebActivity::class.java)
+            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
+            intent.putExtra("PAGE_KEY", Url.contactUs.urlString)
+            startActivity(intent)
+        }
 
         viewModel.getPRItems()
         listViewInitSetting(view)

@@ -79,7 +79,7 @@ enum class Url(val urlString: String) {
     /// マナバから授業動画[Youtube]を開く時
     popupToYoutube("https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"),
     /// GoogleFormsでお問い合わせフォームを作成
-    contactUs("https://forms.gle/ceBzS6TL3A1XuJsNA"),
+    contactUs("https://docs.google.com/forms/d/e/1FAIpQLScYRhlWY9IjqWOrvnWJ0bJ_yPQZpXy4PPShWb68092t2klzeg/viewform"),
     /// TwitterのURL
     officialSNS("https://twitter.com/tokumemo0000"),
     /// ホームページのURL
