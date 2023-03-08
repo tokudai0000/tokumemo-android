@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
 import com.example.tokumemo.main.home.HomeViewModel
+import com.example.tokumemo.main.news.CustomAdapter
 import com.example.tokumemo.main.news.Data
 import com.example.tokumemo.web.WebActivity
 
@@ -23,15 +24,26 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
-        var twoDimensionalArray = arrayOf<Array<String>>()
-        twoDimensionalArray += arrayOf<String>("パスワード")
-        twoDimensionalArray += arrayOf<String>("このアプリについて","お問い合わせ","公式SNS","ホームページ")
-        twoDimensionalArray += arrayOf<String>("利用規約","プライバシーポリシー")
-//        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        var titleArray = arrayListOf<Data>()
+        titleArray.add(Data().apply {
+            title = "パスワード"
+            pubDate = ""
+            link = ""
+        })
+        titleArray.add(Data().apply {
+            title = "このアプリについて"
+            pubDate = ""
+            link = ""
+        })
+        titleArray.add(Data().apply {
+            title = "カスタマイズ"
+            pubDate = ""
+            link = ""
+        })
 
         // xmlにて実装したListViewの取得
-        val listView = view.findViewById<RecyclerView>(R.id.settings_recycler_view)
-
+        val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
+        listView.adapter = CustomAdapter(requireContext(), titleArray)
 //        val adapter = SettingsListsAdapter(titleArray)
 
         // xmlにて実装したListViewの取得
@@ -47,7 +59,7 @@ class SettingsFragment : Fragment() {
 //            intent.putExtra("PAGE_KEY",titleArray[position].link.toString())
 //            startActivity(intent)
 //        }
-        listView.adapter
+//        listView.adapter
 
         return view
     }
