@@ -91,6 +91,13 @@ class HomeFragment : Fragment() {
         imageView.setOnClickListener {
             val childFragment = PRFragment()
             val transaction = childFragmentManager.beginTransaction()
+            viewModel.displayPRImagesNumber?.let {
+//                childFragment = viewModel.prItems[it]
+                viewModel.prItems[it].let {
+                    childFragment.imageStr = it
+                }
+            }
+
             transaction.replace(R.id.child_fragment_container, childFragment).commit()
         }
 
@@ -98,6 +105,7 @@ class HomeFragment : Fragment() {
         Timer().scheduleAtFixedRate(0, 5000) {
             val num = viewModel.selectPRImageNumber()
             if (num != null) {
+                viewModel.displayPRImagesNumber = num
                 val imageTask: GetImage = GetImage(imageView)
                 imageTask.execute(viewModel.prItems[num].imageURL)
             }

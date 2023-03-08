@@ -28,24 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
 
-<!--        <Button-->
-<!--            android:id="@+id/reload_button"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:backgroundTint="@color/thin_gray_color"-->
-<!--            android:minWidth="0dp"-->
-<!--            android:minHeight="0dp"-->
-<!--            app:layout_constraintDimensionRatio="h,1:1"-->
-<!--            app:icon="@drawable/cross"-->
-<!--            app:iconTint="@color/black"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.4"-->
-<!--            app:strokeWidth="0dp" />-->
         <ImageButton
             android:id="@+id/back_button"
             style="?android:attr/borderlessButtonStyle"
@@ -77,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/pr_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
