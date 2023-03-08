@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
 
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
-        listView.adapter = CustomAdapter(requireContext(), titleArray)
+        listView.adapter = NewsListViewAdapter(requireContext(), titleArray)
 //        val adapter = SettingsListsAdapter(titleArray)
 
         // xmlにて実装したListViewの取得

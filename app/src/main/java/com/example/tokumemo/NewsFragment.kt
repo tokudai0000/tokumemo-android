@@ -58,7 +58,7 @@ class NewsFragment : Fragment() {
             }
 
             // requireContext() : nullを許容しない
-            listView.adapter = CustomAdapter(requireContext(), viewModel.newsItems)
+            listView.adapter = NewsListViewAdapter(requireContext(), viewModel.newsItems)
         }
 
         return view
