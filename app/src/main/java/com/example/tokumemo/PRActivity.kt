@@ -1,20 +1,12 @@
-package com.example.tokumemo.main.home
+package com.example.tokumemo
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.tokumemo.GetImage
-import com.example.tokumemo.R
-import com.example.tokumemo.web.WebActivity
 
 class PRActivity : AppCompatActivity() {
 

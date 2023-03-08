@@ -14,9 +14,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.tokumemo.main.MainActivity
-import com.example.tokumemo.model.DataManager
-import com.example.tokumemo.model.MainModel
 
 class ClubListActivity : AppCompatActivity() {
 

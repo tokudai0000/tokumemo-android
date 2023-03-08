@@ -1,16 +1,13 @@
-package com.example.tokumemo.main.settings
+package com.example.tokumemo
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
-import com.example.tokumemo.main.home.MenuData
-import com.example.tokumemo.main.news.Data
+import com.example.tokumemo.Data
 
 class SettingsListsAdapter(context: Context, val items: ArrayList<Data>) : ArrayAdapter<Data>(context,
     R.layout.item_layout, items) {

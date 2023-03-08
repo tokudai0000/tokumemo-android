@@ -1,4 +1,4 @@
-package com.example.tokumemo.main.clubLists
+package com.example.tokumemo
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

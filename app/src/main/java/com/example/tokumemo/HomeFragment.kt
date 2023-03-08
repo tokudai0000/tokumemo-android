@@ -1,11 +1,7 @@
-package com.example.tokumemo.main.home
+package com.example.tokumemo
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.media.Image
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +9,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tokumemo.GetImage
-import com.example.tokumemo.R
-import com.example.tokumemo.model.DataManager
-import com.example.tokumemo.model.Url
-import com.example.tokumemo.web.WebActivity
 import kotlinx.coroutines.*
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.net.URL
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 

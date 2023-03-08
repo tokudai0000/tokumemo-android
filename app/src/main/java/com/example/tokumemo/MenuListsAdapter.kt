@@ -1,13 +1,11 @@
-package com.example.tokumemo.main.home
+package com.example.tokumemo
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tokumemo.R
 
 class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter<MenuListsAdapter.ViewHolder>() {
 

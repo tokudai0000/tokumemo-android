@@ -1,4 +1,4 @@
-package com.example.tokumemo.model
+package com.example.tokumemo
 
 import androidx.lifecycle.ViewModel
 

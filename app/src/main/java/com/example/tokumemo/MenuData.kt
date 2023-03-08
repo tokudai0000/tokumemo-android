@@ -1,6 +1,4 @@
-package com.example.tokumemo.main.home
-
-import android.view.Menu
+package com.example.tokumemo
 
 enum class MenuListItemType {
     courseManagementHomePC,         // 教務事務システム

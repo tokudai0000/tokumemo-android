@@ -1,4 +1,4 @@
-package com.example.tokumemo.web
+package com.example.tokumemo
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,10 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.example.tokumemo.PasswordActivity
-import com.example.tokumemo.R
-import com.example.tokumemo.RequireCorrectPasswordDialog
-import com.example.tokumemo.model.DataManager
 
 class WebActivity : AppCompatActivity() {
 

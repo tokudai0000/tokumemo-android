@@ -1,20 +1,11 @@
-package com.example.tokumemo.main.settings
+package com.example.tokumemo
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.tokumemo.R
-import com.example.tokumemo.main.home.HomeViewModel
-import com.example.tokumemo.main.news.CustomAdapter
-import com.example.tokumemo.main.news.Data
-import com.example.tokumemo.web.WebActivity
 
 class SettingsFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.tokumemo.main
+package com.example.tokumemo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

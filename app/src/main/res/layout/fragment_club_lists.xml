@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".main.clubLists.ClubListsFragment">
+    tools:context=".ClubListsFragment">
 
     <TextView
         android:id="@+id/club_lists_title_bar"

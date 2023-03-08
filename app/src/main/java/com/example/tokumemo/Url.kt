@@ -1,4 +1,4 @@
-package com.example.tokumemo.model
+package com.example.tokumemo
 
 enum class Url(val urlString: String) {
     /// 大学ホームページ

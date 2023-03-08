@@ -1,4 +1,4 @@
-package com.example.tokumemo.main.settings
+package com.example.tokumemo
 
 enum class SettingListItemType {
     password,                       // パスワード

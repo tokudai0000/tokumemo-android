@@ -8,9 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.tokumemo.main.MainActivity
-import com.example.tokumemo.model.DataManager
-import com.example.tokumemo.web.WebActivity
 
 class SettingsActivity : AppCompatActivity() {
 
