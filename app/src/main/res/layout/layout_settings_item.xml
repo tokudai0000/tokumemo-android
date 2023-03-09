@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="44dp">
+    android:layout_height="50dp">
 
     <TextView
         android:id="@+id/field_name_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:ellipsize="middle"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
         android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:paddingLeft="15dp"
         android:singleLine="true"
-        android:text="琵琶湖"
-        android:textAlignment="center"
+        android:text="パスワード"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:textSize="18sp" />
 
 </androidx.cardview.widget.CardView>

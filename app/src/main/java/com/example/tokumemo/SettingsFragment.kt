@@ -6,35 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 
 class SettingsFragment : Fragment() {
+
+    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
+        viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
-        var titleArray = arrayListOf<NewsListData>()
-        titleArray.add(NewsListData().apply {
-            title = "パスワード"
-            pubDate = ""
-            link = ""
-        })
-        titleArray.add(NewsListData().apply {
-            title = "このアプリについて"
-            pubDate = ""
-            link = ""
-        })
-        titleArray.add(NewsListData().apply {
-            title = "カスタマイズ"
-            pubDate = ""
-            link = ""
-        })
 
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
-        listView.adapter = NewsListViewAdapter(requireContext(), titleArray)
+        listView.adapter = SettingsListsAdapter(requireContext(), viewModel.initSettingsList)
 //        val adapter = SettingsListsAdapter(titleArray)
 
         // xmlにて実装したListViewの取得

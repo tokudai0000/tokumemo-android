@@ -3,7 +3,7 @@ package com.example.tokumemo
 data class SettingsListData(
     var title: String,
     var id : SettingListItemType,
-    var url: String
+    var url: String?
 )
 
 enum class SettingListItemType {

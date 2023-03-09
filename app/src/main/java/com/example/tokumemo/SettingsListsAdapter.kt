@@ -7,20 +7,18 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class SettingsListsAdapter(context: Context, val items: ArrayList<NewsListData>) : ArrayAdapter<NewsListData>(context,
-    R.layout.layout_news_list, items) {
+class SettingsListsAdapter(context: Context, val items: List<SettingsListData>) : ArrayAdapter<SettingsListData>(context,
+    R.layout.layout_settings_item, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.layout_news_list, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.layout_settings_item, parent, false)
         }
 
         val item = items[position]
-        val textView = view?.findViewById<TextView>(R.id.item_title)
-        val pubDate = view?.findViewById<TextView>(R.id.item_text)
+        val textView = view?.findViewById<TextView>(R.id.field_name_text)
         textView?.text = item.title
-        pubDate?.text = item.pubDate
 
         return view!!
     }
