@@ -1,6 +1,7 @@
 package com.example.tokumemo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import decrypt
 
 class WebActivity : AppCompatActivity() {
 
@@ -38,6 +40,17 @@ class WebActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
 
+        Log.d("PRINT",getPassword(this) ?: "getPassword_nil")
+
+    }
+    // パスワードを復号化して取得する
+    fun getPassword(context: Context): String? {
+        // shaaredPreferencesから読み込み
+        val encryptedPassword = getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString("encrypted_password", null)
+        // アンラップ
+        encryptedPassword ?: return null
+        // 復号化
+        return decrypt("password", encryptedPassword)
     }
 
     // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く

@@ -60,6 +60,15 @@ class HomeViewModel: ViewModel() {
     }
 
 
+    fun displayMenuList(): List<MenuData> {
+        var displayLists = mutableListOf<MenuData>()
+        for(item in initMenuList) {
+            if(!item.isHiddon) {
+                displayLists.add(item)
+            }
+        }
+        return displayLists
+    }
 
 
     var initMenuList = listOf(

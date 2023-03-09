@@ -57,7 +57,9 @@ class HomeFragment : Fragment() {
 
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
-        val adapter = MenuListsAdapter(viewModel.initMenuList)
+
+        val displayMenuLists = viewModel.displayMenuList()
+        val adapter = MenuListsAdapter(displayMenuLists)
         listView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
         // 書籍情報セルのクリック処理
