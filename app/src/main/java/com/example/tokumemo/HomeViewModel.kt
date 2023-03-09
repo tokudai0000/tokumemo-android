@@ -9,14 +9,7 @@ import java.net.URL
 
 class HomeViewModel: ViewModel() {
 
-    class PublicRelations
-        (var imageURL:String?,
-         var introduction:String?,
-         var tappedURL:String?,
-         var organization_name:String?,
-         var description:String?)
-
-    var prItems = arrayListOf<PublicRelations>()
+    var prItems = arrayListOf<PublicRelationsData>()
 
     var displayPRImagesNumber: Int = -1 // 表示している広告がadItemsに入っている配列番号
 
@@ -33,7 +26,7 @@ class HomeViewModel: ViewModel() {
 
             for (i in 0..itemCounts-1) {
                 var item = items.getJSONObject(i)
-                var prItem = PublicRelations(
+                var prItem = PublicRelationsData(
                     imageURL = item.getString("imageURL"),
                     introduction = item.getString("introduction"),
                     tappedURL = item.getString("tappedURL"),

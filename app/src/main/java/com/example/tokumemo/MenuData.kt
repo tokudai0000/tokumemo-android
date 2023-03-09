@@ -1,5 +1,14 @@
 package com.example.tokumemo
 
+data class MenuData(
+    var title: String,
+    var id: MenuListItemType,
+    var image: Int,
+    var url: String?,
+    var isLockIconExists: Boolean,
+    var isHiddon: Boolean
+)
+
 enum class MenuListItemType {
     CourseManagementHomePC,         // 教務事務システム
     CourseManagementHomeMobile,
@@ -32,12 +41,3 @@ enum class MenuListItemType {
 
     Favorite,                       // お気に入り
 }
-
-data class MenuData(
-    var title: String,
-    var id: MenuListItemType,
-    var image: Int,
-    var url: String?,
-    var isLockIconExists: Boolean,
-    var isHiddon: Boolean
-)
