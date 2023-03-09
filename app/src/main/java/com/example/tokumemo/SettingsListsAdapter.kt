@@ -8,12 +8,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 class SettingsListsAdapter(context: Context, val items: ArrayList<NewsListData>) : ArrayAdapter<NewsListData>(context,
-    R.layout.item_layout, items) {
+    R.layout.layout_news_list, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.layout_news_list, parent, false)
         }
 
         val item = items[position]

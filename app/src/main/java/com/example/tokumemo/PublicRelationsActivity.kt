@@ -21,7 +21,7 @@ class PublicRelationsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_pr)
+        setContentView(R.layout.activity_public_relations)
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
