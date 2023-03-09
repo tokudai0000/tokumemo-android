@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class NewsListViewAdapter(context: Context, private val items: ArrayList<Data>) : ArrayAdapter<Data>(context,
+class NewsListViewAdapter(context: Context, private val items: ArrayList<NewsListData>) : ArrayAdapter<NewsListData>(context,
     R.layout.item_layout, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

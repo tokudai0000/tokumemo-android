@@ -15,18 +15,18 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
-        var titleArray = arrayListOf<Data>()
-        titleArray.add(Data().apply {
+        var titleArray = arrayListOf<NewsListData>()
+        titleArray.add(NewsListData().apply {
             title = "パスワード"
             pubDate = ""
             link = ""
         })
-        titleArray.add(Data().apply {
+        titleArray.add(NewsListData().apply {
             title = "このアプリについて"
             pubDate = ""
             link = ""
         })
-        titleArray.add(Data().apply {
+        titleArray.add(NewsListData().apply {
             title = "カスタマイズ"
             pubDate = ""
             link = ""

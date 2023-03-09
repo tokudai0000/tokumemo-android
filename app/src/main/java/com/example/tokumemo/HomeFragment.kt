@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
         imageView.setOnClickListener {
             viewModel.displayPRImagesNumber?.let {
                 viewModel.prItems[it].let {
-                    val intent = Intent(context, PRActivity::class.java)
+                    val intent = Intent(context, PublicRelationsActivity::class.java)
                     intent.putExtra("PR_imageURL",it.imageURL)
                     intent.putExtra("PR_introduction",it.introduction)
                     intent.putExtra("PR_description",it.description)

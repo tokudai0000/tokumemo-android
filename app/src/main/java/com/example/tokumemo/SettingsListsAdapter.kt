@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.tokumemo.R
-import com.example.tokumemo.Data
 
-class SettingsListsAdapter(context: Context, val items: ArrayList<Data>) : ArrayAdapter<Data>(context,
+class SettingsListsAdapter(context: Context, val items: ArrayList<NewsListData>) : ArrayAdapter<NewsListData>(context,
     R.layout.item_layout, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

@@ -43,7 +43,7 @@ class NewsFragment : Fragment() {
                     val items:JSONArray = result.get().obj().getJSONArray("items")
 
                     for(i in 0 until items.length())
-                        viewModel.newsItems.add(Data().apply {
+                        viewModel.newsItems.add(NewsListData().apply {
                             title = items.getJSONObject(i)["title"].toString()
                             pubDate = items.getJSONObject(i)["pubDate"].toString()
                             link = items.getJSONObject(i)["link"].toString()
