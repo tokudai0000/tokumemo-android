@@ -20,25 +20,7 @@ class HomeViewModel: ViewModel() {
 
     var displayPRImagesNumber: Int = -1 // 表示している広告がadItemsに入っている配列番号
 
-    fun selectPRImageNumber(): Int? {
-        // 広告数が0か1の場合はローテーションする必要がない
-        if (prItems.count() == 0) {
-            return null
-        } else if (prItems.count() == 1) {
-            return 0
-        }
-
-        while (true) {
-            val randomNum = kotlin.random.Random.nextInt(0, prItems.count())
-            // 前回の画像表示番号と同じであれば、再度繰り返す
-            if (randomNum != displayPRImagesNumber) {
-                return randomNum
-            }
-        }
-
-    }
-
-    fun getPRItems(): Job = GlobalScope.launch {
+    fun getPRItemsFromGithub(): Job = GlobalScope.launch {
         try {
 
             val jsonUrl = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
@@ -65,6 +47,26 @@ class HomeViewModel: ViewModel() {
             // Error
         }
     }
+    
+    fun selectPRImageNumber(): Int? {
+        // 広告数が0か1の場合はローテーションする必要がない
+        if (prItems.count() == 0) {
+            return null
+        } else if (prItems.count() == 1) {
+            return 0
+        }
+
+        while (true) {
+            val randomNum = kotlin.random.Random.nextInt(0, prItems.count())
+            // 前回の画像表示番号と同じであれば、再度繰り返す
+            if (randomNum != displayPRImagesNumber) {
+                return randomNum
+            }
+        }
+
+    }
+
+
 
 
     var initMenuList = listOf(

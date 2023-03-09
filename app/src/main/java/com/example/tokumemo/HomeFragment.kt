@@ -25,31 +25,28 @@ class HomeFragment : Fragment() {
     private lateinit var weatherText: TextView
     private lateinit var weatherIcon: ImageView
 
-
-    private var resultText = ""
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         weatherText = view.findViewById<TextView>(R.id.weatherText)
         weatherIcon = view.findViewById<ImageView>(R.id.weatherIcon)
-        val studentCardButton = view.findViewById<Button>(R.id.studentCard)
-        studentCardButton.setOnClickListener {
+
+        val contactUs = view.findViewById<Button>(R.id.studentCard)
+        contactUs.setOnClickListener {
             val intent = Intent(requireContext(), WebActivity::class.java)
-            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
             intent.putExtra("PAGE_KEY", Url.contactUs.urlString)
             startActivity(intent)
         }
 
-        viewModel.getPRItems()
+        viewModel.getPRItemsFromGithub()
+
         listViewInitSetting(view)
         adImagesRotationTimerON(view)
-
         getWeatherNews(view)
-
 
         return view
 
