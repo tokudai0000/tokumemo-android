@@ -19,7 +19,7 @@ class ClubListsFragment : Fragment() {
         val webView = view.findViewById<WebView>(R.id.club_lists_webview)
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
-        webView.loadUrl(Url.clubList.urlString)
+        webView.loadUrl(Url.ClubList.urlString)
 
         return view
     }

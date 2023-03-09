@@ -12,7 +12,7 @@ class WebViewModel: ViewModel() {
 
     /// タイムアウトのURLであるか判定
     public fun isTimeout(urlStr: String): Boolean {
-        return urlStr == Url.universityServiceTimeOut.urlString || urlStr == Url.universityServiceTimeOut2.urlString
+        return urlStr == Url.UniversityServiceTimeOut.urlString || urlStr == Url.UniversityServiceTimeOut2.urlString
     }
 
     /// Safariで開きたいURLであるか判定
@@ -45,23 +45,23 @@ class WebViewModel: ViewModel() {
             return JavaScriptType.none
         }
         // アンケート解答の催促画面
-        if (urlString == Url.skipReminder.urlString) {
+        if (urlString == Url.SkipReminder.urlString) {
             return JavaScriptType.skipReminder
         }
         // 大学統合認証システム(IAS)のログイン画面
-        if (urlString in Url.universityLogin.urlString) {
+        if (urlString in Url.UniversityLogin.urlString) {
             return JavaScriptType.loginIAS
         }
         // シラバスの検索画面
-        if (urlString == Url.syllabus.urlString) {
+        if (urlString == Url.Syllabus.urlString) {
             return JavaScriptType.syllabus
         }
         // メール(Outlook)のログイン画面
-        if (urlString in Url.outlookLoginForm.urlString) {
+        if (urlString in Url.OutlookLoginForm.urlString) {
             return JavaScriptType.loginOutlook
         }
         // 徳島大学キャリアセンターのログイン画面
-        if (urlString == Url.tokudaiCareerCenter.urlString) {
+        if (urlString == Url.TokudaiCareerCenter.urlString) {
             return JavaScriptType.loginCareerCenter
         }
         // それ以外なら

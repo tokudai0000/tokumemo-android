@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         val contactUs = view.findViewById<Button>(R.id.studentCard)
         contactUs.setOnClickListener {
             val intent = Intent(requireContext(), WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", Url.contactUs.urlString)
+            intent.putExtra("PAGE_KEY", Url.ContactUs.urlString)
             startActivity(intent)
         }
 
