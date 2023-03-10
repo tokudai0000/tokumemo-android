@@ -8,9 +8,12 @@ import java.util.*
 public final class DataManager {
     companion object {
 
-        public var cAccount = {
-
-        }
+        data class LoginState(
+            var isProgress: Boolean = false,          // 進行中
+            var completeImmediately: Boolean = false, // 完了してすぐ
+            var completed: Boolean = false,           // ログイン完了
+        )
+        public var loginState:LoginState = LoginState()
 
         /// JavaScriptを動かすかどうかのフラグ
         ///

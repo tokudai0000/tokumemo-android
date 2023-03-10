@@ -8,14 +8,6 @@
     android:layout_gravity="center"
     tools:context=".MainActivity">
 
-    <WebView
-        android:id="@+id/webView_for_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </WebView>
-
     <fragment
         android:id="@+id/nav_host_fragment"
         android:layout_height="match_parent"

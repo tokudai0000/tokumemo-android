@@ -1,12 +1,6 @@
 package com.example.tokumemo
 
-import android.content.Context
-import decrypt
-import encrypt
 import android.os.Bundle
-import android.util.Log
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -27,106 +21,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         setupWithNavController(bottomNavigation, navController)
 
-        savePassword(this, "c611821006")
-        Log.d("PRINT",getPassword(this) ?: "getPassword_nil")
-
-        // 自動ログイン用WebView
-//        val webView: WebView = findViewById(R.id.webView_for_login)
-//        webView.settings.javaScriptEnabled = true
-//        webView.webViewClient = object : WebViewClient(){
-//
-//            override fun onPageFinished(view: WebView?, url: String?) {
-//                var urlString = ""
-//                url?.let { urlString = it }
-//
-//                val type = viewModel.anyJavaScriptExecute(urlString)
-//
-//                // 徳島大学ログイン画面の場合
-//                if (type == MainModel.JavaScriptType.loginIAS) {
-//
-//                    // エラーハンドリング
-//                    if (!DataManager.canExecuteJavascript) {
-//                        return
-//                    }
-//
-//                    val cAccount = encryptedLoad("KEY_cAccount")
-//                    val password = encryptedLoad("KEY_password")
-//
-//                    webView.evaluateJavascript(
-//                        "document.getElementById('username').value= '$cAccount'",
-//                        null
-//                    )
-//                    webView.evaluateJavascript(
-//                        "document.getElementById('password').value= '$password'",
-//                        null
-//                    )
-//                    webView.evaluateJavascript(
-//                        "document.getElementsByClassName('form-element form-button')[0].click();",
-//                        null
-//                    )
-//
-//
-//                }
-//
-//                when (viewModel.anyJavaScriptExecute(urlString)) {
-//                    MainModel.JavaScriptType.loginIAS -> {
-//                        if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
-//                            if (DataManager.jsCount < 2) {
-//                                Log.i("jsCount", DataManager.jsCount.toString())
-//                                DataManager.jsCount += 1
-//                                val cAccount = encryptedLoad("KEY_cAccount")
-//                                val password = encryptedLoad("KEY_password")
-//
-//                                webView.evaluateJavascript(
-//                                    "document.getElementById('username').value= '$cAccount'",
-//                                    null
-//                                )
-//                                webView.evaluateJavascript(
-//                                    "document.getElementById('password').value= '$password'",
-//                                    null
-//                                )
-//                                webView.evaluateJavascript(
-//                                    "document.getElementsByClassName('form-element form-button')[0].click();",
-//                                    null
-//                                )
-//                            }
-//                        }
-//                    }
-//                    else -> {}
-//                }
-//
-//                super.onPageFinished(view, url)
-//
-//                // ついでに天気情報を更新しておく
-//                binding.weatherText.text = resultText
-//                iconUrl = "https://openweathermap.org/img/wn/" + encryptedLoad("icon") + ".png"
-//                weatherWebView.loadUrl(iconUrl)
-//            }
-//        }
-//        webView.loadUrl("https://eweb.stud.tokushima-u.ac.jp/Portal/")
-//        // 隠れWebビューここまで
-
-    }
-
-    // パスワードを暗号化して保存する
-    fun savePassword(context: Context, plainPassword: String) {
-        // 暗号化
-        val encryptedPassword = encrypt(context, "password", plainPassword)
-
-        // shaaredPreferencesに保存
-        var editor = getSharedPreferences("my_settings", Context.MODE_PRIVATE).edit().apply {
-            putString("encrypted_password", encryptedPassword).commit()
-        }
-    }
-
-    // パスワードを復号化して取得する
-    fun getPassword(context: Context): String? {
-        // shaaredPreferencesから読み込み
-        val encryptedPassword = getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString("encrypted_password", null)
-        // アンラップ
-        encryptedPassword ?: return null
-        // 復号化
-        return decrypt("password", encryptedPassword)
     }
 }
 
