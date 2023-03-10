@@ -47,8 +47,6 @@ class HomeFragment : Fragment() {
         webViewForLogin = view.findViewById<WebView>(R.id.webView_for_login)
         listView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
 
-        savePassword(view.context,"c611821006","KEY_cAccount")
-        savePassword(view.context,"S7Nk9D9H2a","KEY_password")
         val contactUs = view.findViewById<Button>(R.id.studentCard)
         contactUs.setOnClickListener {
             val intent = Intent(requireContext(), WebActivity::class.java)
