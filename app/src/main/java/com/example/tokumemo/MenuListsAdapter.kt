@@ -36,7 +36,12 @@ class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val field = fields[position]
         holder.fieldName.text = field.title
-        holder.fieldImage.setImageResource(field.image)
+
+        if(!DataManager.loginState.completed && field.isLockIconExists) {
+            holder.fieldImage.setImageResource(R.drawable.lock)
+        }else{
+            holder.fieldImage.setImageResource(field.image)
+        }
 
         // 4. セルのクリックイベントにリスナをセット
         holder.itemView.setOnClickListener {

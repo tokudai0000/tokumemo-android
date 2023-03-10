@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings.Global.putString
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,7 @@ class HomeFragment : Fragment() {
 
     private fun listViewInitSetting(view: View) {
         val displayMenuLists = viewModel.displayMenuList()
+        // 最初はログイン完了していないので鍵マークを表示
         val adapter = MenuListsAdapter(displayMenuLists)
         listView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
@@ -170,6 +172,8 @@ class HomeFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
         webView.loadUrl(Url.UniversityTransitionLogin.urlString)
         DataManager.canExecuteJavascript = true
+        DataManager.loginState.isProgress = true // ログイン処理の開始(iOSでは必要ないが、Androidでは必要)
+
         webView.webViewClient = object : WebViewClient() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -199,14 +203,25 @@ class HomeFragment : Fragment() {
 
                 // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
                 if (DataManager.loginState.completeImmediately) {
+                    if (view != null) {
+                        if (listView.adapter != null) {
+                            listView.adapter!!.notifyDataSetChanged()
+                        }
+
+                        Toast.makeText(
+                            view.context,
+                            "ログイン終了",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 //                    listView.adapter =
                 }
 
                 // ログイン中のアニメーションを消す
-//                if (dataManager.loginState.isProgress == false) {
+                if (DataManager.loginState.isProgress == false) {
 //                    viewActivityIndicator.stopAnimating() // クルクルストップ
 //                    loginGrayBackGroundView.isHidden = true
-//                }
+                }
 
 
                 // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
@@ -230,7 +245,6 @@ class HomeFragment : Fragment() {
                         "document.getElementsByClassName('form-element form-button')[0].click();",
                         null
                     )
-                    Toast.makeText(view.context, "実施", Toast.LENGTH_SHORT).show()
 
                     // フラグ管理
                     updateLoginFlag(flagType.ExecutedJavaScript)
