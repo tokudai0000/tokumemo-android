@@ -27,6 +27,7 @@ import java.net.URL
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 import decrypt
+import java.time.LocalDateTime
 
 
 class HomeFragment : Fragment() {
@@ -82,6 +83,18 @@ class HomeFragment : Fragment() {
             override fun onItemClick(book: MenuData) {
                 when(book.id) {
                     MenuListItemType.CurrentTermPerformance -> {
+                        // API24以下ではこれ API26以上ではLocalDate.now()が使用できる
+                        val calendar = Calendar.getInstance()
+                        var year = calendar.get(Calendar.YEAR)
+                        val month = calendar.get(Calendar.MONTH) + 1 //月は0から始まるため、+1する
+
+                        // 1月から3月までは前年度のURLを表示
+                        if (month < 4){
+                            year -= 1
+                        }
+                        val intent = Intent(requireContext(), WebActivity::class.java)
+                        intent.putExtra("PAGE_KEY",book.url + year)
+                        startActivity(intent)
 
                     }
                     MenuListItemType.Syllabus -> {
