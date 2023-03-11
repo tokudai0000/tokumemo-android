@@ -2,11 +2,13 @@ package com.example.tokumemo
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.Settings.Global.putString
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -47,6 +49,9 @@ class HomeFragment : Fragment() {
         webViewForLogin = view.findViewById<WebView>(R.id.webView_for_login)
         listView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
 
+        savePassword(view.context,"c611821006","KEY_cAccount")
+        savePassword(view.context,"S7Nk9D9H2a","KEY_password")
+
         val contactUs = view.findViewById<Button>(R.id.studentCard)
         contactUs.setOnClickListener {
             val intent = Intent(requireContext(), WebActivity::class.java)
@@ -73,28 +78,27 @@ class HomeFragment : Fragment() {
         listView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
         // 書籍情報セルのクリック処理
-        adapter.setOnBookCellClickListener(
-            object : MenuListsAdapter.OnBookCellClickListener {
-                override fun onItemClick(book: MenuData) {
-                    // 書籍データを渡す処理
-//                    setFragmentResult("menuData", bundleOf(
-//                        "id" to book.id,
-//                        "url" to book.url
-//                    ))
+        adapter.setOnBookCellClickListener(object : MenuListsAdapter.OnBookCellClickListener {
+            override fun onItemClick(book: MenuData) {
+                when(book.id) {
+                    MenuListItemType.CurrentTermPerformance -> {
 
-                    val intent = Intent(requireContext(), WebActivity::class.java)
-                    // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-                    intent.putExtra("PAGE_KEY",book.url)
-                    startActivity(intent)
-                    // 画面遷移処理
-//                    parentFragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.fl_activity_main, BookFragment())
-//                        .addToBackStack(null)
-//                        .commit()
+                    }
+                    MenuListItemType.Syllabus -> {
+
+                    }
+                    MenuListItemType.LibraryCalendar -> {
+
+                    }
+                    else -> {
+                        val intent = Intent(requireContext(), WebActivity::class.java)
+                        intent.putExtra("PAGE_KEY",book.url)
+                        startActivity(intent)
+                    }
+
                 }
             }
-        )
+        })
         listView.adapter = adapter
     }
 
@@ -173,10 +177,9 @@ class HomeFragment : Fragment() {
         DataManager.loginState.isProgress = true // ログイン処理の開始(iOSでは必要ないが、Androidでは必要)
 
         webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
 
-            override fun onPageFinished(view: WebView?, url: String?) {
-                // アンラップ
-                val urlString = guard(url) { throw return }
+                val urlString = guard(url) { throw return false }
 
                 // ログインが完了しているかフラグ更新
                 checkLoginComplete(urlString)
@@ -221,6 +224,13 @@ class HomeFragment : Fragment() {
 //                    loginGrayBackGroundView.isHidden = true
                 }
 
+                return false
+            }
+
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                // アンラップ
+                val urlString = guard(url) { throw return }
 
                 // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
                 if (canExecuteJS(urlString)) {
