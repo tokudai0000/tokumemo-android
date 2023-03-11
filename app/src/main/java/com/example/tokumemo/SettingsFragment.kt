@@ -1,10 +1,12 @@
 package com.example.tokumemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
@@ -23,23 +25,34 @@ class SettingsFragment : Fragment() {
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
         listView.adapter = SettingsListsAdapter(requireContext(), viewModel.initSettingsList)
-//        val adapter = SettingsListsAdapter(titleArray)
+        listView.setOnItemClickListener {parent, view, position, id ->
+            val item = viewModel.initSettingsList[position]
+            when (item.id) {
+                SettingListItemType.Password -> {
 
-        // xmlにて実装したListViewの取得
+                }
+                SettingListItemType.Favorite -> {
+                    Toast.makeText(
+                        view.context,
+                        "近日中に実装",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                SettingListItemType.Customize -> {
+                    Toast.makeText(
+                        view.context,
+                        "近日中に実装",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    val intent = Intent(requireContext(), WebActivity::class.java)
+                    intent.putExtra("PAGE_KEY", item.url.toString())
+                    startActivity(intent)
+                }
 
-        // 項目をタップしたときの処理
-//        listView.setOnItemClickListener {parent, view, position, id ->
-//
-//            // 項目のラベルテキストをログに表示
-//            Log.i("PRINT", titleArray[position].link.toString())
-//
-//            val intent = Intent(requireContext(), WebActivity::class.java)
-//            // WebActivityにどのWebサイトを開こうとしているかをIdとして送信して知らせる
-//            intent.putExtra("PAGE_KEY",titleArray[position].link.toString())
-//            startActivity(intent)
-//        }
-//        listView.adapter
-
+            }
+        }
         return view
     }
 }
