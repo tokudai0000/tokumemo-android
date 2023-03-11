@@ -99,7 +99,9 @@ class HomeFragment : Fragment() {
 
                     }
                     MenuListItemType.Syllabus -> {
-
+                        val intent = Intent(requireContext(), PasswordActivity::class.java)
+                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
+                        startActivity(intent)
                     }
                     MenuListItemType.LibraryCalendar -> {
                         val calendar = Calendar.getInstance()

@@ -29,7 +29,9 @@ class SettingsFragment : Fragment() {
             val item = viewModel.initSettingsList[position]
             when (item.id) {
                 SettingListItemType.Password -> {
-
+                    val intent = Intent(requireContext(), PasswordActivity::class.java)
+                    intent.putExtra("hogemon", PasswordActivity.DisplayType.Password)
+                    startActivity(intent)
                 }
                 SettingListItemType.Favorite -> {
                     Toast.makeText(
