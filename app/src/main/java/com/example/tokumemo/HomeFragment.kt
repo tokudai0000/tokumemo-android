@@ -1,6 +1,7 @@
 package com.example.tokumemo
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -101,7 +102,31 @@ class HomeFragment : Fragment() {
 
                     }
                     MenuListItemType.LibraryCalendar -> {
+                        val calendar = Calendar.getInstance()
+                        var year = calendar.get(Calendar.YEAR)
 
+                        // ダイアログの表示
+                        val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(), R.style.FirstDialogStyle)
+                        alertDialog.setTitle("図書館の所在を選択")
+                        alertDialog.setMessage("こちらは最新情報ではありません。最新の情報は図書館ホームページをご覧ください。")
+                        alertDialog.setNegativeButton("蔵本",
+                            DialogInterface.OnClickListener { dialog, whichButton ->
+                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$year.pdf&embedded=true"
+                                val intent = Intent(requireContext(), WebActivity::class.java)
+                                intent.putExtra("PAGE_KEY",libraryURL)
+                                startActivity(intent)
+                            })
+                        alertDialog.setPositiveButton("常三島",
+                            DialogInterface.OnClickListener { dialog, whichButton ->
+                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$year.pdf&embedded=true"
+                                val intent = Intent(requireContext(), WebActivity::class.java)
+                                intent.putExtra("PAGE_KEY",libraryURL)
+                                startActivity(intent)
+                            })
+                        alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
+                            // キャンセルの処理
+                        })
+                        alertDialog.show()
                     }
                     else -> {
                         val intent = Intent(requireContext(), WebActivity::class.java)
