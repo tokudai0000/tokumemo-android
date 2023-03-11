@@ -91,7 +91,7 @@ enum class Url(val urlString: String) {
     /// アプリ紹介文
     AppIntroduction("https://tokudai0000.github.io/tokumemo_resource/document/tokumemo_explanation.txt"),
     /// トクメモ＋のソースコード[GitHub]
-    SourceCode("https://github.com/tokudai0000/univIP"),
+    SourceCode("https://github.com/tokudai0000/TokumemoAndroid"),
     /// 気象庁の天気予報
     Weather("https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"),
 
