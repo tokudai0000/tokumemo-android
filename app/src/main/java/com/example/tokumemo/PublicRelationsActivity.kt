@@ -16,7 +16,7 @@ class PublicRelationsActivity : AppCompatActivity() {
     lateinit var introduction: String
     lateinit var description: String
     lateinit var tappedURL: String
-    lateinit var organization_name: String
+//    lateinit var organization_name: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,20 +38,18 @@ class PublicRelationsActivity : AppCompatActivity() {
         loadPRData()
 
         val imageView = findViewById<ImageView>(R.id.pr_image_view)
-        val imageTask: GetImage = GetImage(imageView)
-        imageTask.execute(imageURL)
+        GetImage(imageView).execute(imageURL)
 
-        var introText = findViewById<TextView>(R.id.textView5)
-        introText.text = introduction
+        findViewById<TextView>(R.id.textView5).text = introduction
     }
 
     private fun loadPRData() {
-        // HomeFragemntからURLを受け取る
+        // HomeFragmentからURLを受け取る
         imageURL = intent.getStringExtra("PR_imageURL").toString()
         introduction = intent.getStringExtra("PR_introduction").toString()
         description = intent.getStringExtra("PR_description").toString()
         tappedURL = intent.getStringExtra("PR_tappedURL").toString()
-        organization_name = intent.getStringExtra("PR_organization_name").toString()
+//        organization_name = intent.getStringExtra("PR_organization_name").toString()
     }
 
 }

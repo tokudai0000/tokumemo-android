@@ -68,11 +68,11 @@ class HomeFragment : Fragment() {
     /// RecyclerViewの初期設定
     private fun recyclerViewInitSetting(view: View) {
         val displayMenuLists = viewModel.displayMenuList()
-        val adapter = MenuListsAdapter(displayMenuLists)
+        val adapter = HomeMenuRecyclerAdapter(displayMenuLists)
         // 横3列に指定する
         menuRecyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
-        adapter.setOnBookCellClickListener(object : MenuListsAdapter.OnBookCellClickListener {
+        adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
                 when(item.id) {
                     // 教務事務システム

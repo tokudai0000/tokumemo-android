@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MenuListsAdapter(private val fields: List<HomeListData>): RecyclerView.Adapter<MenuListsAdapter.ViewHolder>() {
+class HomeMenuRecyclerAdapter(private val fields: List<HomeListData>): RecyclerView.Adapter<HomeMenuRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val fieldImage: ImageView = view.findViewById(R.id.field_image)
