@@ -6,7 +6,7 @@ data class HomeListData(
     var image: Int,
     var url: String?,
     var isLockIconExists: Boolean,
-    var isHiddon: Boolean
+    var isHidden: Boolean
 )
 
 enum class MenuListItemType {
