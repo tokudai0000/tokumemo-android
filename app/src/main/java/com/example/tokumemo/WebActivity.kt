@@ -47,6 +47,11 @@ class WebActivity : AppCompatActivity() {
             webView.goForward()
         }
 
+        findViewById<ImageButton>(R.id.browser_button).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlString))
+            startActivity(intent)
+        }
+
 
         viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
