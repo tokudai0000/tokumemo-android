@@ -25,7 +25,7 @@ class SettingsFragment : Fragment() {
         // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
         listView.adapter = SettingsListsAdapter(requireContext(), viewModel.initSettingsList)
-        listView.setOnItemClickListener {parent, view, position, id ->
+        listView.setOnItemClickListener {_, view, position, _ ->
             val item = viewModel.initSettingsList[position]
             when (item.id) {
                 SettingListItemType.Password -> {
