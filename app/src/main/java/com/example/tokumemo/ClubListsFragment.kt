@@ -21,11 +21,13 @@ class ClubListsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_club_lists, container, false)
         val webView = view.findViewById<WebView>(R.id.club_lists_webview)
-        webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
         webView.loadUrl(Url.ClubList.urlString)
+
         webView.setWebChromeClient(object : WebChromeClient() {
+            // Web側(HTML,JavaScript)からKotlinが通知を受け、WebActivityを表示させる
             override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {
+                // アラートの表示をキャンセルする
                 result.cancel()
 
                 val intent = Intent(requireContext(), WebActivity::class.java)
@@ -35,8 +37,6 @@ class ClubListsFragment : Fragment() {
                 return true
             }
         })
-
         return view
     }
-
 }
