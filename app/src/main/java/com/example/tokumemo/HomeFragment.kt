@@ -3,13 +3,9 @@ package com.example.tokumemo
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.Settings.Global.putString
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -28,7 +24,6 @@ import java.net.URL
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 import decrypt
-import java.time.LocalDateTime
 
 
 class HomeFragment : Fragment() {
@@ -37,7 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var weatherText: TextView
     private lateinit var weatherIcon: ImageView
     private lateinit var webViewForLogin: WebView
-    private lateinit var listView: RecyclerView
+    private lateinit var menuRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,43 +41,41 @@ class HomeFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        weatherText = view.findViewById<TextView>(R.id.weatherText)
-        weatherIcon = view.findViewById<ImageView>(R.id.weatherIcon)
+        weatherText = view.findViewById<TextView>(R.id.weather_text)
+        weatherIcon = view.findViewById<ImageView>(R.id.weather_icon)
         webViewForLogin = view.findViewById<WebView>(R.id.webView_for_login)
-        listView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
+        menuRecyclerView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
 
-        savePassword(view.context,"c611821006","KEY_cAccount")
-        savePassword(view.context,"S7Nk9D9H2a","KEY_password")
 
-        val contactUs = view.findViewById<Button>(R.id.studentCard)
-        contactUs.setOnClickListener {
+        val contactUs = view.findViewById<Button>(R.id.contact_us)
+        contactUs.setOnClickListener { // 意見箱ボタン
             val intent = Intent(requireContext(), WebActivity::class.java)
             intent.putExtra("PAGE_KEY", Url.ContactUs.urlString)
             startActivity(intent)
         }
 
+        // PR画像(広告)の取得
         viewModel.getPRItemsFromGithub()
-
-        listViewInitSetting(view)
+        recyclerViewInitSetting(view)
+        pRImagesInitSetting(view)
+        getWeatherData(view)
         loginWebViewInitSetting(view)
-        adImagesRotationTimerON(view)
-        getWeatherNews(view)
 
         return view
-
     }
 
 
-    private fun listViewInitSetting(view: View) {
+    /// RecyclerViewの初期設定
+    private fun recyclerViewInitSetting(view: View) {
         val displayMenuLists = viewModel.displayMenuList()
-        // 最初はログイン完了していないので鍵マークを表示
         val adapter = MenuListsAdapter(displayMenuLists)
-        listView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+        // 横3列に指定する
+        menuRecyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
-        // 書籍情報セルのクリック処理
         adapter.setOnBookCellClickListener(object : MenuListsAdapter.OnBookCellClickListener {
-            override fun onItemClick(book: MenuData) {
-                when(book.id) {
+            override fun onItemClick(item: HomeListData) {
+                when(item.id) {
+                    // 教務事務システム
                     MenuListItemType.CurrentTermPerformance -> {
                         // API24以下ではこれ API26以上ではLocalDate.now()が使用できる
                         val calendar = Calendar.getInstance()
@@ -94,61 +87,64 @@ class HomeFragment : Fragment() {
                             year -= 1
                         }
                         val intent = Intent(requireContext(), WebActivity::class.java)
-                        intent.putExtra("PAGE_KEY",book.url + year)
+                        intent.putExtra("PAGE_KEY",item.url + year)
                         startActivity(intent)
-
                     }
+
+                    // シラバス
                     MenuListItemType.Syllabus -> {
                         val intent = Intent(requireContext(), PasswordActivity::class.java)
                         intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
                         startActivity(intent)
                     }
+
+                    // 図書館カレンダー
                     MenuListItemType.LibraryCalendar -> {
                         val calendar = Calendar.getInstance()
-                        var year = calendar.get(Calendar.YEAR)
+                        val year = calendar.get(Calendar.YEAR)
 
-                        // ダイアログの表示
+                        // ダイアログの表示(常三島と蔵本を)
                         val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(), R.style.FirstDialogStyle)
                         alertDialog.setTitle("図書館の所在を選択")
                         alertDialog.setMessage("こちらは最新情報ではありません。最新の情報は図書館ホームページをご覧ください。")
                         alertDialog.setNegativeButton("蔵本",
-                            DialogInterface.OnClickListener { dialog, whichButton ->
+                            DialogInterface.OnClickListener { _, _ ->
                                 val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$year.pdf&embedded=true"
                                 val intent = Intent(requireContext(), WebActivity::class.java)
                                 intent.putExtra("PAGE_KEY",libraryURL)
                                 startActivity(intent)
                             })
                         alertDialog.setPositiveButton("常三島",
-                            DialogInterface.OnClickListener { dialog, whichButton ->
+                            DialogInterface.OnClickListener { _, _ ->
                                 val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$year.pdf&embedded=true"
                                 val intent = Intent(requireContext(), WebActivity::class.java)
                                 intent.putExtra("PAGE_KEY",libraryURL)
                                 startActivity(intent)
                             })
-                        alertDialog.setOnCancelListener(DialogInterface.OnCancelListener {
-                            // キャンセルの処理
-                        })
                         alertDialog.show()
                     }
+
+                    // 他のメニューはWebActivityで開く
                     else -> {
                         val intent = Intent(requireContext(), WebActivity::class.java)
-                        intent.putExtra("PAGE_KEY",book.url)
+                        intent.putExtra("PAGE_KEY",item.url)
                         startActivity(intent)
                     }
 
                 }
             }
         })
-        listView.adapter = adapter
+        menuRecyclerView.adapter = adapter
     }
 
-    /// 広告を一定時間ごとに読み込ませる処理のスイッチ
-    private fun adImagesRotationTimerON(view: View) {
-        val imageView = view.findViewById<ImageView>(R.id.pr_image_button)
 
-        // ImageViewにクリックリスナーを設定
+    /// PR画像についての初期設定
+    private fun pRImagesInitSetting(view: View) {
+        val imageView = view.findViewById<ImageView>(R.id.pr_image_button)
         imageView.setOnClickListener {
+            // PR画像が表示されているのならdisplayPRImagesNumberには値が入っている
             viewModel.displayPRImagesNumber?.let {
+                // 表示されているPR画像の情報をPublicRelationsActivityに値を渡す
                 viewModel.prItems[it].let {
                     val intent = Intent(context, PublicRelationsActivity::class.java)
                     intent.putExtra("PR_imageURL",it.imageURL)
@@ -161,113 +157,111 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 5000 ms 毎に実行
+        // PR画像(広告)を5000 msごとに読み込ませる
         Timer().scheduleAtFixedRate(0, 5000) {
-            val num = viewModel.selectPRImageNumber()
-            if (num != null) {
-                viewModel.displayPRImagesNumber = num
-                val imageTask: GetImage = GetImage(imageView)
-                imageTask.execute(viewModel.prItems[num].imageURL)
+            viewModel.selectPRImageNumber()?.let {
+                viewModel.displayPRImagesNumber = it
+                GetImage(imageView).execute(viewModel.prItems[it].imageURL)
             }
         }
     }
 
-    // 天気を取得
-    private fun getWeatherNews(view: View): Job = GlobalScope.launch {
+
+    /// 天気を取得
+    private fun getWeatherData(view: View): Job = GlobalScope.launch {
         // 徳島大学本部の所在地の緯度経度
-        var lat = 34.07003444012803
-        var lon = 134.55981101249947
-        // APIを使う際に必要なKEY
-        val API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
-        // URL。場所と言語・API_KEYを添付
+        val latitude = 34.07003444012803 // 緯度(いど)
+        val longitude = 134.55981101249947 // 経度(けいど)
+        // OpenWeatherMapからAPI通信を許可してもらうKEY
+        val apiKey = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        // URLを作成 パラメーターに場所と言語、APIのKEYを付与
         val urlStr = "https://api.openweathermap.org/data/2.5/weather?" +
-                "units=metric&" +
-                "lat=" + lat + "&" +
-                "lon=" + lon + "&" +
+                "units=" + "metric"+ "&" +
+                "lat=" + latitude + "&" +
+                "lon=" + longitude + "&" +
                 "lang=" + "ja" + "&" +
-                "APPID=" + API_KEY
+                "APPID=" + apiKey
 
         try {
+            // URLから返ってきたデータをStringで取得
             val str = URL(urlStr).readText()
+            // JSONにパース
             val json = JSONObject(str)
 
-            // 天気を取得
-            val weatherList = json.getJSONArray("weather").getJSONObject(0)
-
-            // 天気を取得
-            val descriptionText = weatherList.getString("description")
-            val icon = weatherList.getString("icon")
+            val weatherData = json.getJSONArray("weather").getJSONObject(0)
+            val description = weatherData.getString("description")
+            val icon = weatherData.getString("icon")
             val temp = json.getJSONObject("main").getString("temp")
 
-            val imageTask: GetImage = GetImage(weatherIcon)
-            imageTask.execute("https://openweathermap.org/img/wn/" + icon + ".png")
-            weatherText.text = "$descriptionText\n$temp℃"
+            GetImage(weatherIcon).execute("https://openweathermap.org/img/wn/" + icon + ".png")
+            // 1行目に天気の情報(薄い雲など)、2行目に天気の気温を表示
+            weatherText.text = "$description\n$temp℃"
+
         } catch (e: Exception) {
-//            weatherText.text = "現在天気を取得できません"
+            weatherText.text = "取得失敗"
         }
     }
 
 
+    /// バックグラウンドで動かしているログイン用のWebViewの初期設定
     private fun loginWebViewInitSetting(view: View) {
-        // 自動ログイン用WebView
+        // JavaScriptインジェクションを実行するフラグを立てる
+        DataManager.canExecuteJavascript = true
+        // ログイン処理の開始(iOSでは必要ないが、Androidでは必要。理由不明)
+        DataManager.loginState.isProgress = true
+
         val webView: WebView = view.findViewById(R.id.webView_for_login)
         webView.settings.javaScriptEnabled = true
         webView.loadUrl(Url.UniversityTransitionLogin.urlString)
-        DataManager.canExecuteJavascript = true
-        DataManager.loginState.isProgress = true // ログイン処理の開始(iOSでは必要ないが、Androidでは必要)
 
         webView.webViewClient = object : WebViewClient() {
+            // URL読み込み開始前
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-
+                // アンラップ
                 val urlString = guard(url) { throw return false }
 
-                // ログインが完了しているかフラグ更新
+                // フラグの更新
                 checkLoginComplete(urlString)
 
                 // パスワードを登録しているか
-                if (hasRegisteredPassword() == false) {
-                    updateLoginFlag(flagType.NotStart)
+                if (!hasRegisteredPassword()) {
+                    updateLoginFlag(FlagType.NotStart)
                 }
 
                 // タイムアウトの判定
                 if (isTimeout(urlString)) {
-                    relogin()
+                    reLogin()
                 }
 
-                // ログインに失敗していた場合
+                // 大学Webに自動ログインに失敗していた場合
                 if (isLoginFailure(urlString)) {
-                    updateLoginFlag(flagType.LoginFailure)
-                    if (view != null) {
-                        Toast.makeText(view.context, "学生番号もしくはパスワードが間違っている為、ログインできませんでした", Toast.LENGTH_SHORT).show()
-                    }
+                    updateLoginFlag(FlagType.LoginFailure)
+                    Toast.makeText(view?.context,
+                        "学生番号もしくはパスワードが間違っている為、ログインできませんでした",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
                 if (DataManager.loginState.completeImmediately) {
-                    if (view != null) {
-                        if (listView.adapter != null) {
-                            listView.adapter!!.notifyDataSetChanged()
-                        }
+                    menuRecyclerView.adapter?.notifyDataSetChanged()
 
-                        Toast.makeText(
-                            view.context,
-                            "ログイン終了",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-//                    listView.adapter =
+                    Toast.makeText(
+                        view?.context,
+                        "ログイン終了",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 // ログイン中のアニメーションを消す
-                if (DataManager.loginState.isProgress == false) {
+//                if (DataManager.loginState.isProgress == false) {
 //                    viewActivityIndicator.stopAnimating() // クルクルストップ
 //                    loginGrayBackGroundView.isHidden = true
-                }
-
+//                }
                 return false
             }
 
-
+            // 読み込み完了時
             override fun onPageFinished(view: WebView?, url: String?) {
                 // アンラップ
                 val urlString = guard(url) { throw return }
@@ -294,8 +288,8 @@ class HomeFragment : Fragment() {
                         null
                     )
 
-                    // フラグ管理
-                    updateLoginFlag(flagType.ExecutedJavaScript)
+                    // フラグを更新
+                    updateLoginFlag(FlagType.ExecutedJavaScript)
                     return
                 }
             }
@@ -304,11 +298,10 @@ class HomeFragment : Fragment() {
 
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
-    private fun relogin() {
+    private fun reLogin() {
 //        viewActivityIndicator.startAnimating() // クルクルスタート
 //        loginGrayBackGroundView.isHidden = false
-        updateLoginFlag(flagType.LoginStart)
-
+        updateLoginFlag(FlagType.LoginStart)
         webViewForLogin.loadUrl(Url.UniversityTransitionLogin.urlString)
     }
 
@@ -328,13 +321,13 @@ class HomeFragment : Fragment() {
 
         // ログイン処理中かつ、ログイン後のURL
         if (DataManager.loginState.isProgress && result) {
-            updateLoginFlag(flagType.LoginSuccess)
+            updateLoginFlag(FlagType.LoginSuccess)
             return
         }
         return
     }
 
-    enum class flagType {
+    enum class FlagType {
         NotStart,
         LoginStart,
         LoginSuccess,
@@ -342,31 +335,31 @@ class HomeFragment : Fragment() {
         ExecutedJavaScript
     }
     // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-    private fun updateLoginFlag(type: flagType) {
+    private fun updateLoginFlag(type: FlagType) {
         when (type){
-            flagType.NotStart -> {
+            FlagType.NotStart -> {
                 DataManager.canExecuteJavascript = false
                 DataManager.loginState.isProgress = false
                 DataManager.loginState.completed = false
             }
-            flagType.LoginStart -> {
+            FlagType.LoginStart -> {
                 DataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
                 DataManager.loginState.isProgress = true // ログイン処理中
                 DataManager.loginState.completed = false // ログインが完了していない
             }
-            flagType.LoginSuccess -> {
+            FlagType.LoginSuccess -> {
                 DataManager.canExecuteJavascript = false
                 DataManager.loginState.isProgress = false
                 DataManager.loginState.completeImmediately = true
                 DataManager.loginState.completed = true
 //                lastLoginTime = Date() // 最終ログイン時刻の記録
             }
-            flagType.LoginFailure -> {
+            FlagType.LoginFailure -> {
                 DataManager.canExecuteJavascript = false
                 DataManager.loginState.isProgress = false
                 DataManager.loginState.completed = false
             }
-            flagType.ExecutedJavaScript -> {
+            FlagType.ExecutedJavaScript -> {
                 // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
                 DataManager.canExecuteJavascript = false
                 DataManager.loginState.isProgress = true

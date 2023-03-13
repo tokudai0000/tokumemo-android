@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter<MenuListsAdapter.ViewHolder>() {
+class MenuListsAdapter(private val fields: List<HomeListData>): RecyclerView.Adapter<MenuListsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val fieldImage: ImageView = view.findViewById(R.id.field_image)
@@ -24,7 +24,7 @@ class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter
 
     // 2. インターフェースを作成
     interface  OnBookCellClickListener {
-        fun onItemClick(book: MenuData)
+        fun onItemClick(book: HomeListData)
     }
 
     // 3. リスナーをセット
@@ -37,6 +37,7 @@ class MenuListsAdapter(private val fields: List<MenuData>): RecyclerView.Adapter
         val field = fields[position]
         holder.fieldName.text = field.title
 
+        // 最初はログイン完了していないので鍵マークを表示
         if(!DataManager.loginState.completed && field.isLockIconExists) {
             holder.fieldImage.setImageResource(R.drawable.lock)
         }else{

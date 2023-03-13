@@ -1,6 +1,6 @@
 package com.example.tokumemo
 
-data class MenuData(
+data class HomeListData(
     var title: String,
     var id: MenuListItemType,
     var image: Int,
