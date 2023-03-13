@@ -168,37 +168,40 @@ class HomeFragment : Fragment() {
 
 
     /// 天気を取得
-    private fun getWeatherData(view: View): Job = GlobalScope.launch {
-        // 徳島大学本部の所在地の緯度経度
-        val latitude = 34.07003444012803 // 緯度(いど)
-        val longitude = 134.55981101249947 // 経度(けいど)
-        // OpenWeatherMapからAPI通信を許可してもらうKEY
-        val apiKey = "e0578cd3fb0d436dd64d4d5d5a404f08"
-        // URLを作成 パラメーターに場所と言語、APIのKEYを付与
-        val urlStr = "https://api.openweathermap.org/data/2.5/weather?" +
-                "units=" + "metric"+ "&" +
-                "lat=" + latitude + "&" +
-                "lon=" + longitude + "&" +
-                "lang=" + "ja" + "&" +
-                "APPID=" + apiKey
+    private fun getWeatherData(view: View) {
+        // 非同期処理
+        GlobalScope.launch {
+            // 徳島大学本部の所在地の緯度経度
+            val latitude = 34.07003444012803 // 緯度(いど)
+            val longitude = 134.55981101249947 // 経度(けいど)
+            // OpenWeatherMapからAPI通信を許可してもらうKEY
+            val apiKey = "e0578cd3fb0d436dd64d4d5d5a404f08"
+            // URLを作成 パラメーターに場所と言語、APIのKEYを付与
+            val urlStr = "https://api.openweathermap.org/data/2.5/weather?" +
+                    "units=" + "metric" + "&" +
+                    "lat=" + latitude + "&" +
+                    "lon=" + longitude + "&" +
+                    "lang=" + "ja" + "&" +
+                    "APPID=" + apiKey
 
-        try {
-            // URLから返ってきたデータをStringで取得
-            val str = URL(urlStr).readText()
-            // JSONにパース
-            val json = JSONObject(str)
+            weatherText.text = "取得失敗" // 上書きされなければ、取得失敗ということ(catchでは何度か通る)
+            try {
+                // URLから返ってきたデータをStringで取得
+                val str = URL(urlStr).readText()
+                // JSONにパース
+                val json = JSONObject(str)
 
-            val weatherData = json.getJSONArray("weather").getJSONObject(0)
-            val description = weatherData.getString("description")
-            val icon = weatherData.getString("icon")
-            val temp = json.getJSONObject("main").getString("temp")
+                val weatherData = json.getJSONArray("weather").getJSONObject(0)
+                val description = weatherData.getString("description")
+                val icon = weatherData.getString("icon")
+                val temp = json.getJSONObject("main").getString("temp")
 
-            GetImage(weatherIcon).execute("https://openweathermap.org/img/wn/" + icon + ".png")
-            // 1行目に天気の情報(薄い雲など)、2行目に天気の気温を表示
-            weatherText.text = "$description\n$temp℃"
+                GetImage(weatherIcon).execute("https://openweathermap.org/img/wn/" + icon + ".png")
+                // 1行目に天気の情報(薄い雲など)、2行目に天気の気温を表示
+                weatherText.text = "$description\n$temp℃"
 
-        } catch (e: Exception) {
-            weatherText.text = "取得失敗"
+            } catch (e: Exception) {
+            }
         }
     }
 
