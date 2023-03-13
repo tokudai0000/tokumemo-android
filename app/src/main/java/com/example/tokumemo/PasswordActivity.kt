@@ -32,7 +32,7 @@ class PasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_password)
 
         finishButton = findViewById(R.id.finish_button)
-        titleTextView = findViewById(R.id.titleText)
+        titleTextView = findViewById(R.id.urlText)
         titleLabel1 = findViewById(R.id.cAccountLabel)
         titleLabel2 = findViewById(R.id.passwordLabel)
         textField1 = findViewById(R.id.editStudentNumber)
