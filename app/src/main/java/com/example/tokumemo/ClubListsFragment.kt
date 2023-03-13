@@ -20,7 +20,7 @@ class ClubListsFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_club_lists, container, false)
-        val webView = view.findViewById<WebView>(R.id.club_lists_webview)
+        val webView = view.findViewById<WebView>(R.id.club_lists_web_view)
         webView.settings.javaScriptEnabled = true
         webView.loadUrl(Url.ClubList.urlString)
 
