@@ -149,11 +149,11 @@ class WebActivity : AppCompatActivity() {
                                 // フラグを下ろす
                                 DataManager.canExecuteJavascript = false
                             } else {
-                                val dialog = RequireCorrectPasswordDialog()
-                                dialog.show(supportFragmentManager, "simple")
+//                                val dialog = RequireCorrectPasswordDialog()
+//                                dialog.show(supportFragmentManager, "simple")
                             }
                         } else if (DataManager.jsCount == -1) {
-                            Toast.makeText(applicationContext, "トクメモ＋ゲストユーザーなのでパスワード自動入力を行いませんでした。", Toast.LENGTH_LONG).show()
+//                            Toast.makeText(applicationContext, "トクメモ＋ゲストユーザーなのでパスワード自動入力を行いませんでした。", Toast.LENGTH_LONG).show()
                         }
                     }
                     WebViewModel.JavaScriptType.loginOutlook -> {
