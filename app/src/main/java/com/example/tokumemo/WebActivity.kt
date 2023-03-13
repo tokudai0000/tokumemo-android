@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
@@ -19,6 +20,7 @@ class WebActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private lateinit var viewModel: WebViewModel
+//    private lateinit var urlText: TextView
 
     private var urlString = ""
     private var isConnectToNetwork = false
@@ -36,6 +38,15 @@ class WebActivity : AppCompatActivity() {
         findViewById<Button>(R.id.reload_button).setOnClickListener{
             webView.reload()
         }
+
+        findViewById<ImageButton>(R.id.back_button).setOnClickListener{
+            webView.goBack()
+        }
+
+        findViewById<ImageButton>(R.id.forward_button).setOnClickListener {
+            webView.goForward()
+        }
+
 
         viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
@@ -80,6 +91,10 @@ class WebActivity : AppCompatActivity() {
                 url ?: return // アンラップ
 
                 urlString = url
+
+                val uri = Uri.parse(url)
+                val domain = uri.host
+                findViewById<TextView>(R.id.urlText).text = domain?:""
 
                 // タイムアウトの判定
                 if (viewModel.isTimeout(urlString)) {
