@@ -36,6 +36,7 @@ class NewsFragment : Fragment() {
 
         // RSSをJsonに変換してくれるサイトから、データを取得。
         // 本来はViewModelに記載したいが、通信完了後の書き方を知らないため、後日修正予定
+        viewModel.newsItems = arrayListOf<NewsListData>() // 初期化
         val url = Url.Rss.urlString
         url.httpGet().responseJson { _, _, result ->
             when (result) {
