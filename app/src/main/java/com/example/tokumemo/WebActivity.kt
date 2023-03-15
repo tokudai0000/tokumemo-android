@@ -147,51 +147,39 @@ class WebActivity : AppCompatActivity() {
                     // ログイン画面に飛ばされた場合
                     WebViewModel.JavaScriptType.loginIAS -> {
 
-                        if (shouldShowPasswordView()) {
-                            // パスワード登録画面を表示
-                            val intent = Intent(applicationContext, PasswordActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else if (DataManager.canExecuteJavascript && DataManager.jsCount >= 0) {
-                            if (DataManager.jsCount < 2) {
-                                Log.i("jsCount", DataManager.jsCount.toString())
-                                DataManager.jsCount += 1
-                                val cAccount = encryptedLoad("KEY_cAccount")
-                                val password = encryptedLoad("KEY_password")
+                        Log.i("jsCount", DataManager.jsCount.toString())
+                        val cAccount = getPassword(view!!.context,"KEY_cAccount")
+                        val password = getPassword(view!!.context,"KEY_password")
 
-                                webView.evaluateJavascript(
-                                    "document.getElementById('username').value= '$cAccount'",
-                                    null
-                                )
-                                webView.evaluateJavascript(
-                                    "document.getElementById('password').value= '$password'",
-                                    null
-                                )
-                                webView.evaluateJavascript(
-                                    "document.getElementsByClassName('form-element form-button')[0].click();",
-                                    null
-                                )
-                                // フラグを下ろす
-                                DataManager.canExecuteJavascript = false
-                            } else {
-//                                val dialog = RequireCorrectPasswordDialog()
-//                                dialog.show(supportFragmentManager, "simple")
-                            }
-                        } else if (DataManager.jsCount == -1) {
-//                            Toast.makeText(applicationContext, "トクメモ＋ゲストユーザーなのでパスワード自動入力を行いませんでした。", Toast.LENGTH_LONG).show()
-                        }
+                        webView.evaluateJavascript(
+                            "document.getElementById('username').value= '$cAccount'",
+                            null
+                        )
+                        webView.evaluateJavascript(
+                            "document.getElementById('password').value= '$password'",
+                            null
+                        )
+                        webView.evaluateJavascript(
+                            "document.getElementsByClassName('form-element form-button')[0].click();",
+                            null
+                        )
+                        // フラグを下ろす
+                        DataManager.canExecuteJavascript = false
+
                     }
                     WebViewModel.JavaScriptType.loginOutlook -> {
 
                     }
                     WebViewModel.JavaScriptType.loginCareerCenter -> {
+                        val cAccount = getPassword(view!!.context,"KEY_cAccount")
+                        val password = getPassword(view!!.context,"KEY_password")
                         // 徳島大学キャリアセンター室
                         // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
                         // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
-                        webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
-                        webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                        webView.evaluateJavascript("document.getElementsByName('user_id')[0].value='$cAccount'", null)
+                        webView.evaluateJavascript("document.getElementsByName('user_password')[0].value='$password'", null)
                         // フラグを下ろす
-                        dataManager.canExecuteJavascript = false
+                        DataManager.canExecuteJavascript = false
                     }
                     else -> {
 
@@ -221,28 +209,18 @@ class WebActivity : AppCompatActivity() {
 
     // ハスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
     private fun shouldShowPasswordView():Boolean {
-        val cAccount = encryptedLoad("KEY_cAccount")
-        val password = encryptedLoad("KEY_password")
+        val cAccount = getPassword(this, "KEY_cAccount")
+        val password = getPassword(this, "KEY_password")
         return (cAccount == "" || password == "")
     }
 
-    // 以下、暗号化してデバイスに保存する(PasswordActivityにも存在するので今後、統一)
-    companion object {
-        const val PREF_NAME = "encrypted_prefs"
-    }
-    // 読み込み
-    private fun encryptedLoad(KEY: String): String {
-        val mainKey = MasterKey.Builder(applicationContext)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        val prefs = EncryptedSharedPreferences.create(
-            applicationContext,
-            PREF_NAME,
-            mainKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        return prefs.getString(KEY, "")!! // nilの場合は空白を返す
+    // パスワードを復号化して取得する
+    private fun getPassword(context: Context, KEY: String): String? {
+        // shaaredPreferencesから読み込み
+        val encryptedPassword = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString(KEY, null)
+        // アンラップ
+        encryptedPassword ?: return null
+        // 復号化
+        return decrypt("password", encryptedPassword)
     }
 }
