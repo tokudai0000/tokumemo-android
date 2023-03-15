@@ -7,6 +7,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
@@ -120,10 +122,24 @@ class WebActivity : AppCompatActivity() {
 
                 when (viewModel.anyJavaScriptExecute(urlString)) {
                     WebViewModel.JavaScriptType.skipReminder -> {
+                        // アンケート解答の催促画面
+                        webView.evaluateJavascript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", null)
 
                     }
                     WebViewModel.JavaScriptType.syllabus -> {
+                        val subjectName = intent.getStringExtra("SYLLABUS_subject_name").toString()
+                        val teacherName = intent.getStringExtra("SYLLABUS_teacher_name").toString()
 
+                        // 検索中は、画面を消すことにより、ユーザーの別操作を防ぐ
+                        webView.visibility = INVISIBLE
+
+                        // シラバスの検索画面
+                        // ネイティブでの検索内容をWebに反映したのち、検索を行う
+                        webView.evaluateJavascript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='$subjectName'", null)
+                        webView.evaluateJavascript("document.getElementById('ctl00_phContents_txt_staff_Search').value='$teacherName'", null)
+                        webView.evaluateJavascript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", null)
+                        // フラグを下ろす
+                        DataManager.canExecuteJavascript = false
                     }
 
                     // ログイン画面に飛ばされた場合
@@ -172,6 +188,10 @@ class WebActivity : AppCompatActivity() {
                     else -> {
 
                     }
+                }
+                // シラバス検索完了後のURLに変化していたらwebViewを表示
+                if (url.toString() == "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx") {
+                    webView.visibility = GONE
                 }
                 super.onPageFinished(view, url)
             }

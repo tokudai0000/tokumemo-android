@@ -1,6 +1,7 @@
 package com.example.tokumemo
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -72,7 +73,10 @@ class PasswordActivity : AppCompatActivity() {
                 titleLabel2.text = "科目名"
                 registerButton.text = "検索"
                 registerButton.setOnClickListener(){
-
+                    val intent = Intent(this, WebActivity::class.java)
+                    intent.putExtra("SYLLABUS_teacher_name",textField1.text.toString())
+                    intent.putExtra("SYLLABUS_subject_name",textField2.text.toString())
+                    startActivity(intent)
                 }
             }
         }
