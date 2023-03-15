@@ -185,7 +185,13 @@ class WebActivity : AppCompatActivity() {
 
                     }
                     WebViewModel.JavaScriptType.loginCareerCenter -> {
-
+                        // 徳島大学キャリアセンター室
+                        // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
+                        // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
+                        webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+                        webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                        // フラグを下ろす
+                        dataManager.canExecuteJavascript = false
                     }
                     else -> {
 

@@ -74,6 +74,7 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
+                DataManager.canExecuteJavascript = true
                 when(item.id) {
                     // 教務事務システム
                     MenuListItemType.CurrentTermPerformance -> {

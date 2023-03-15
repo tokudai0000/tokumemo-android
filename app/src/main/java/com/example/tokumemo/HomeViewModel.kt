@@ -77,7 +77,7 @@ class HomeViewModel: ViewModel() {
         HomeListData(title="[図書]本貸出延長", id= MenuListItemType.LibraryBookLendingExtension, image=R.drawable.librarybooklendingextension, url= Url.LibraryBookLendingExtension.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="時間割", id= MenuListItemType.TimeTable, image=R.drawable.timetable, url= Url.TimeTable.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="今学期の成績", id= MenuListItemType.CurrentTermPerformance, image=R.drawable.currenttermperformance, url= Url.CurrentTermPerformance.urlString, isLockIconExists=true, isHidden=false),
-        HomeListData(title="シラバス", id= MenuListItemType.Syllabus, image=R.drawable.syllabus, url= Url.CurrentTermPerformance.urlString, isLockIconExists=true, isHidden=false),
+        HomeListData(title="シラバス", id= MenuListItemType.Syllabus, image=R.drawable.syllabus, url= Url.CurrentTermPerformance.urlString, isLockIconExists=false, isHidden=false),
         HomeListData(title="生協カレンダー", id= MenuListItemType.CoopCalendar, image=R.drawable.coopcalendar, url= Url.TokudaiCoop.urlString, isLockIconExists=false, isHidden=false),
         HomeListData(title="今月の食堂メニュー", id= MenuListItemType.Cafeteria, image=R.drawable.cafeteria, url= Url.TokudaiCoopDinigMenu.urlString, isLockIconExists=false, isHidden=false),
         HomeListData(title="[図書]カレンダー", id= MenuListItemType.LibraryCalendar, image=R.drawable.librarycalendar, url=null, isLockIconExists=false, isHidden=false),
