@@ -45,7 +45,7 @@ class WebViewModel: ViewModel() {
             return JavaScriptType.none
         }
         // アンケート解答の催促画面
-        if (urlString == Url.SkipReminder.urlString) {
+        if (urlString in Url.SkipReminder.urlString) {
             return JavaScriptType.skipReminder
         }
         // 大学統合認証システム(IAS)のログイン画面
@@ -53,7 +53,7 @@ class WebViewModel: ViewModel() {
             return JavaScriptType.loginIAS
         }
         // シラバスの検索画面
-        if (urlString == Url.Syllabus.urlString) {
+        if (urlString in Url.Syllabus.urlString) {
             return JavaScriptType.syllabus
         }
         // メール(Outlook)のログイン画面
@@ -61,7 +61,7 @@ class WebViewModel: ViewModel() {
             return JavaScriptType.loginOutlook
         }
         // 徳島大学キャリアセンターのログイン画面
-        if (urlString == Url.TokudaiCareerCenter.urlString) {
+        if (urlString in Url.TokudaiCareerCenter.urlString) {
             return JavaScriptType.loginCareerCenter
         }
         // それ以外なら

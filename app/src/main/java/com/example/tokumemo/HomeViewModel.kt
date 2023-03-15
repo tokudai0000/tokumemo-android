@@ -73,7 +73,7 @@ class HomeViewModel: ViewModel() {
     var initMenuList = listOf(
         HomeListData(title="教務事務システム", id= MenuListItemType.CourseManagementHomeMobile, image=R.drawable.coursemanagementhome, url= Url.CourseManagementMobile.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="manaba", id= MenuListItemType.ManabaHomePC, image=R.drawable.manaba, url= Url.ManabaMobile.urlString, isLockIconExists=true, isHidden=false),
-        HomeListData(title="メール", id= MenuListItemType.MailService, image=R.drawable.mailservice, url= Url.OutlookService.toString(), isLockIconExists=true, isHidden=false),
+        HomeListData(title="メール", id= MenuListItemType.MailService, image=R.drawable.mailservice, url= Url.OutlookService.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="[図書]本貸出延長", id= MenuListItemType.LibraryBookLendingExtension, image=R.drawable.librarybooklendingextension, url= Url.LibraryBookLendingExtension.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="時間割", id= MenuListItemType.TimeTable, image=R.drawable.timetable, url= Url.TimeTable.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="今学期の成績", id= MenuListItemType.CurrentTermPerformance, image=R.drawable.currenttermperformance, url= Url.CurrentTermPerformance.urlString, isLockIconExists=true, isHidden=false),

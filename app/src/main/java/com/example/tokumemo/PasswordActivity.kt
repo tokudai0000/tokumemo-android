@@ -73,7 +73,9 @@ class PasswordActivity : AppCompatActivity() {
                 titleLabel2.text = "科目名"
                 registerButton.text = "検索"
                 registerButton.setOnClickListener(){
+                    DataManager.canExecuteJavascript = true
                     val intent = Intent(this, WebActivity::class.java)
+                    intent.putExtra("PAGE_KEY", Url.Syllabus.urlString)
                     intent.putExtra("SYLLABUS_teacher_name",textField1.text.toString())
                     intent.putExtra("SYLLABUS_subject_name",textField2.text.toString())
                     startActivity(intent)
