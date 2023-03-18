@@ -74,6 +74,13 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
+                if (!DataManager.loginState.completed && item.isHidden) {
+                    Toast.makeText(view?.context,
+                        "自動ログイン機能をONにしよう！Settingsからパスワードを登録をしてみてね",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
                 DataManager.canExecuteJavascript = true
                 when(item.id) {
                     // 教務事務システム
@@ -249,12 +256,6 @@ class HomeFragment : Fragment() {
                 // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
                 if (DataManager.loginState.completeImmediately) {
                     menuRecyclerView.adapter?.notifyDataSetChanged()
-
-                    Toast.makeText(
-                        view?.context,
-                        "ログイン終了",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
                 // ログイン中のアニメーションを消す
