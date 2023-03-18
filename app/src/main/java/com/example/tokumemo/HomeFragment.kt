@@ -74,9 +74,9 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
-                if (!DataManager.loginState.completed && item.isHidden) {
+                if (!DataManager.loginState.completed && item.isLockIconExists) {
                     Toast.makeText(view?.context,
-                        "自動ログイン機能をONにしよう！Settingsからパスワードを登録をしてみてね",
+                        "自動ログイン機能をONにしよう！Settingsから試してみてね",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
