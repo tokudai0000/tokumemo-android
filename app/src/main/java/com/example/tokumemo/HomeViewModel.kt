@@ -85,7 +85,7 @@ class HomeViewModel: ViewModel() {
         HomeListData(title="キャリア支援室", id= MenuListItemType.CareerCenter, image=R.drawable.careercenter, url= Url.TokudaiCareerCenter.urlString, isLockIconExists=false, isHidden=false),
         HomeListData(title="[図書]本購入", id= MenuListItemType.LibraryBookPurchaseRequest, image=R.drawable.librarybookpurchaserequest, url= Url.LibraryBookPurchaseRequest.urlString, isLockIconExists=true, isHidden=false),
         HomeListData(title="SSS時間割", id= MenuListItemType.StudySupportSpace, image=R.drawable.studysupportspace, url= Url.StudySupportSpace.urlString, isLockIconExists=false, isHidden=false),
-        HomeListData(title="知っておきたい防災", id= MenuListItemType.DisasterPrevention, image=R.drawable.disasterprevention, url= Url.DisasterPrevention.urlString, isLockIconExists=true, isHidden=false),
+        HomeListData(title="知っておきたい防災", id= MenuListItemType.DisasterPrevention, image=R.drawable.disasterprevention, url= Url.DisasterPrevention.urlString, isLockIconExists=false, isHidden=false),
 
         // Hidden
         HomeListData(title="統合認証ポータル", id= MenuListItemType.Portal, image=R.drawable.coursemanagementhome, url= Url.Portal.urlString, isLockIconExists=false, isHidden=true),

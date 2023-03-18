@@ -14,10 +14,6 @@ class AgreementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agreement)
 
-        val textView = findViewById<TextView>(R.id.agreement_text_view)
-        textView.isVerticalScrollBarEnabled = true
-//        textView.scrollBarStyle = SCROLLBARS_INSIDE_OVERLAY
-
         findViewById<Button>(R.id.terms_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
             intent.putExtra("PAGE_KEY",Url.TermsOfService.urlString)
