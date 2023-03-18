@@ -71,22 +71,26 @@
             android:textColor="@color/white"
             android:textSize="10sp" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/agreement_text_view"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:background="#1A000000"
-        android:gravity="center_horizontal"
-        android:scrollbars="vertical"
-        android:text="@string/agreement_text"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" >
+        <TextView
+            android:id="@+id/agreement_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1A000000"
+            android:gravity="center_horizontal"
+            android:isScrollContainer="false"
+            android:scrollbars="none"
+            android:text="@string/agreement_text"
+            android:textColor="@color/white"/>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

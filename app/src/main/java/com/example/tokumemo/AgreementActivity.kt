@@ -3,6 +3,7 @@ package com.example.tokumemo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.SCROLLBARS_INSIDE_OVERLAY
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,9 @@ class AgreementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agreement)
 
-//        findViewById<TextView>(R.id.agreement_text_view).text =
+        val textView = findViewById<TextView>(R.id.agreement_text_view)
+        textView.isVerticalScrollBarEnabled = true
+//        textView.scrollBarStyle = SCROLLBARS_INSIDE_OVERLAY
 
         findViewById<Button>(R.id.terms_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)

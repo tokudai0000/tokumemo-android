@@ -8,7 +8,7 @@ import java.util.*
 public final class DataManager {
     companion object {
 
-        public val agreementVer = "1.0.2"
+        public val agreementVer = "1.0.0"
 
         data class LoginState(
             var isProgress: Boolean = false,          // 進行中
