@@ -5,132 +5,147 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@color/thin_gray_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </WebView>
+        <Button
+            android:id="@+id/finish_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/thin_gray_color"
+            android:elevation="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="完了"
+            android:textColor="@color/black"
 
-    <ImageButton
-        android:id="@+id/menuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_menu_24" />
+            style="?android:attr/borderlessButtonStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp" />
 
-    <Button
-        android:id="@+id/back"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:autoText="false"
-        android:background="@color/gray"
-        android:backgroundTint="@color/gray"
-        android:gravity="top"
-        android:text="完了"
-        android:textSize="10sp"
-        app:icon="@drawable/ic_baseline_backspace_24"
-        app:iconSize="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ListView
-        android:id="@+id/menuList"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:background="@color/white"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/nav"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/border"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/urlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="URL"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reload_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/finish_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <Button
-            android:id="@+id/home"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/reload_button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/gray"
-            android:text="Home"
-            android:textColor="@color/darkGray"
-            android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_home_nav_24"
-            app:iconGravity="top"
-            app:iconPadding="-2dp"
-            app:iconTint="@color/darkGray" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/thin_gray_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:icon="@drawable/reload"
+            app:iconTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:strokeWidth="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/news"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:text="News"
-            android:textColor="@color/darkGray"
-            android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_article_24"
-            app:iconGravity="top"
-            app:iconPadding="-2dp"
-            app:iconTint="@color/darkGray" />
-
-        <Button
-            android:id="@+id/review"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:text="ClubList"
-            android:textColor="@color/darkGray"
-            android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_sports_handball_24"
-            app:iconGravity="top"
-            app:iconPadding="-2dp"
-            app:iconTint="@color/darkGray" />
-
-        <Button
-            android:id="@+id/settings"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:text="Settings"
-            android:textColor="@color/darkGray"
-            android:textSize="8sp"
-            app:icon="@drawable/ic_baseline_manage_accounts_24"
-            app:iconGravity="top"
-            app:iconPadding="-2dp"
-            app:iconTint="@color/darkGray" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/noNetWorkText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ネットが接続されていません"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/nav"
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+    </WebView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@color/thin_gray_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/back_button"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:background="@color/thin_gray_color"
+            android:scaleType="centerInside"
+            android:src="@drawable/leftarrow"
+            app:iconTint="@color/black" />
+
+        <ImageButton
+            android:id="@+id/forward_button"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:background="@color/thin_gray_color"
+            android:scaleType="centerInside"
+            android:src="@drawable/rightarrow"
+            app:iconTint="@color/black" />
+
+        <ImageButton
+            android:id="@+id/browser_button"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:background="@color/thin_gray_color"
+            android:scaleType="centerInside"
+            android:src="@drawable/browser"
+            app:iconTint="@color/black" />
+
+        <ImageButton
+            android:id="@+id/menu_button"
+
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:background="@color/thin_gray_color"
+            android:scaleType="centerInside"
+            android:src="@drawable/horizontal_ellipsis"
+            app:iconTint="@color/black" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,8 @@
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import com.example.tokumemo.MainActivity
 import com.example.tokumemo.R
 
 class FirstDialogFragment: DialogFragment() {
