@@ -158,8 +158,8 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // PR画像(広告)を5000 msごとに読み込ませる
-        Timer().scheduleAtFixedRate(0, 5000) {
+        // PR画像(広告)を10000 msごとに読み込ませる
+        Timer().scheduleAtFixedRate(0, 10000) {
             viewModel.selectPRImageNumber()?.let {
                 viewModel.displayPRImagesNumber = it
                 GetImage(imageView).execute(viewModel.prItems[it].imageURL)
