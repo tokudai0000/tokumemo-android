@@ -74,6 +74,13 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
+                if (!DataManager.loginState.completed && item.isLockIconExists) {
+                    Toast.makeText(view?.context,
+                        "自動ログイン機能をONにしよう！Settingsから試してみてね",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
                 DataManager.canExecuteJavascript = true
                 when(item.id) {
                     // 教務事務システム
@@ -158,8 +165,8 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // PR画像(広告)を5000 msごとに読み込ませる
-        Timer().scheduleAtFixedRate(0, 5000) {
+        // PR画像(広告)を10000 msごとに読み込ませる
+        Timer().scheduleAtFixedRate(0, 10000) {
             viewModel.selectPRImageNumber()?.let {
                 viewModel.displayPRImagesNumber = it
                 GetImage(imageView).execute(viewModel.prItems[it].imageURL)
@@ -249,12 +256,6 @@ class HomeFragment : Fragment() {
                 // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
                 if (DataManager.loginState.completeImmediately) {
                     menuRecyclerView.adapter?.notifyDataSetChanged()
-
-                    Toast.makeText(
-                        view?.context,
-                        "ログイン終了",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
                 // ログイン中のアニメーションを消す

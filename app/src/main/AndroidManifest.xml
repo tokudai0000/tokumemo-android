@@ -32,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AgreementActivity" android:screenOrientation="portrait" />
         <activity android:name=".PublicRelationsActivity" android:screenOrientation="portrait" />
         <activity android:name=".WebActivity" android:screenOrientation="portrait" />
         <activity android:name=".PasswordActivity" android:screenOrientation="portrait" />
