@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         viewModel.getPRItemsFromGithub()
         recyclerViewInitSetting(view)
         pRImagesInitSetting(view)
-        getWeatherData(view)
+//        getWeatherData(view)
         loginWebViewInitSetting(view)
 
         return view
