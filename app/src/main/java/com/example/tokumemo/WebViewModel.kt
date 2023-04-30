@@ -49,7 +49,7 @@ class WebViewModel: ViewModel() {
             return JavaScriptType.skipReminder
         }
         // 大学統合認証システム(IAS)のログイン画面
-        if (urlString in Url.UniversityLogin.urlString) {
+        if (urlString.contains(Url.UniversityLogin.urlString)) {
             return JavaScriptType.loginIAS
         }
         // シラバスの検索画面
