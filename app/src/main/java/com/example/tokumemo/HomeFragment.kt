@@ -74,10 +74,12 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
-                if (!DataManager.loginState.completed && item.isLockIconExists) {
+                val cAccount = getPassword(view.context, "KEY_cAccount") ?: ""
+                val password = getPassword(view.context, "KEY_password") ?: ""
+                if ((cAccount.isEmpty() || password.isEmpty()) && item.isLockIconExists) {
                     Toast.makeText(view?.context,
                         "自動ログイン機能をONにしよう！Settingsから試してみてね",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     ).show()
                 }
 
@@ -240,23 +242,23 @@ class HomeFragment : Fragment() {
                 }
 
                 // タイムアウトの判定
-                if (isTimeout(urlString)) {
-                    reLogin()
-                }
+//                if (isTimeout(urlString)) {
+//                    reLogin()
+//                }
 
                 // 大学Webに自動ログインに失敗していた場合
-                if (isLoginFailure(urlString)) {
-                    updateLoginFlag(FlagType.LoginFailure)
-                    Toast.makeText(view?.context,
-                        "学生番号もしくはパスワードが間違っている為、ログインできませんでした",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+//                if (isLoginFailure(urlString)) {
+//                    updateLoginFlag(FlagType.LoginFailure)
+//                    Toast.makeText(view?.context,
+//                        "学生番号もしくはパスワードが間違っている為、ログインできませんでした",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
 
                 // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
-                if (DataManager.loginState.completeImmediately) {
-                    menuRecyclerView.adapter?.notifyDataSetChanged()
-                }
+//                if (DataManager.loginState.completeImmediately) {
+//                    menuRecyclerView.adapter?.notifyDataSetChanged()
+//                }
 
                 // ログイン中のアニメーションを消す
 //                if (DataManager.loginState.isProgress == false) {

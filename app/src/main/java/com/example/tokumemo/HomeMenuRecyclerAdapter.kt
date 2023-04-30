@@ -38,11 +38,11 @@ class HomeMenuRecyclerAdapter(private val fields: List<HomeListData>): RecyclerV
         holder.fieldName.text = field.title
 
         // 最初はログイン完了していないので鍵マークを表示
-        if(!DataManager.loginState.completed && field.isLockIconExists) {
-            holder.fieldImage.setImageResource(R.drawable.lock)
-        }else{
+//        if(!DataManager.loginState.completed && field.isLockIconExists) {
+//            holder.fieldImage.setImageResource(R.drawable.lock)
+//        }else{
             holder.fieldImage.setImageResource(field.image)
-        }
+//        }
 
         // 4. セルのクリックイベントにリスナをセット
         holder.itemView.setOnClickListener {
