@@ -99,7 +99,6 @@
                         android:layout_marginBottom="2dp"
                         android:layout_weight="0.5"
                         android:gravity="center"
-                        android:text="現在の徳島市"
                         android:textColor="@color/black"
                         android:textSize="10sp" />
 
@@ -131,7 +130,6 @@
                         android:layout_weight="1"
                         android:foregroundGravity="center"
                         android:gravity="center"
-                        android:text="天気を取得中"
                         android:textColor="@color/black"
                         android:textSize="10sp" />
 
