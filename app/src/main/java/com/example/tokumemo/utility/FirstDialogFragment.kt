@@ -1,3 +1,5 @@
+package com.example.tokumemo.utility
+
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface

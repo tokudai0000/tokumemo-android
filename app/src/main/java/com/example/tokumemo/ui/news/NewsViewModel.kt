@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.news
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.web
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,18 +7,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import decrypt
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.R
+import com.example.tokumemo.utility.decrypt
 
 class WebActivity : AppCompatActivity() {
 

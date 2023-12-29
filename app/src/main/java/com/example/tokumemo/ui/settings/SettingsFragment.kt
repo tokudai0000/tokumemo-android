@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,9 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.tokumemo.R
+import com.example.tokumemo.ui.web.WebActivity
+import com.example.tokumemo.ui.password.PasswordActivity
 
 class SettingsFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.news
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.lifecycle.ViewModelProvider
+import com.example.tokumemo.R
+import com.example.tokumemo.common.Url
+import com.example.tokumemo.ui.web.WebActivity
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.*

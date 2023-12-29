@@ -1,9 +1,4 @@
-package com.example.tokumemo
-
-import android.content.Context
-import decrypt
-import encrypt
-import java.util.*
+package com.example.tokumemo.data
 
 public final class DataManager {
     companion object {
@@ -15,7 +10,7 @@ public final class DataManager {
             var completeImmediately: Boolean = false, // 完了してすぐ
             var completed: Boolean = false,           // ログイン完了
         )
-        public var loginState:LoginState = LoginState()
+        public var loginState: LoginState = LoginState()
 
         /// JavaScriptを動かすかどうかのフラグ
         ///

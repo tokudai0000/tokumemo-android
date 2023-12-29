@@ -1,3 +1,5 @@
+package com.example.tokumemo.utility
+
 import android.content.Context
 import android.security.KeyPairGeneratorSpec
 import android.util.Base64

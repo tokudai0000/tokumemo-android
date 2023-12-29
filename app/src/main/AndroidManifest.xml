@@ -19,10 +19,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true"
-            android:parentActivityName=".WebActivity">
+            android:parentActivityName=".ui.web.WebActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -32,10 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AgreementActivity" android:screenOrientation="portrait" />
-        <activity android:name=".PublicRelationsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".WebActivity" android:screenOrientation="portrait" />
-        <activity android:name=".PasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.agreement.AgreementActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.pr.PublicRelationsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.web.WebActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.password.PasswordActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

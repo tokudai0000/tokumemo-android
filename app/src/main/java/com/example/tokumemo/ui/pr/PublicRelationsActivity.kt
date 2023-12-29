@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.pr
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tokumemo.utility.GetImage
+import com.example.tokumemo.R
+import com.example.tokumemo.ui.web.WebActivity
 
 // PR画面
 class PublicRelationsActivity : AppCompatActivity() {

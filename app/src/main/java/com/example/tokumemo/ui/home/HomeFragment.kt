@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.home
 
 import android.content.Context
 import android.content.DialogInterface
@@ -17,13 +17,21 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import encrypt
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.utility.GetImage
+import com.example.tokumemo.ui.password.PasswordActivity
+import com.example.tokumemo.ui.pr.PublicRelationsActivity
+import com.example.tokumemo.R
+import com.example.tokumemo.common.Url
+import com.example.tokumemo.ui.web.WebActivity
+import com.example.tokumemo.utility.guard
+import com.example.tokumemo.utility.encrypt
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.net.URL
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
-import decrypt
+import com.example.tokumemo.utility.decrypt
 
 
 class HomeFragment : Fragment() {
@@ -72,7 +80,8 @@ class HomeFragment : Fragment() {
         // 横3列に指定する
         menuRecyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
-        adapter.setOnBookCellClickListener(object : HomeMenuRecyclerAdapter.OnBookCellClickListener {
+        adapter.setOnBookCellClickListener(object :
+            HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: HomeListData) {
                 val cAccount = getPassword(view.context, "KEY_cAccount") ?: ""
                 val password = getPassword(view.context, "KEY_password") ?: ""
@@ -114,7 +123,9 @@ class HomeFragment : Fragment() {
                         val year = calendar.get(Calendar.YEAR)
 
                         // ダイアログの表示(常三島と蔵本を)
-                        val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(), R.style.FirstDialogStyle)
+                        val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(),
+                            R.style.FirstDialogStyle
+                        )
                         alertDialog.setTitle("図書館の所在を選択")
                         alertDialog.setMessage("こちらは最新情報ではありません。最新の情報は図書館ホームページをご覧ください。")
                         alertDialog.setNegativeButton("蔵本",
