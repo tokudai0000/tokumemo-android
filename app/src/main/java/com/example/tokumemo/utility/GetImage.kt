@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.utility
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

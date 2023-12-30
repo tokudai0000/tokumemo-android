@@ -1,6 +1,8 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.web
 
 import androidx.lifecycle.ViewModel
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.common.Url
 
 class WebViewModel: ViewModel() {
     // Safariで開く用として、現在表示しているURLを保存する

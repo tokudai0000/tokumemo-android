@@ -1,6 +1,7 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.settings
 
 import androidx.lifecycle.ViewModel
+import com.example.tokumemo.common.Url
 
 class SettingsViewModel: ViewModel() {
 

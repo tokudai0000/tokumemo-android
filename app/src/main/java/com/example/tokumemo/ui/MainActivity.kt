@@ -1,12 +1,14 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui
 
-import FirstDialogFragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.example.tokumemo.ui.agreement.AgreementActivity
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

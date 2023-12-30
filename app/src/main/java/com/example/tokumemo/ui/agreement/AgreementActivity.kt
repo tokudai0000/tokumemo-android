@@ -1,12 +1,14 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.agreement
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View.SCROLLBARS_INSIDE_OVERLAY
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.R
+import com.example.tokumemo.common.Url
+import com.example.tokumemo.ui.web.WebActivity
 
 class AgreementActivity : AppCompatActivity() {
 
@@ -16,12 +18,12 @@ class AgreementActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.terms_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY",Url.TermsOfService.urlString)
+            intent.putExtra("PAGE_KEY", Url.TermsOfService.urlString)
             startActivity(intent)
         }
         findViewById<Button>(R.id.privacy_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY",Url.PrivacyPolicy.urlString)
+            intent.putExtra("PAGE_KEY", Url.PrivacyPolicy.urlString)
             startActivity(intent)
         }
         findViewById<Button>(R.id.agreement_button).setOnClickListener {

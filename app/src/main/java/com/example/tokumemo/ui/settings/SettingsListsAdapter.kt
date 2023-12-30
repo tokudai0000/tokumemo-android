@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.settings
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.example.tokumemo.R
 
 class SettingsListsAdapter(context: Context, val items: List<SettingsListData>) : ArrayAdapter<SettingsListData>(context,
     R.layout.layout_settings_item, items) {

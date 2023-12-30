@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.settings
 
 data class SettingsListData(
     var title: String,

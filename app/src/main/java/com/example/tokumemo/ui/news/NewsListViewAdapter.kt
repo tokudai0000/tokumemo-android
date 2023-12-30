@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.news
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.example.tokumemo.R
 
 class NewsListViewAdapter(context: Context, private val items: ArrayList<NewsListData>) : ArrayAdapter<NewsListData>(context,
     R.layout.layout_news_list, items) {

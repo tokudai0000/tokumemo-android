@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.password
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import decrypt
-import encrypt
+import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.R
+import com.example.tokumemo.common.Url
+import com.example.tokumemo.ui.web.WebActivity
+import com.example.tokumemo.utility.decrypt
+import com.example.tokumemo.utility.encrypt
 
 class PasswordActivity : AppCompatActivity() {
 

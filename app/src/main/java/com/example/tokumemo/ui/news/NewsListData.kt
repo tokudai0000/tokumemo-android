@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.news
 
 data class NewsListData(
     var title: String? = null,

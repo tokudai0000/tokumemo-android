@@ -1,4 +1,4 @@
-package com.example.tokumemo
+package com.example.tokumemo.ui.home
 
 data class HomeListData(
     var title: String,
