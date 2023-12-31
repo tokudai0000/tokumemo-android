@@ -36,20 +36,6 @@ class SettingsFragment : Fragment() {
                     intent.putExtra("hogemon", PasswordActivity.DisplayType.Password)
                     startActivity(intent)
                 }
-                SettingListItemType.Favorite -> {
-                    Toast.makeText(
-                        view.context,
-                        "近日中に実装",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                SettingListItemType.Customize -> {
-                    Toast.makeText(
-                        view.context,
-                        "近日中に実装",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
                 else -> {
                     val intent = Intent(requireContext(), WebActivity::class.java)
                     intent.putExtra("PAGE_KEY", item.url.toString())

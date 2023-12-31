@@ -8,8 +8,6 @@ data class SettingsListData(
 
 enum class SettingListItemType {
     Password,                       // パスワード
-    Favorite,                       // お気に入り登録
-    Customize,                      // 並び替え
 
     AboutThisApp,                   // このアプリについて
     ContactUs,                      // お問い合わせ
