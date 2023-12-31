@@ -1,16 +1,11 @@
-plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    namespace 'com.example.tokumemo'
-    compileSdk 33
-
     defaultConfig {
         applicationId "com.tokudai0000.tokumemo"
         minSdk 21
+        compileSdk 34
         targetSdk 33
         versionCode 18
         versionName "4.0.1"
@@ -24,6 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,47 +29,51 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-    }
+    namespace 'com.example.tokumemo'
 }
 
 dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.security:security-crypto:1.1.0-alpha04"
-    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha04'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Support Library
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.google.android.material:material:1.11.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+    implementation "androidx.activity:activity-ktx:1.8.2"
 
+    // Layout
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+
+    // Analytics
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.google.firebase:firebase-analytics-ktx"
 
-    // MaterialComponentsのBottomNavigationを使うため
-    implementation 'com.google.android.material:material:1.8.0'
+    // cryoto
+    def crypto_version = "1.1.0-alpha06"
+    implementation "androidx.security:security-crypto:$crypto_version"
+    implementation "androidx.security:security-crypto-ktx:$crypto_version"
 
-    // Navigationを使うため
+    // Navigation
     def nav_version = '2.0.0'
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
 
-
-    /// Fuel library
+    /// Fuel HTTP
     def fuel_version = "2.3.1"
     implementation "com.github.kittinunf.fuel:fuel:$fuel_version"
-    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-json:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
+
+    // MaterialComponentsのBottomNavigationを使うため
+    implementation 'com.google.android.material:material:1.11.0'
 }
+
+ext.applicationInfo = [
+        name           : "tokumemo_plus",
+        copyrightHolder: "tokudai0000",
+        year           : "2021",
+        url            : ""
+]
