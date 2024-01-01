@@ -1,6 +1,6 @@
-package com.example.tokumemo.ui.settings
+package com.example.tokumemo.domain.model
 
-data class SettingsListData(
+class SettingsListData(
     var title: String,
     var id : SettingListItemType,
     var url: String?

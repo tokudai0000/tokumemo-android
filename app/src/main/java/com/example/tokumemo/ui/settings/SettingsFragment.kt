@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.example.tokumemo.R
+import com.example.tokumemo.common.AppConstants
+import com.example.tokumemo.domain.model.SettingListItemType
 import com.example.tokumemo.ui.web.WebActivity
 import com.example.tokumemo.ui.password.PasswordActivity
 
 class SettingsFragment : Fragment() {
-
-    private val viewModel by viewModels<SettingsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +21,10 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
-        // xmlにて実装したListViewの取得
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
-        listView.adapter = SettingsListsAdapter(requireContext(), viewModel.initSettingsList)
-        listView.setOnItemClickListener {_, view, position, _ ->
-            val item = viewModel.initSettingsList[position]
+        listView.adapter = SettingsListsAdapter(requireContext(), AppConstants.settingsItems)
+        listView.setOnItemClickListener {_, _, position, _ ->
+            val item = AppConstants.settingsItems[position]
             when (item.id) {
                 SettingListItemType.Password -> {
                     val intent = Intent(requireContext(), PasswordActivity::class.java)
