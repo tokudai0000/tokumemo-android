@@ -7,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
-import com.example.tokumemo.domain.model.HomeListData
+import com.example.tokumemo.domain.model.MenuItem
 
-class HomeMenuRecyclerAdapter(private val fields: List<HomeListData>): RecyclerView.Adapter<HomeMenuRecyclerAdapter.ViewHolder>() {
+class HomeMenuRecyclerAdapter(private val fields: List<MenuItem>): RecyclerView.Adapter<HomeMenuRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val fieldImage: ImageView = view.findViewById(R.id.field_image)
@@ -26,7 +26,7 @@ class HomeMenuRecyclerAdapter(private val fields: List<HomeListData>): RecyclerV
 
     // 2. インターフェースを作成
     interface  OnBookCellClickListener {
-        fun onItemClick(book: HomeListData)
+        fun onItemClick(book: MenuItem)
     }
 
     // 3. リスナーをセット

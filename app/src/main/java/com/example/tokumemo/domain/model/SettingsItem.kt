@@ -1,6 +1,6 @@
 package com.example.tokumemo.domain.model
 
-class SettingsListData(
+class SettingsItem(
     var title: String,
     var id : SettingListItemType,
     var url: String?

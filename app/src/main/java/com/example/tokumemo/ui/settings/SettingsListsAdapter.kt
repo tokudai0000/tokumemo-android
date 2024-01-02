@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.tokumemo.R
-import com.example.tokumemo.domain.model.SettingsListData
+import com.example.tokumemo.domain.model.SettingsItem
 
-class SettingsListsAdapter(context: Context, val items: List<SettingsListData>) : ArrayAdapter<SettingsListData>(context, R.layout.layout_settings_item, items) {
+class SettingsListsAdapter(context: Context, val items: List<SettingsItem>) : ArrayAdapter<SettingsItem>(context, R.layout.layout_settings_item, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         // ViewHolderパターンを使用してパフォーマンスを向上させる

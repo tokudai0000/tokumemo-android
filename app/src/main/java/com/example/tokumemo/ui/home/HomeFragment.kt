@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +16,9 @@ import com.example.tokumemo.utility.GetImage
 import com.example.tokumemo.ui.password.PasswordActivity
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
 import com.example.tokumemo.R
-import com.example.tokumemo.domain.model.HomeListData
+import com.example.tokumemo.domain.model.MenuItem
 import com.example.tokumemo.domain.model.MenuListItemType
 import com.example.tokumemo.ui.web.WebActivity
-import com.example.tokumemo.utility.guard
-import kotlinx.coroutines.*
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -56,7 +53,7 @@ class HomeFragment : Fragment() {
 
         adapter.setOnBookCellClickListener(object :
             HomeMenuRecyclerAdapter.OnBookCellClickListener {
-            override fun onItemClick(item: HomeListData) {
+            override fun onItemClick(item: MenuItem) {
 //                val cAccount = getPassword(view.context, "KEY_cAccount") ?: ""
 //                val password = getPassword(view.context, "KEY_password") ?: ""
 //                if ((cAccount.isEmpty() || password.isEmpty()) && item.isLockIconExists) {
