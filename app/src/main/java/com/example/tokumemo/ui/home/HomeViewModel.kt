@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.example.tokumemo.ui.pr.PublicRelationsData
 import com.example.tokumemo.R
 import com.example.tokumemo.common.Url
+import com.example.tokumemo.domain.model.HomeListData
+import com.example.tokumemo.domain.model.MenuListItemType
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -16,7 +18,7 @@ class HomeViewModel: ViewModel() {
 
     var displayPRImagesNumber: Int? = null // 表示している広告がadItemsに入っている配列番号
 
-    fun getPRItemsFromGithub(): Job = GlobalScope.launch {
+    fun getAdItems(): Job = GlobalScope.launch {
         try {
             val jsonUrl = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
             val str = URL(jsonUrl).readText()

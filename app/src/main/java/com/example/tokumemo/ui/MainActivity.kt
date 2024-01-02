@@ -30,4 +30,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+//    private fun shouldShowTermsAgreementView(): Boolean {
+//        return (DataManager.agreementVersion != ConstStruct.latestTermsVersion)
+//    }
 }

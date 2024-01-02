@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
+import com.example.tokumemo.domain.model.HomeListData
 
 class HomeMenuRecyclerAdapter(private val fields: List<HomeListData>): RecyclerView.Adapter<HomeMenuRecyclerAdapter.ViewHolder>() {
 

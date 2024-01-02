@@ -1,4 +1,4 @@
-package com.example.tokumemo.ui.home
+package com.example.tokumemo.domain.model
 
 data class HomeListData(
     var title: String,
@@ -38,6 +38,4 @@ enum class MenuListItemType {
     UniversityWeb,                  // 大学サイト
     StudySupportSpace,              // 学びサポート企画部
     DisasterPrevention,             // 上月研究室防災情報
-
-    Favorite,                       // お気に入り
 }
