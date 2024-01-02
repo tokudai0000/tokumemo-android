@@ -1,4 +1,4 @@
-package com.example.tokumemo.ui.news
+package com.example.tokumemo.domain.model
 
 data class NewsListData(
     var title: String? = null,
