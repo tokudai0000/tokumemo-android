@@ -1,14 +1,12 @@
-package com.example.tokumemo.ui.settings
+package com.example.tokumemo.common
 
-import androidx.lifecycle.ViewModel
-import com.example.tokumemo.common.Url
+import com.example.tokumemo.domain.model.SettingListItemType
+import com.example.tokumemo.domain.model.SettingsListData
 
-class SettingsViewModel: ViewModel() {
+object AppConstants {
 
-    var initSettingsList = listOf(
+    val settingsItems = listOf(
         SettingsListData(title="パスワード", id= SettingListItemType.Password, url= null),
-        SettingsListData(title="お気に入り登録", id= SettingListItemType.Favorite, url= null),
-        SettingsListData(title="カスタマイズ", id= SettingListItemType.Customize, url= null),
         SettingsListData(title="このアプリについて", id= SettingListItemType.AboutThisApp, url= Url.AppIntroduction.urlString),
         SettingsListData(title="お問い合わせ", id= SettingListItemType.ContactUs, url= Url.ContactUs.urlString),
         SettingsListData(title="公式SNS", id= SettingListItemType.OfficialSNS, url= Url.OfficialSNS.urlString),
@@ -17,5 +15,4 @@ class SettingsViewModel: ViewModel() {
         SettingsListData(title="プライバシーポリシー", id= SettingListItemType.PrivacyPolicy, url= Url.PrivacyPolicy.urlString),
         SettingsListData(title="ソースコード", id= SettingListItemType.SourceCode, url= Url.SourceCode.urlString)
     )
-
 }

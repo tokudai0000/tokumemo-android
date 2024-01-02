@@ -83,13 +83,13 @@ enum class Url(val urlString: String) {
     /// TwitterのURL
     OfficialSNS("https://twitter.com/tokumemo0000"),
     /// ホームページのURL
-    HomePage("https://lit.link/developers"),
-    /// トクメモ＋のプライバシーポリシーURL[GitHub]
-    PrivacyPolicy("https://tokudai0000.github.io/tokumemo_resource/document/privacy_policy.txt"),
+    HomePage("https://tokumemo.notion.site/6e750dcdc6d544a9a23460503d88ca5d"),
+    /// トクメモ＋のプライバシーポリシーURL
+    PrivacyPolicy("https://tokumemo-store-house.notion.site/21abf42ea3134a07b5df41f206df1e5d"),
     /// トクメモ＋の利用規約URL[GitHub]
-    TermsOfService("https://tokudai0000.github.io/tokumemo_resource/document/terms_of_service.txt"),
+    TermsOfService("https://tokumemo-store-house.notion.site/5c8ed54b641d481993f1ee9be8709aea"),
     /// アプリ紹介文
-    AppIntroduction("https://tokudai0000.github.io/tokumemo_resource/document/tokumemo_explanation.txt"),
+    AppIntroduction("https://tokumemo.notion.site/945a1f46d3794d37b1317d668a98728b"),
     /// トクメモ＋のソースコード[GitHub]
     SourceCode("https://github.com/tokudai0000/TokumemoAndroid"),
     /// 気象庁の天気予報
