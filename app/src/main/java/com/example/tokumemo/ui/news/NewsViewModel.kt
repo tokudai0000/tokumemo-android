@@ -1,5 +1,6 @@
 package com.example.tokumemo.ui.news
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tokumemo.common.Url
@@ -32,9 +33,12 @@ class NewsViewModel: ViewModel() {
                 }
                 is Result.Failure -> {
                     // エラーハンドリング
+                    val error = result.getException()
+                    Log.e("NewsViewModel", "Error fetching news: ${error.message}", error)
                 }
                 else -> {
                     // 予期しない結果を扱う
+                    Log.wtf("NewsViewModel", "Unexpected result type encountered")
                 }
             }
         }
