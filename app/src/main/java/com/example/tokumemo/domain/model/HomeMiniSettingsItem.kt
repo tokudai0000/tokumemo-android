@@ -1,20 +1,18 @@
 package com.example.tokumemo.domain.model
 
-data class SettingsItem(
+data class HomeMiniSettingsItem(
     val title: String,
     val id: Type,
     val targetUrl: String?
 ) {
     enum class Type {
-        Password,
-        AboutThisApp,
+        Review,
+        PrApplication,
         ContactUs,
-        OfficialSNS,
         HomePage,
         TermsOfService,
         PrivacyPolicy,
+        OfficialSNS,
         SourceCode,
-        Review,
-        Acknowledgements,
     }
 }

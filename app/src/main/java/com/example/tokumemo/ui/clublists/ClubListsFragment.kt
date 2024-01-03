@@ -24,7 +24,7 @@ class ClubListsFragment : Fragment() {
         val webView = view.findViewById<WebView>(R.id.club_lists_web_view)
         // 有効にすることでHTML側からネイティブ側へアクションを起こしている
         webView.settings.javaScriptEnabled = true
-        webView.loadUrl(Url.ClubList.urlString)
+        webView.loadUrl(Url.ClubLists.urlString)
 
         webView.webChromeClient = object : WebChromeClient() {
             // Web側(HTML,JavaScript)からKotlinが通知を受け、WebActivityを表示させる
