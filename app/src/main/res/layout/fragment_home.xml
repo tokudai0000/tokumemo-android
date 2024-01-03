@@ -64,12 +64,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menu_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="233dp"
+        android:layout_height="230dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_background"
         android:orientation="vertical"
+        app:layout_constraintCircleRadius="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
