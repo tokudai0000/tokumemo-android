@@ -1,26 +1,30 @@
 package com.example.tokumemo.ui.home
 
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
+import com.example.tokumemo.R
+import com.example.tokumemo.common.AppConstants
 import com.example.tokumemo.data.DataManager
-import com.example.tokumemo.utility.GetImage
+import com.example.tokumemo.domain.model.MenuItem
 import com.example.tokumemo.ui.password.PasswordActivity
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
-import com.example.tokumemo.R
-import com.example.tokumemo.domain.model.MenuItem
-import com.example.tokumemo.domain.model.MenuListItemType
 import com.example.tokumemo.ui.web.WebActivity
+import com.example.tokumemo.utility.GetImage
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
+
 
 class HomeFragment : Fragment() {
 
@@ -34,7 +38,6 @@ class HomeFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         menuRecyclerView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
-
         // PR画像(広告)の取得
         viewModel.getAdItems()
         recyclerViewInitSetting(view)
@@ -46,83 +49,44 @@ class HomeFragment : Fragment() {
 
     /// RecyclerViewの初期設定
     private fun recyclerViewInitSetting(view: View) {
-        val displayMenuLists = viewModel.displayMenuList()
+        val displayMenuLists = AppConstants.menuItems
         val adapter = HomeMenuRecyclerAdapter(displayMenuLists)
         // 横3列に指定する
-        menuRecyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+        menuRecyclerView.layoutManager = NoScrollGridLayoutManager(requireContext(), 3)
 
         adapter.setOnBookCellClickListener(object :
             HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: MenuItem) {
-//                val cAccount = getPassword(view.context, "KEY_cAccount") ?: ""
-//                val password = getPassword(view.context, "KEY_password") ?: ""
-//                if ((cAccount.isEmpty() || password.isEmpty()) && item.isLockIconExists) {
-//                    Toast.makeText(view?.context,
-//                        "自動ログイン機能をONにしよう！Settingsから試してみてね",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
 
                 DataManager.canExecuteJavascript = true
                 when(item.id) {
-                    // 教務事務システム
-                    MenuListItemType.CurrentTermPerformance -> {
-                        // API24以下ではこれ API26以上ではLocalDate.now()が使用できる
-                        val calendar = Calendar.getInstance()
-                        var year = calendar.get(Calendar.YEAR)
-                        val month = calendar.get(Calendar.MONTH) + 1 //月は0から始まるため、+1する
 
-                        // 1月から3月までは前年度のURLを表示
-                        if (month < 4){
-                            year -= 1
-                        }
-                        val intent = Intent(requireContext(), WebActivity::class.java)
-                        intent.putExtra("PAGE_KEY",item.url + year)
-                        startActivity(intent)
-                    }
-
-                    // シラバス
-                    MenuListItemType.Syllabus -> {
+                    // 講義関連
+                    MenuItem.Type.AcademicRelated -> {
                         val intent = Intent(requireContext(), PasswordActivity::class.java)
                         intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
                         startActivity(intent)
                     }
 
-                    // 図書館カレンダー
-                    MenuListItemType.LibraryCalendar -> {
-                        val calendar = Calendar.getInstance()
-                        val year = calendar.get(Calendar.YEAR)
-
-                        // ダイアログの表示(常三島と蔵本を)
-                        val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(),
-                            R.style.FirstDialogStyle
-                        )
-                        alertDialog.setTitle("図書館の所在を選択")
-                        alertDialog.setMessage("こちらは最新情報ではありません。最新の情報は図書館ホームページをご覧ください。")
-                        alertDialog.setNegativeButton("蔵本",
-                            DialogInterface.OnClickListener { _, _ ->
-                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$year.pdf&embedded=true"
-                                val intent = Intent(requireContext(), WebActivity::class.java)
-                                intent.putExtra("PAGE_KEY",libraryURL)
-                                startActivity(intent)
-                            })
-                        alertDialog.setPositiveButton("常三島",
-                            DialogInterface.OnClickListener { _, _ ->
-                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$year.pdf&embedded=true"
-                                val intent = Intent(requireContext(), WebActivity::class.java)
-                                intent.putExtra("PAGE_KEY",libraryURL)
-                                startActivity(intent)
-                            })
-                        alertDialog.show()
+                    // 図書館関連
+                    MenuItem.Type.LibraryRelated -> {
+                        val intent = Intent(requireContext(), PasswordActivity::class.java)
+                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
+                        startActivity(intent)
                     }
 
-                    // 他のメニューはWebActivityで開く
+                    // その他
+                    MenuItem.Type.Etc -> {
+                        val intent = Intent(requireContext(), PasswordActivity::class.java)
+                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
+                        startActivity(intent)
+                    }
+
                     else -> {
                         val intent = Intent(requireContext(), WebActivity::class.java)
                         intent.putExtra("PAGE_KEY",item.url)
                         startActivity(intent)
                     }
-
                 }
             }
         })
@@ -167,4 +131,42 @@ class HomeFragment : Fragment() {
 //
 //        return !(cAccount == null || password == null)
 //    }
+    //                    // 図書館カレンダー
+//                    MenuListItemType.LibraryCalendar -> {
+//                        val calendar = Calendar.getInstance()
+//                        val year = calendar.get(Calendar.YEAR)
+//
+//                        // ダイアログの表示(常三島と蔵本を)
+//                        val alertDialog: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext(),
+//                            R.style.FirstDialogStyle
+//                        )
+//                        alertDialog.setTitle("図書館の所在を選択")
+//                        alertDialog.setMessage("こちらは最新情報ではありません。最新の情報は図書館ホームページをご覧ください。")
+//                        alertDialog.setNegativeButton("蔵本",
+//                            DialogInterface.OnClickListener { _, _ ->
+//                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_$year.pdf&embedded=true"
+//                                val intent = Intent(requireContext(), WebActivity::class.java)
+//                                intent.putExtra("PAGE_KEY",libraryURL)
+//                                startActivity(intent)
+//                            })
+//                        alertDialog.setPositiveButton("常三島",
+//                            DialogInterface.OnClickListener { _, _ ->
+//                                val libraryURL = "https://docs.google.com/viewer?url=https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_$year.pdf&embedded=true"
+//                                val intent = Intent(requireContext(), WebActivity::class.java)
+//                                intent.putExtra("PAGE_KEY",libraryURL)
+//                                startActivity(intent)
+//                            })
+//                        alertDialog.show()
+//                    }
+}
+class NoScrollGridLayoutManager(context: Context, spanCount: Int) : GridLayoutManager(context, spanCount) {
+    override fun canScrollVertically(): Boolean {
+        // 縦方向のスクロールを禁止
+        return false
+    }
+
+    override fun canScrollHorizontally(): Boolean {
+        // 横方向のスクロールを禁止
+        return false
+    }
 }

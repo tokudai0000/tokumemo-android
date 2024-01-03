@@ -59,15 +59,4 @@ class HomeViewModel: ViewModel() {
         }
 
     }
-
-
-    fun displayMenuList(): List<MenuItem> {
-        val displayLists = mutableListOf<MenuItem>()
-        for(item in initMenuList) {
-            if(!item.isHidden) {
-                displayLists.add(item)
-            }
-        }
-        return displayLists
-    }
 }
