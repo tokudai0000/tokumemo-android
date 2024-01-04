@@ -1,5 +1,6 @@
 package com.example.tokumemo.ui.home
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.tokumemo.R
 import com.example.tokumemo.common.AppConstants
 import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.domain.model.MenuDetailItem
 import com.example.tokumemo.domain.model.MenuItem
 import com.example.tokumemo.ui.password.PasswordActivity
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
@@ -63,23 +66,17 @@ class HomeFragment : Fragment() {
 
                     // 講義関連
                     MenuItem.Type.AcademicRelated -> {
-                        val intent = Intent(requireContext(), PasswordActivity::class.java)
-                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
-                        startActivity(intent)
+                        showMenuDetailDialog(AppConstants.academicRelatedItems)
                     }
 
                     // 図書館関連
                     MenuItem.Type.LibraryRelated -> {
-                        val intent = Intent(requireContext(), PasswordActivity::class.java)
-                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
-                        startActivity(intent)
+                        showMenuDetailDialog(AppConstants.libraryRelatedItems)
                     }
 
                     // その他
                     MenuItem.Type.Etc -> {
-                        val intent = Intent(requireContext(), PasswordActivity::class.java)
-                        intent.putExtra("hogemon", PasswordActivity.DisplayType.Syllabus)
-                        startActivity(intent)
+                        showMenuDetailDialog(AppConstants.etcItems)
                     }
 
                     else -> {
@@ -120,6 +117,22 @@ class HomeFragment : Fragment() {
                 GetImage(imageView).execute(viewModel.prItems[it].imageURL)
             }
         }
+    }
+
+    private fun showMenuDetailDialog(items: List<MenuDetailItem>) {
+        val builder = AlertDialog.Builder(requireContext())
+
+        // MenuDetailItem の配列から表示用の文字列の配列を生成
+        val itemNames = items.map { it.title }.toTypedArray()
+
+        builder.setItems(itemNames) { dialog, which ->
+            val intent = Intent(requireContext(), WebActivity::class.java)
+            intent.putExtra("PAGE_KEY",items[which].targetUrl)
+            startActivity(intent)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
 
