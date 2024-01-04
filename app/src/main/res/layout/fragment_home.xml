@@ -62,15 +62,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="409dp"
+        <ListView
+            android:id="@+id/home_mini_settings_recycler_view"
+            android:layout_width="0dp"
             android:layout_height="900dp"
-            android:layout_marginTop="1dp"
-            android:background="#EC3B3B"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintCircleRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_recycler_view">
+            app:layout_constraintTop_toBottomOf="@+id/menu_recycler_view" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

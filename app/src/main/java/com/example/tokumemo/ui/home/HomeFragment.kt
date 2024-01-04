@@ -5,24 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.tokumemo.R
 import com.example.tokumemo.common.AppConstants
 import com.example.tokumemo.data.DataManager
+import com.example.tokumemo.domain.model.HomeMiniSettingsItem
 import com.example.tokumemo.domain.model.MenuDetailItem
 import com.example.tokumemo.domain.model.MenuItem
+import com.example.tokumemo.domain.model.SettingsItem
 import com.example.tokumemo.ui.password.PasswordActivity
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
+import com.example.tokumemo.ui.settings.SettingsListsAdapter
 import com.example.tokumemo.ui.web.WebActivity
 import com.example.tokumemo.utility.GetImage
 import java.util.*
@@ -43,15 +43,16 @@ class HomeFragment : Fragment() {
         menuRecyclerView = view.findViewById<RecyclerView>(R.id.menu_recycler_view)
         // PR画像(広告)の取得
         viewModel.getAdItems()
-        recyclerViewInitSetting(view)
+        menuRecyclerViewInitSetting(view)
         pRImagesInitSetting(view)
+        homeMiniSettingsRecyclerViewInitSetting(view)
 
         return view
     }
 
 
     /// RecyclerViewの初期設定
-    private fun recyclerViewInitSetting(view: View) {
+    private fun menuRecyclerViewInitSetting(view: View) {
         val displayMenuLists = AppConstants.menuItems
         val adapter = HomeMenuRecyclerAdapter(displayMenuLists)
         // 横3列に指定する
@@ -90,6 +91,16 @@ class HomeFragment : Fragment() {
         menuRecyclerView.adapter = adapter
     }
 
+    private fun homeMiniSettingsRecyclerViewInitSetting(view: View) {
+        val homeMiniSettingsRecyclerView = view.findViewById<ListView>(R.id.home_mini_settings_recycler_view)
+        val displayMenuLists = AppConstants.homeMiniSettingsItems
+        homeMiniSettingsRecyclerView.adapter = HomeMiniSettingsRecyclerAdapter(requireContext(), displayMenuLists)
+        homeMiniSettingsRecyclerView.setOnItemClickListener {_, _, position, _ ->
+            val intent = Intent(requireContext(), WebActivity::class.java)
+            intent.putExtra("PAGE_KEY", displayMenuLists[position].targetUrl.toString())
+            startActivity(intent)
+        }
+    }
 
     /// PR画像についての初期設定
     private fun pRImagesInitSetting(view: View) {
