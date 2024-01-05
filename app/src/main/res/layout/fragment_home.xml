@@ -1,57 +1,81 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_ground_gray_color">
+    android:fillViewport="true">
 
-<!--    <fragment-->
-<!--        android:id="@+id/pr_view_fragment"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_width="match_parent"/>-->
-    <WebView
-        android:id="@+id/webView_for_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:translationZ="50dp"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></WebView>
-
-    <FrameLayout
-        android:id="@+id/child_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/back_ground_gray_color">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="2"
+                android:background="@color/orange">
+
+                <ImageView
+                    android:id="@+id/pr_image_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/black"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher_foreground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="w,1:1.414"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menu_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="230dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical"
+            app:layout_constraintCircleRadius="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/univ_constraint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="2"
-            android:background="@color/orange">
+            android:background="@color/orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menu_recycler_view">
 
             <ImageView
-                android:id="@+id/pr_image_button"
+                android:id="@+id/univ_image_button"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
@@ -67,98 +91,16 @@
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="12dp"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
+        <ListView
+            android:id="@+id/home_mini_settings_recycler_view"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="900dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintCircleRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/univ_constraint" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2.2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:translationZ="2dp">
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_weight="0.5"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/weather_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:foregroundGravity="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="MissingConstraints" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/weather_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="1"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <Button
-                android:id="@+id/contact_us"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="意見箱"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menu_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

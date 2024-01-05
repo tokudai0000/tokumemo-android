@@ -15,7 +15,7 @@ class NewsViewModel: ViewModel() {
     val newsItems = MutableLiveData<ArrayList<NewsListData>>()
 
     fun fetchNews() {
-        val url = Url.Rss.urlString
+        val url = Url.NewsItemJsonData.urlString
         url.httpGet().responseJson { _, _, result ->
             when (result) {
                 is Result.Success -> {

@@ -1,4 +1,4 @@
-package com.example.tokumemo.ui.settings
+package com.example.tokumemo.ui.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.tokumemo.R
+import com.example.tokumemo.domain.model.HomeMiniSettingsItem
 import com.example.tokumemo.domain.model.SettingsItem
 
-class SettingsListsAdapter(context: Context, val items: List<SettingsItem>) : ArrayAdapter<SettingsItem>(context, R.layout.layout_settings_item, items) {
+class HomeMiniSettingsRecyclerAdapter(context: Context, val items: List<HomeMiniSettingsItem>) : ArrayAdapter<HomeMiniSettingsItem>(context, R.layout.layout_settings_item, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         // ViewHolderパターンを使用してパフォーマンスを向上させる

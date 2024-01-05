@@ -9,20 +9,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tokumemo.utility.GetImage
 import com.example.tokumemo.R
+import com.example.tokumemo.domain.model.AdItem
 import com.example.tokumemo.ui.web.WebActivity
 
 // PR画面
 class PublicRelationsActivity : AppCompatActivity() {
 
-    // 少量なのでViewModelは作成しない
-    lateinit var imageURL: String
-    lateinit var introduction: String
-    lateinit var description: String
-    lateinit var tappedURL: String
-//    lateinit var organization_name: String
+    lateinit var item: AdItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        item = intent.getSerializableExtra("PAGE_KEY") as AdItem
 
         setContentView(R.layout.activity_public_relations)
 
@@ -34,25 +32,13 @@ class PublicRelationsActivity : AppCompatActivity() {
         val detailedInfoButton = findViewById<Button>(R.id.button)
         detailedInfoButton.setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", tappedURL)
+            intent.putExtra("PAGE_KEY", item.targetUrlStr)
             startActivity(intent)
         }
 
-        loadPRData()
-
         val imageView = findViewById<ImageView>(R.id.pr_image_view)
-        GetImage(imageView).execute(imageURL)
+        GetImage(imageView).execute(item.imageUrlStr)
 
-        findViewById<TextView>(R.id.textView5).text = introduction
+        findViewById<TextView>(R.id.textView5).text = item.imageDescription
     }
-
-    private fun loadPRData() {
-        // HomeFragmentからURLを受け取る
-        imageURL = intent.getStringExtra("PR_imageURL").toString()
-        introduction = intent.getStringExtra("PR_introduction").toString()
-        description = intent.getStringExtra("PR_description").toString()
-        tappedURL = intent.getStringExtra("PR_tappedURL").toString()
-//        organization_name = intent.getStringExtra("PR_organization_name").toString()
-    }
-
 }

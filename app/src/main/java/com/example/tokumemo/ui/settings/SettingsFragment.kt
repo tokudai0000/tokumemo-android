@@ -9,7 +9,7 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.example.tokumemo.R
 import com.example.tokumemo.common.AppConstants
-import com.example.tokumemo.domain.model.SettingListItemType
+import com.example.tokumemo.domain.model.SettingsItem
 import com.example.tokumemo.ui.web.WebActivity
 import com.example.tokumemo.ui.password.PasswordActivity
 
@@ -26,14 +26,14 @@ class SettingsFragment : Fragment() {
         listView.setOnItemClickListener {_, _, position, _ ->
             val item = AppConstants.settingsItems[position]
             when (item.id) {
-                SettingListItemType.Password -> {
+                SettingsItem.Type.Password -> {
                     val intent = Intent(requireContext(), PasswordActivity::class.java)
                     intent.putExtra("hogemon", PasswordActivity.DisplayType.Password)
                     startActivity(intent)
                 }
                 else -> {
                     val intent = Intent(requireContext(), WebActivity::class.java)
-                    intent.putExtra("PAGE_KEY", item.url.toString())
+                    intent.putExtra("PAGE_KEY", item.targetUrl.toString())
                     startActivity(intent)
                 }
             }
