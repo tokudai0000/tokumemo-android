@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
 import com.example.tokumemo.common.AppConstants
 import com.example.tokumemo.data.DataManager
-import com.example.tokumemo.domain.model.AdItem
 import com.example.tokumemo.domain.model.MenuDetailItem
 import com.example.tokumemo.domain.model.MenuItem
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
@@ -52,34 +51,37 @@ class HomeFragment : Fragment() {
     }
 
     private fun configurePrImages() {
-        val imageView = view.findViewById<ImageView>(R.id.pr_image_button)
-        imageView.setOnClickListener {
+        val prImageView = view.findViewById<ImageView>(R.id.pr_image_button)
+        prImageView.setOnClickListener {
 
-            viewModel.displayPrItem = AdItem(id = 1, clientName = "", imageUrlStr = "https://raw.githubusercontent.com/tokudai0000/tokumemo_resource/main/api/v1/images/23112800.png", targetUrlStr = "", imageDescription = "徳島サイバーセキュリティ・ミートアップ、待望のCTF")
             // displayPrItemのnullチェック
             viewModel.displayPrItem?.let { item ->
                 val intent = Intent(requireContext(), PublicRelationsActivity::class.java)
                 intent.putExtra("PAGE_KEY",item)
                 startActivity(intent)
             }
-//            viewModel.displayPRImagesNumber?.let { number ->
-//                val prItem = viewModel.prItems[number]
-//                Intent(context, PublicRelationsActivity::class.java).apply {
-//                    putExtra("PR_imageURL", prItem.imageURL)
-//                    putExtra("PR_introduction", prItem.introduction)
-//                    putExtra("PR_description", prItem.description)
-//                    putExtra("PR_tappedURL", prItem.tappedURL)
-//                    putExtra("PR_organization_name", prItem.organization_name)
-//                    startActivity(this)
-//                }
-//            }
+        }
+
+        val univImageView = view.findViewById<ImageView>(R.id.univ_image_button)
+        univImageView.setOnClickListener {
+
+            // displayPrItemのnullチェック
+            viewModel.displayUnivItem?.let { item ->
+                val intent = Intent(requireContext(), WebActivity::class.java)
+                intent.putExtra("PAGE_KEY",item.targetUrlStr)
+                startActivity(intent)
+            }
         }
 
         // PR画像(広告)を5000 msごとに読み込ませる
         Timer().scheduleAtFixedRate(0, 5000) {
-            viewModel.selectPRImageNumber()?.let {
-                viewModel.displayPRImagesNumber = it
-                GetImage(imageView).execute(viewModel.prItems[it].imageURL)
+            viewModel.randomChoiceForAdImage(adItems = viewModel.prItems, displayAdItem = viewModel.displayPrItem)?.let {
+                viewModel.displayPrItem = it
+                GetImage(prImageView).execute(it.imageUrlStr)
+            }
+            viewModel.randomChoiceForAdImage(adItems = viewModel.univItems, displayAdItem = viewModel.displayUnivItem)?.let {
+                viewModel.displayPrItem = it
+                GetImage(univImageView).execute(it.imageUrlStr)
             }
         }
     }
@@ -129,30 +131,30 @@ class HomeFragment : Fragment() {
     /// PR画像についての初期設定
 
     private fun configureUnivImages() {
-        val imageView = view.findViewById<ImageView>(R.id.univ_image_button)
-        imageView.setOnClickListener {
-            // PR画像が表示されているのならdisplayPRImagesNumberには値が入っている
-            viewModel.displayPRImagesNumber?.let {
-                // 表示されているPR画像の情報をPublicRelationsActivityに値を渡す
-                viewModel.prItems[it].let {
-                    val intent = Intent(context, PublicRelationsActivity::class.java)
-                    intent.putExtra("PR_imageURL",it.imageURL)
-                    intent.putExtra("PR_introduction",it.introduction)
-                    intent.putExtra("PR_description",it.description)
-                    intent.putExtra("PR_tappedURL",it.tappedURL)
-                    intent.putExtra("PR_organization_name",it.organization_name)
-                    startActivity(intent)
-                }
-            }
-        }
-
-        // PR画像(広告)を10000 msごとに読み込ませる
-        Timer().scheduleAtFixedRate(0, 5000) {
-            viewModel.selectPRImageNumber()?.let {
-                viewModel.displayPRImagesNumber = it
-                GetImage(imageView).execute(viewModel.prItems[it].imageURL)
-            }
-        }
+//        val imageView = view.findViewById<ImageView>(R.id.univ_image_button)
+//        imageView.setOnClickListener {
+//            // PR画像が表示されているのならdisplayPRImagesNumberには値が入っている
+//            viewModel.displayPRImagesNumber?.let {
+//                // 表示されているPR画像の情報をPublicRelationsActivityに値を渡す
+//                viewModel.prItems[it].let {
+//                    val intent = Intent(context, PublicRelationsActivity::class.java)
+//                    intent.putExtra("PR_imageURL",it.imageURL)
+//                    intent.putExtra("PR_introduction",it.introduction)
+//                    intent.putExtra("PR_description",it.description)
+//                    intent.putExtra("PR_tappedURL",it.tappedURL)
+//                    intent.putExtra("PR_organization_name",it.organization_name)
+//                    startActivity(intent)
+//                }
+//            }
+//        }
+//
+//        // PR画像(広告)を10000 msごとに読み込ませる
+//        Timer().scheduleAtFixedRate(0, 5000) {
+//            viewModel.selectPRImageNumber()?.let {
+//                viewModel.displayPRImagesNumber = it
+//                GetImage(imageView).execute(viewModel.prItems[it].imageURL)
+//            }
+//        }
     }
 
     private fun configureHomeMiniSettingsListView() {
