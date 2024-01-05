@@ -38,10 +38,9 @@ class HomeFragment : Fragment() {
     ): View? {
 
         view =  inflater.inflate(R.layout.fragment_home, container, false)
-
-        configurePrImages()
+        
+        configureAdImages()
         configureMenuRecyclerView()
-        configureUnivImages()
         configureHomeMiniSettingsListView()
 
         // PR画像(広告)の取得
@@ -50,7 +49,7 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun configurePrImages() {
+    private fun configureAdImages() {
         val prImageView = view.findViewById<ImageView>(R.id.pr_image_button)
         prImageView.setOnClickListener {
 
@@ -64,8 +63,6 @@ class HomeFragment : Fragment() {
 
         val univImageView = view.findViewById<ImageView>(R.id.univ_image_button)
         univImageView.setOnClickListener {
-
-            // displayPrItemのnullチェック
             viewModel.displayUnivItem?.let { item ->
                 val intent = Intent(requireContext(), WebActivity::class.java)
                 intent.putExtra("PAGE_KEY",item.targetUrlStr)
@@ -73,7 +70,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // PR画像(広告)を5000 msごとに読み込ませる
+        // 広告を5000 msごとに読み込ませる
         Timer().scheduleAtFixedRate(0, 5000) {
             viewModel.randomChoiceForAdImage(adItems = viewModel.prItems, displayAdItem = viewModel.displayPrItem)?.let {
                 viewModel.displayPrItem = it
@@ -126,35 +123,6 @@ class HomeFragment : Fragment() {
             }
         })
         menuRecyclerView.adapter = adapter
-    }
-
-    /// PR画像についての初期設定
-
-    private fun configureUnivImages() {
-//        val imageView = view.findViewById<ImageView>(R.id.univ_image_button)
-//        imageView.setOnClickListener {
-//            // PR画像が表示されているのならdisplayPRImagesNumberには値が入っている
-//            viewModel.displayPRImagesNumber?.let {
-//                // 表示されているPR画像の情報をPublicRelationsActivityに値を渡す
-//                viewModel.prItems[it].let {
-//                    val intent = Intent(context, PublicRelationsActivity::class.java)
-//                    intent.putExtra("PR_imageURL",it.imageURL)
-//                    intent.putExtra("PR_introduction",it.introduction)
-//                    intent.putExtra("PR_description",it.description)
-//                    intent.putExtra("PR_tappedURL",it.tappedURL)
-//                    intent.putExtra("PR_organization_name",it.organization_name)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-//
-//        // PR画像(広告)を10000 msごとに読み込ませる
-//        Timer().scheduleAtFixedRate(0, 5000) {
-//            viewModel.selectPRImageNumber()?.let {
-//                viewModel.displayPRImagesNumber = it
-//                GetImage(imageView).execute(viewModel.prItems[it].imageURL)
-//            }
-//        }
     }
 
     private fun configureHomeMiniSettingsListView() {
