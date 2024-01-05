@@ -1,4 +1,4 @@
-package com.example.tokumemo.ui.pr
+package com.example.tokumemo.domain.model
 
 class PublicRelationsData(
     var imageURL:String?,

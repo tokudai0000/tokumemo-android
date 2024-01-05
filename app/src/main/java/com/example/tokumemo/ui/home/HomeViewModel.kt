@@ -1,8 +1,8 @@
 package com.example.tokumemo.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.tokumemo.ui.pr.PublicRelationsData
-import com.example.tokumemo.domain.model.MenuItem
+import com.example.tokumemo.domain.model.AdItem
+import com.example.tokumemo.domain.model.PublicRelationsData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -12,6 +12,7 @@ import java.net.URL
 class HomeViewModel: ViewModel() {
 
     var prItems = arrayListOf<PublicRelationsData>()
+    var displayPrItem: AdItem? = null
 
     var displayPRImagesNumber: Int? = null // 表示している広告がadItemsに入っている配列番号
 
