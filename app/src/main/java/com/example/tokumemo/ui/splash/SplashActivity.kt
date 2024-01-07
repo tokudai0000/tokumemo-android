@@ -1,5 +1,6 @@
 package com.example.tokumemo.ui.splash
 
+import UnivAuthRepository
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -87,8 +88,9 @@ class SplashActivity : AppCompatActivity() {
                 // ログイン処理を行うURLか判定
                 if (UrlCheckers.shouldInjectJavaScript(url, canExecuteJavascript, urlType = UrlCheckers.UrlType.UniversityLogin)) {
                     canExecuteJavascript = false
-                    val cAccount = getPassword(view!!.context,"KEY_cAccount")
-                    val password = getPassword(view!!.context,"KEY_password")
+                    val univAuth = UnivAuthRepository(this@SplashActivity).fetchUnivAuth()
+                    val cAccount = univAuth.accountCID //"c612333035x" //getPassword(view!!.context,"KEY_cAccount")
+                    val password = univAuth.password //getPassword(view!!.context,"KEY_password")
                     webView.evaluateJavascript("document.getElementById('username').value= '$cAccount'", null)
                     webView.evaluateJavascript("document.getElementById('password').value= '$password'", null)
                     webView.evaluateJavascript("document.getElementsByClassName('form-element form-button')[0].click();", null)

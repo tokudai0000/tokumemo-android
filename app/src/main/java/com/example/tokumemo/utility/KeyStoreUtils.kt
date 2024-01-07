@@ -1,102 +1,184 @@
-package com.example.tokumemo.utility
-
+import android.annotation.TargetApi
+import android.content.Context
+import android.os.Build
+import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import java.math.BigInteger
+import java.nio.charset.Charset
+import java.security.Key
 import java.security.KeyPairGenerator
 import java.security.KeyStore
+import java.security.KeyStoreException
+import java.util.*
 import javax.crypto.Cipher
-
-val KEY_PROVIDER = "AndroidKeyStore"
-val CIPHER_TRANSFORMATION = "RSA/ECB/PKCS1Padding"
+import javax.crypto.KeyGenerator
+import javax.crypto.spec.IvParameterSpec
+import javax.security.auth.x500.X500Principal
 
 /*
-参考記事
-https://developer.android.com/privacy-and-security/keystore?hl=ja
-https://qiita.com/masaki_shoji/items/2ada7a182677a98d1cf9
-https://qiita.com/f_nishio/items/485490dea126dbbb5001
-https://qiita.com/sekitaka_1214/items/1942621118bba78ddf5b
+参考
+https://qiita.com/Sab_swiftlin/items/f92b4118b5abd1203154
  */
 
-/**
- * テキストを暗号化する関数
- * @param alias キーペアを識別するためのエイリアス
- * @param plainText 暗号化したいテキスト
- * @return Base64でエンコードされた暗号化テキスト
- */
-public fun encrypt(alias: String, plainText: String): String {
-    /*
-    Keystore.getInstanceの引数に"AndroidKeyStore"を指定し、Android KeyStoreのインスタンスを取得する。
-    このインスタンスはフィールドにAndroidKeyStoreSpiのインスタンスを保持する。
-     */
-    val keyStore = KeyStore.getInstance(KEY_PROVIDER)
-    //Android KeyStoreをロードする。内部のAndroidKeystoreSpiがこのメソッドにより初期化されるため、この処理が必要
-    keyStore.load(null)
+object KeyStoreUtils {
+    // 共通定義
+    private const val PROVIDER = "AndroidKeyStore"
+    private const val KEY_STORE_ALIAS = "this_apps_alias"
 
-    // 鍵ペア(公開鍵&秘密鍵)がない場合生成
-    if (!keyStore.containsAlias(alias)) {
-        generateKeyPair(alias)
-    }
-    // 公開鍵を取得
-    val publicKey = keyStore.getCertificate(alias).publicKey
-    val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
-    cipher.init(Cipher.ENCRYPT_MODE, publicKey)
+    // API22以下で利用
+    private const val ALGORITHM = "RSA"
+    private const val CIPHER_TRANSFORMATION_RSA = "RSA/ECB/PKCS1Padding"
 
-    // 平文を暗号化
-    val encryptedBytes = cipher.doFinal(plainText.toByteArray())
-    // 暗号化されたデータをBase64でエンコード
-    return Base64.encodeToString(encryptedBytes, Base64.DEFAULT)
-}
+    // API23以上で利用
+    @TargetApi(23)
+    private const val CIPHER_TRANSFORMATION_AES = "${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_CBC}/${KeyProperties.ENCRYPTION_PADDING_PKCS7}"
 
-/**
- * 暗号化されたテキストを復号化する関数
- * @param alias キーペアを識別するためのエイリアス
- * @param encryptedText 暗号化されたテキスト
- * @return 復号化されたテキスト
- */
-public fun decrypt(alias: String, encryptedText: String): String? {
-    val keyStore = KeyStore.getInstance(KEY_PROVIDER)
-    keyStore.load(null)
-
-    // 鍵ペア(公開鍵&秘密鍵)がない場合は復号できないので、nullを返す
-    if (!keyStore.containsAlias(alias)) {
-        return null
+    // APIレベルで分岐して暗号化
+    fun encrypt(context: Context, plainText: String): String? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            encryptAES(plainText)
+        } else {
+            encryptRSA(context, plainText)
+        }
     }
 
-    // 秘密鍵を取得
-    val privateKey = keyStore.getKey(alias, null)
-
-    // 復号化処理
-    val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
-    cipher.init(Cipher.DECRYPT_MODE, privateKey)
-    val encryptedBytes = Base64.decode(encryptedText, Base64.DEFAULT)
-
-    // 復号化したデータ
-    val decryptedBytes = cipher.doFinal(encryptedBytes)
-    return String(decryptedBytes)
-}
-
-private fun generateKeyPair(alias: String) {
-    /*
-    鍵ペアを作成するためのKeyPairGeneratorのインスタンスを取得する
-    引数のproviderに"AndroidKeyStore"を指定することで、
-    Android Keystoreに鍵ペアを作成するKeyPairGeneratorSpiインスタンスを取得する
-     */
-    val keyPairGenerator = KeyPairGenerator.getInstance(
-        KeyProperties.KEY_ALGORITHM_RSA,
-        KEY_PROVIDER
-    )
-
-    // 作成する鍵ペアのスペックを指定するためのKeyGenParameterSpecインスタンスを生成
-    val parameterSpec: KeyGenParameterSpec = KeyGenParameterSpec.Builder(
-        alias, //エイリアスを"hoge"に設定。Android KeyStoreからエントリーを取得する際はこのエイリアスを使用する。
-        KeyProperties.PURPOSE_ENCRYPT//鍵の使用目的を指定する。ここでは暗号化のみを目的とした鍵を生成。指定した目的以外で鍵を使用するとInvalidKeyExceptionが発生する
-    ).run {
-        //使用するダイジェストのアルゴリズムをSHA-256に限定する。これ以外のダイジェストアルゴリズムの使用は拒否される。
-        setDigests(KeyProperties.DIGEST_SHA256)
-        build()
+    // APIレベルで分岐して復号
+    fun decrypt(encryptedText: String): String? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            decryptAES(encryptedText)
+        } else {
+            decryptRSA(encryptedText)
+        }
     }
 
-    keyPairGenerator.initialize(parameterSpec)
-    keyPairGenerator.generateKeyPair()
+    // API22以下用暗号化メソッド
+    private fun encryptRSA(context: Context, plainText: String): String? {
+
+        val start = Calendar.getInstance()
+        val end = Calendar.getInstance()
+        end.add(Calendar.YEAR, 100)
+
+        val keyStore = KeyStore.getInstance(PROVIDER).apply {
+            load(null)
+        }.also {
+            if (!it.containsAlias(KEY_STORE_ALIAS)) {
+                KeyPairGenerator.getInstance(ALGORITHM, PROVIDER).apply {
+                    initialize(
+                        KeyPairGeneratorSpec.Builder(context)
+                            .setAlias(KEY_STORE_ALIAS)
+                            .setSubject(X500Principal("CN=$KEY_STORE_ALIAS"))
+                            .setSerialNumber(BigInteger.ONE)
+                            .setStartDate(start.time)
+                            .setEndDate(end.time)
+                            .build()
+                    )
+                }.run {
+                    generateKeyPair()
+                }
+            }
+        }
+        val key = keyStore.getCertificate(KEY_STORE_ALIAS).publicKey
+
+        return Cipher.getInstance(CIPHER_TRANSFORMATION_RSA).apply {
+            init(Cipher.ENCRYPT_MODE, key)
+        }.run {
+            this.doFinal(plainText.toByteArray(Charset.defaultCharset()))
+        }.let {
+            Base64.encodeToString(it, Base64.DEFAULT)
+        }
+    }
+
+    // API22以下用復号メソッド
+    private fun decryptRSA(encryptedText: String): String? {
+
+        val keyStore = KeyStore.getInstance(PROVIDER).apply {
+            load(null)
+        }.also {
+            if (!it.containsAlias(KEY_STORE_ALIAS)) return null
+        }
+
+        val privateKey = keyStore.getKey(KEY_STORE_ALIAS, null)
+        return Cipher.getInstance(CIPHER_TRANSFORMATION_RSA).apply {
+            init(Cipher.DECRYPT_MODE, privateKey)
+        }.run {
+            this.doFinal(Base64.decode(encryptedText, Base64.DEFAULT))
+        }?.let {
+            String(it)
+        }
+    }
+
+    // API23以上用暗号化メソッド
+    @TargetApi(23)
+    private fun encryptAES(plainText: String): String? {
+        val keyStore = KeyStore.getInstance(PROVIDER).apply {
+            load(null)
+        }
+
+        val key = getKey(keyStore)
+        val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_AES).apply {
+            init(Cipher.ENCRYPT_MODE, key)
+        }
+        val ivStr = Base64.encodeToString(cipher.iv, Base64.DEFAULT)
+        val textBytes = cipher.doFinal(plainText.toByteArray(Charset.defaultCharset()))
+        return ivStr + Base64.encodeToString(textBytes, Base64.DEFAULT)
+    }
+
+    // API23以上用復号メソッド
+    @TargetApi(23)
+    private fun decryptAES(encryptedText: String): String? {
+        val keyStore = KeyStore.getInstance(PROVIDER).apply {
+            load(null)
+        }.also {
+            if (!it.containsAlias(KEY_STORE_ALIAS)) return null
+        }
+
+        val splitText = encryptedText.split("\n").also {
+            if (it.size < 2) return null
+        }
+        val ivStr = splitText[0]
+        val encryptedBytes = Base64.decode(splitText[1], Base64.DEFAULT)
+        val key = keyStore.getKey(KEY_STORE_ALIAS, null)
+        val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_AES).apply {
+            init(Cipher.DECRYPT_MODE, key, IvParameterSpec(Base64.decode(ivStr, Base64.DEFAULT)))
+        }
+        val decryptedBytes = cipher.doFinal(encryptedBytes)
+        return String(decryptedBytes)
+    }
+
+    // API23以上用共通鍵取得メソッド
+    @TargetApi(23)
+    @Throws(KeyStoreException::class)
+    private fun getKey(keyStore: KeyStore): Key {
+        // 既に鍵を所有していたらRSAか否かで処理を分岐
+        if (keyStore.containsAlias(KEY_STORE_ALIAS)) {
+            keyStore.getKey(KEY_STORE_ALIAS, null).let {
+                if (it.algorithm == ALGORITHM) {
+                    // RSAだったら削除して例外をスロー
+                    keyStore.deleteEntry(KEY_STORE_ALIAS)
+                    throw KeyStoreException("Mismatch key")
+                } else {
+                    // AESだったら鍵を返す
+                    return it
+                }
+            }
+        }
+
+        // 鍵が無ければ作って返す
+        KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, PROVIDER).apply {
+            init(
+                KeyGenParameterSpec.Builder(KEY_STORE_ALIAS, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setCertificateSubject(X500Principal("CN=$KEY_STORE_ALIAS"))
+                    .setCertificateSerialNumber(BigInteger.ONE)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .build()
+            )
+        }.run {
+            generateKey()
+        }
+
+        return keyStore.getKey(KEY_STORE_ALIAS, null)
+    }
 }
