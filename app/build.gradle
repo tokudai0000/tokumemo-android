@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     defaultConfig {
         applicationId "com.tokudai0000.tokumemo"
-        minSdk 21
+        minSdk 23
         compileSdk 34
         targetSdk 33
         versionCode 18
