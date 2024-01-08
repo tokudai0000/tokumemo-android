@@ -2,10 +2,12 @@ package com.example.tokumemo.ui.splash
 
 import UnivAuthRepository
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
@@ -17,22 +19,66 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
 import com.example.tokumemo.common.Url
 import com.example.tokumemo.common.UrlCheckers
 import com.example.tokumemo.data.DataManager
 import com.example.tokumemo.data.DataManager.Companion.canExecuteJavascript
+import com.example.tokumemo.domain.model.AdItem
 import com.example.tokumemo.ui.MainActivity
+import com.example.tokumemo.ui.RootActivity
 import com.example.tokumemo.ui.agreement.AgreementActivity
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
 import com.example.tokumemo.ui.web.WebActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URL
 
 class SplashActivity : AppCompatActivity() {
+    companion object {
+
+        const val EXTRA_RESULT = "result"
+
+        fun createIntent(context: Context) =
+            Intent(context, SplashActivity::class.java)
+    }
+
+    private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        GlobalScope.launch {
+            try {
+                val termVersion = getCurrentTermVersion()
+
+                // UIスレッドで実行
+                withContext(Dispatchers.Main) {
+                    val KEY = "KEY_agreementVersion"
+                    val sharedPreferences = getSharedPreferences("my_settings", Context.MODE_PRIVATE)
+                    val oldAgreementVer = sharedPreferences.getString(KEY, null).toString()
+
+                    if (termVersion == oldAgreementVer) {
+                        webView.loadUrl(Url.UniversityTransitionLogin.urlString)
+                    }else{
+                        val returnIntent = Intent()
+                        returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "AgreementActivity")
+                        setResult(Activity.RESULT_OK, returnIntent)
+                        finish()
+                    }
+                }
+                println("Current term version: $termVersion")
+            } catch (e: Exception) {
+                println("Error occurred: ${e.message}")
+            }
+        }
 
         configureWebView()
         configureLoginStatus()
@@ -40,9 +86,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun configureWebView() {
-        val webView: WebView = findViewById(R.id.webView)
+        webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
-        webView.loadUrl(Url.UniversityTransitionLogin.urlString)
 
         webView.webViewClient = object : WebViewClient() {
 
@@ -69,14 +114,18 @@ class SplashActivity : AppCompatActivity() {
 
                 // ログイン成功
                 if (UrlCheckers.isImmediatelyAfterLoginURL(url)) {
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    val returnIntent = Intent()
+                    returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
+                    setResult(Activity.RESULT_OK, returnIntent)
+                    finish()
                 }
 
                 // ログイン失敗
                 if (UrlCheckers.isFailureUniversityServiceLoggedInURL(url)) {
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    val returnIntent = Intent()
+                    returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
+                    setResult(Activity.RESULT_OK, returnIntent)
+                    finish()
                 }
             }
 
@@ -114,5 +163,27 @@ class SplashActivity : AppCompatActivity() {
         copylight.gravity = Gravity.CENTER
         copylight.setTextColor(Color.LTGRAY)
         copylight.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+    }
+
+    private fun isTermsVersionDifferent(current: String, accepted: String): Boolean {
+        return current != accepted
+    }
+
+    // 関数をsuspend関数に変更
+    private suspend fun getCurrentTermVersion(): String {
+        val apiUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/current_term_version.json"
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val responseData = URL(apiUrl).readText()
+                val jsonData = JSONObject(responseData)
+
+                // Jsonデータから内容物を取得
+                jsonData.getString("currentTermVersion")
+            } catch (e: Exception) {
+                // エラー処理、適宜エラーメッセージを返す
+                "Error: ${e.message}"
+            }
+        }
     }
 }
