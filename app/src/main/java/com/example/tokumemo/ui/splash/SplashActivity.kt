@@ -39,6 +39,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class SplashActivity : AppCompatActivity() {
     companion object {
@@ -54,6 +56,13 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        Timer("Schedule", false).schedule(10000) {
+            val returnIntent = Intent()
+            returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
+        }
 
         GlobalScope.launch {
             try {
