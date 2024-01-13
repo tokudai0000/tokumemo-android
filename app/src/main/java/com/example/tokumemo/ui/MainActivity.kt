@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        print("🖐️　あああ")
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val navController = findNavController(R.id.nav_host_fragment)
+        setupWithNavController(bottomNavigation, navController)
     }
 }
