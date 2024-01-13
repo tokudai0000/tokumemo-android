@@ -67,6 +67,7 @@ class SplashActivity : AppCompatActivity() {
         GlobalScope.launch {
             try {
                 val termVersion = getCurrentTermVersion()
+                DataManager.agreementVer = termVersion
 
                 // UIスレッドで実行
                 withContext(Dispatchers.Main) {
