@@ -3,7 +3,7 @@ package com.example.tokumemo.data
 public final class DataManager {
     companion object {
 
-        public val agreementVer = "1.0.0"
+        public var agreementVer = ""
 
         data class LoginState(
             var isProgress: Boolean = false,          // 進行中

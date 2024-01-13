@@ -3,7 +3,10 @@ package com.example.tokumemo.common
 enum class Url(val urlString: String) {
 
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う) 旧http://eweb.stud.tokushima-u.ac.jp/Portal/top.html
-    UniversityTransitionLogin("http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"),
+    /// https://eweb.stud.tokushima-u.ac.jp/Portal/shibboleth_login.aspx
+//    UniversityTransitionLogin("http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"),
+    UniversityTransitionLogin("https://eweb.stud.tokushima-u.ac.jp/Portal/shibboleth_login.aspx"),
+//    UniversityTransitionLogin("https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"),
 
 
     // ----- JavaScript実行検知 関連 -----

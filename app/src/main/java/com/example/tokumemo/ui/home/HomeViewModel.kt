@@ -1,5 +1,6 @@
 package com.example.tokumemo.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.tokumemo.domain.model.AdItem
 import kotlinx.coroutines.GlobalScope
@@ -21,7 +22,10 @@ class HomeViewModel: ViewModel() {
         try {
             val jsonUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/ad_items.json"
             val str = URL(jsonUrl).readText()
+//            print("😊"+jsonUrl)
+            print("😊"+str)
             val json = JSONObject(str)
+            print("😊"+json)
 
             // Jsonデータから内容物を取得
             val prItems = json.getJSONArray("prItems")

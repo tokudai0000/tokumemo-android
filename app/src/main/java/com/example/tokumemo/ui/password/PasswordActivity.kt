@@ -1,19 +1,14 @@
 package com.example.tokumemo.ui.password
 
-import android.content.Context
-import android.content.Intent
+import UnivAuthRepository
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tokumemo.data.DataManager
 import com.example.tokumemo.R
-import com.example.tokumemo.common.Url
-import com.example.tokumemo.ui.web.WebActivity
-import com.example.tokumemo.utility.decrypt
-import com.example.tokumemo.utility.encrypt
+import com.example.tokumemo.domain.model.UnivAuth
 
 class PasswordActivity : AppCompatActivity() {
 
@@ -46,48 +41,21 @@ class PasswordActivity : AppCompatActivity() {
 
         val type: DisplayType = intent.getSerializableExtra("hogemon") as DisplayType
 
-        when(type) {
-            DisplayType.Password ->{
-                titleTextView.text = "パスワード"
-                titleLabel1.text = "cアカウント"
-                titleLabel2.text = "パスワード"
-                registerButton.text = "登録"
-                textField1.setText(getPassword(this, "KEY_cAccount"))
-                textField2.setText(getPassword(this, "KEY_password"))
-                registerButton.setOnClickListener(){
-                    savePassword(this, textField1.text.toString(),"KEY_cAccount")
-                    savePassword(this, textField2.text.toString(),"KEY_password")
-                    Toast.makeText(
-                        this,
-                        "保存完了！",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            DisplayType.Favorite -> {
-                registerButton.setOnClickListener(){
-
-                }
-            }
-
-            DisplayType.Syllabus -> {
-                titleTextView.text = "シラバス"
-                titleLabel1.text = "教員名"
-                titleLabel2.text = "科目名"
-                registerButton.text = "検索"
-                registerButton.setOnClickListener(){
-                    DataManager.canExecuteJavascript = true
-                    val intent = Intent(this, WebActivity::class.java)
-                    intent.putExtra("PAGE_KEY", Url.Syllabus.urlString)
-                    intent.putExtra("SYLLABUS_teacher_name",textField1.text.toString())
-                    intent.putExtra("SYLLABUS_subject_name",textField2.text.toString())
-                    startActivity(intent)
-                }
-            }
+        titleTextView.text = "パスワード"
+        titleLabel1.text = "cアカウント"
+        titleLabel2.text = "パスワード"
+        registerButton.text = "登録"
+        val univAuthRepository = UnivAuthRepository(this)
+        textField1.setText(univAuthRepository.fetchUnivAuth().accountCID)
+        registerButton.setOnClickListener(){
+            val univAuth = UnivAuth(accountCID = textField1.text.toString(), password = textField2.text.toString())
+            univAuthRepository.setUnivAuth(univAuth)
+            Toast.makeText(
+                this,
+                "保存完了！",
+                Toast.LENGTH_SHORT
+            ).show()
         }
-
-
 
         finishButton.setOnClickListener(){
             finish()
@@ -95,25 +63,25 @@ class PasswordActivity : AppCompatActivity() {
     }
 
     // パスワードを暗号化して保存する
-    private fun savePassword(context: Context, plainPassword: String, KEY: String) {
-        // 暗号化
-        val encryptedPassword = encrypt(context, "password", plainPassword)
-
-        // shaaredPreferencesに保存
-        var editor = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).edit().apply {
-            putString(KEY, encryptedPassword).commit()
-        }
-    }
-
-    // パスワードを復号化して取得する
-    private fun getPassword(context: Context, KEY: String): String? {
-        // shaaredPreferencesから読み込み
-        val encryptedPassword = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString(KEY, null)
-        // アンラップ
-        encryptedPassword ?: return null
-        // 復号化
-        return decrypt("password", encryptedPassword)
-    }
+//    private fun savePassword(context: Context, plainPassword: String, KEY: String) {
+//        // 暗号化
+//        val encryptedPassword = encrypt("password", plainPassword)
+//
+//        // shaaredPreferencesに保存
+//        var editor = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).edit().apply {
+//            putString(KEY, encryptedPassword).commit()
+//        }
+//    }
+//
+//    // パスワードを復号化して取得する
+//    private fun getPassword(context: Context, KEY: String): String? {
+//        // shaaredPreferencesから読み込み
+//        val encryptedPassword = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString(KEY, null)
+//        // アンラップ
+//        encryptedPassword ?: return null
+//        // 復号化
+//        return decrypt("password", encryptedPassword)
+//    }
 
 //    private fun initSetup() {
 //        // findViewById

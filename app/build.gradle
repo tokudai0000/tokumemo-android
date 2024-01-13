@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     defaultConfig {
         applicationId "com.tokudai0000.tokumemo"
-        minSdk 21
+        minSdk 23
         compileSdk 34
         targetSdk 33
         versionCode 18
@@ -70,6 +70,10 @@ dependencies {
 
     // MaterialComponentsのBottomNavigationを使うため
     implementation 'com.google.android.material:material:1.11.0'
+
+    // Activity Result API
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.activity:activity-ktx:1.9.0-alpha01'
 }
 
 ext.applicationInfo = [

@@ -1,5 +1,6 @@
 package com.example.tokumemo.ui.agreement
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +8,23 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tokumemo.data.DataManager
 import com.example.tokumemo.R
+import com.example.tokumemo.common.AKLog
+import com.example.tokumemo.common.AKLogLevel
 import com.example.tokumemo.common.Url
+import com.example.tokumemo.domain.model.AdItem
+import com.example.tokumemo.ui.RootActivity
+import com.example.tokumemo.ui.splash.SplashActivity
 import com.example.tokumemo.ui.web.WebActivity
 
 class AgreementActivity : AppCompatActivity() {
+
+    companion object {
+
+        const val EXTRA_RESULT = "result"
+
+        fun createIntent(context: Context) =
+            Intent(context, AgreementActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +42,15 @@ class AgreementActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.agreement_button).setOnClickListener {
             val KEY = "KEY_agreementVersion"
+
+            AKLog(AKLogLevel.DEBUG, DataManager.agreementVer)
             getSharedPreferences("my_settings", Context.MODE_PRIVATE).edit().apply {
                 putString(KEY, DataManager.agreementVer).commit()
             }
+
+            val returnIntent = Intent()
+            returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
+            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }

@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.tokumemo.data.DataManager
 import com.example.tokumemo.R
-import com.example.tokumemo.utility.decrypt
 
 class WebActivity : AppCompatActivity() {
 
@@ -63,17 +62,8 @@ class WebActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
 
-        Log.d("PRINT",getPassword(this) ?: "getPassword_nil")
+//        Log.d("PRINT",getPassword(this) ?: "getPassword_nil")
 
-    }
-    // パスワードを復号化して取得する
-    fun getPassword(context: Context): String? {
-        // shaaredPreferencesから読み込み
-        val encryptedPassword = getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString("encrypted_password", null)
-        // アンラップ
-        encryptedPassword ?: return null
-        // 復号化
-        return decrypt("password", encryptedPassword)
     }
 
     // MainActivityからデータを受け取ったデータを基にURLを読み込んでサイトを開く
@@ -144,8 +134,8 @@ class WebActivity : AppCompatActivity() {
                     WebViewModel.JavaScriptType.loginIAS -> {
 
                         Log.i("jsCount", DataManager.jsCount.toString())
-                        val cAccount = getPassword(view!!.context,"KEY_cAccount")
-                        val password = getPassword(view!!.context,"KEY_password")
+                        val cAccount = ""//getPassword(view!!.context,"KEY_cAccount")
+                        val password = ""//getPassword(view!!.context,"KEY_password")
 
                         webView.evaluateJavascript(
                             "document.getElementById('username').value= '$cAccount'",
@@ -167,8 +157,8 @@ class WebActivity : AppCompatActivity() {
 
                     }
                     WebViewModel.JavaScriptType.loginCareerCenter -> {
-                        val cAccount = getPassword(view!!.context,"KEY_cAccount")
-                        val password = getPassword(view!!.context,"KEY_password")
+                        val cAccount = ""//getPassword(view!!.context,"KEY_cAccount")
+                        val password = ""//getPassword(view!!.context,"KEY_password")
                         // 徳島大学キャリアセンター室
                         // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
                         // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
@@ -202,21 +192,4 @@ class WebActivity : AppCompatActivity() {
 //
 //        return super.onKeyDown(keyCode, event)
 //    }
-
-    // ハスワードを登録しているか判定し、パスワード画面の表示を行うべきか判定
-    private fun shouldShowPasswordView():Boolean {
-        val cAccount = getPassword(this, "KEY_cAccount")
-        val password = getPassword(this, "KEY_password")
-        return (cAccount == "" || password == "")
-    }
-
-    // パスワードを復号化して取得する
-    private fun getPassword(context: Context, KEY: String): String? {
-        // shaaredPreferencesから読み込み
-        val encryptedPassword = context.getSharedPreferences("my_settings", Context.MODE_PRIVATE).getString(KEY, null)
-        // アンラップ
-        encryptedPassword ?: return null
-        // 復号化
-        return decrypt("password", encryptedPassword)
-    }
 }
