@@ -45,19 +45,19 @@
 <!--            </intent-filter>-->
         </activity>
         <activity android:name=".ui.agreement.AgreementActivity" android:screenOrientation="portrait" android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
     </activity>
         <activity android:name=".ui.pr.PublicRelationsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.web.WebActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.password.PasswordActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.RootActivity" android:screenOrientation="portrait" android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
