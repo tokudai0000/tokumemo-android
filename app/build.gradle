@@ -74,6 +74,9 @@ dependencies {
     // Activity Result API
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.activity:activity-ktx:1.9.0-alpha01'
+
+    // レイアウト
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
 
 ext.applicationInfo = [
