@@ -88,6 +88,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
+
+        android:background="@drawable/shape_rounded_corners"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,11 +99,12 @@
             android:id="@+id/agreement_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1A000000"
+            android:background="@color/clear"
             android:gravity="center_horizontal"
+
             android:isScrollContainer="false"
             android:scrollbars="none"
             android:text="@string/agreement_text"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
