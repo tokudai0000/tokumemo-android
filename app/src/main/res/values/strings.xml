@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">トクメモ＋</string>
+    <string name="app_name_tokumemo">トクメモ＋</string>
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
