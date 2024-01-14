@@ -51,13 +51,6 @@ class WebActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<ImageButton>(R.id.menu_button).setOnClickListener {
-            Toast.makeText(this,
-                "近日中に実装",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
 
         viewModel = ViewModelProvider(this)[WebViewModel::class.java]
         webViewSetup()
