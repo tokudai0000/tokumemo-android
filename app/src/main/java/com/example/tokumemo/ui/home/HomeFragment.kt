@@ -11,11 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokumemo.R
+import com.example.tokumemo.common.AKLog
+import com.example.tokumemo.common.AKLogLevel
 import com.example.tokumemo.common.AppConstants
 import com.example.tokumemo.data.DataManager
 import com.example.tokumemo.domain.model.MenuDetailItem
@@ -23,6 +26,12 @@ import com.example.tokumemo.domain.model.MenuItem
 import com.example.tokumemo.ui.pr.PublicRelationsActivity
 import com.example.tokumemo.ui.web.WebActivity
 import com.example.tokumemo.utility.GetImage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URL
 
 
 class HomeFragment : Fragment() {
@@ -45,6 +54,15 @@ class HomeFragment : Fragment() {
 
         // PR画像(広告)の取得
         viewModel.getAdItems()
+
+        val termText: TextView = view.findViewById(R.id.number_of_users_text_view)
+        GlobalScope.launch {
+            try {
+                termText.text = getNumberOfUsers()
+            } catch (e: Exception) {
+                AKLog(AKLogLevel.ERROR, "Error: ${e.message}")
+            }
+        }
 
         return view
     }
@@ -152,6 +170,22 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    private suspend fun getNumberOfUsers(): String {
+        val apiUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/number_of_users.json"
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val responseData = URL(apiUrl).readText()
+                val jsonData = JSONObject(responseData)
+
+                // Jsonデータから内容物を取得
+                jsonData.getString("numberOfUsers")
+            } catch (e: Exception) {
+                // エラー処理、適宜エラーメッセージを返す
+                "Error: ${e.message}"
+            }
+        }
+    }
 
     // 学生番号、パスワードを登録しているか判定
 //    private fun hasRegisteredPassword(): Boolean {

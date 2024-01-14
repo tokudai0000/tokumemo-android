@@ -1,96 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="2"
-    android:background="@color/main_color">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+
+    <!--  imageViewを円形にするために  -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/iconCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="50dp"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/_12" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/_12" />
+    </androidx.cardview.widget.CardView>
+
+
+    <!--  アプリの歴史欄  -->
+    <!--  ScrollViewの角丸はbackgroundで適用  -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/shape_rounded_corners"
+
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/iconCard"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/agreement_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+
+            android:gravity="center_horizontal"
+            android:text="@string/agreement_text"
+            android:textColor="@color/black" />
+    </ScrollView>
+
+
+    <!--  利用規約とプライバシーポリシーのボタンを横に2つ並べる  -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toTopOf="@+id/agreement_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!--    利用規約のボタン    -->
+        <Button
+            android:id="@+id/terms_button"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+
+            android:text="利用規約"
+            android:textSize="10sp"
+            android:textColor="@color/black" />
+
+        <!-- スペースの追加 -->
+        <Space
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <!--    プライバシーポリシーのボタン    -->
+        <Button
+            android:id="@+id/privacy_button"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+
+            android:text="プライバシーポリシー"
+            android:textSize="10sp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!--  同意ボタン  -->
     <Button
         android:id="@+id/agreement_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+
         android:backgroundTint="@color/orange"
         android:text="同意する"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/agreement_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <!-- スペースの追加 -->
-
-        <Button
-            android:id="@+id/terms_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:backgroundTint="#1A000000"
-            android:text="利用規約"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
-
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/privacy_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:backgroundTint="#1A000000"
-            android:text="プライバシーポリシー"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
-    </LinearLayout>
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" >
-        <TextView
-            android:id="@+id/agreement_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#1A000000"
-            android:gravity="center_horizontal"
-            android:isScrollContainer="false"
-            android:scrollbars="none"
-            android:text="@string/agreement_text"
-            android:textColor="@color/white"/>
-    </ScrollView>
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

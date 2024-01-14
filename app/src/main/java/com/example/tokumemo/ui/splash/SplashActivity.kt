@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -98,6 +99,8 @@ class SplashActivity : AppCompatActivity() {
     private fun configureWebView() {
         webView = findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
+        // 非表示にする
+        webView.visibility = View.GONE
 
         webView.webViewClient = object : WebViewClient() {
 
