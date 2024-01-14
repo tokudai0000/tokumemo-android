@@ -1,15 +1,15 @@
 buildscript {
     repositories {
+        // デフォルト
         google()
+        // デフォルト　Javaのライブラリを保管してるリポジトリ
         mavenCentral()
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.15'
-    }
-}
+        // Firebaseの追加(Firebase Analytics)
+        classpath 'com.google.gms:google-services:4.4.0'
 
-plugins {
-    id 'com.android.application' version '8.1.1' apply false
-    id 'com.android.library' version '8.1.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21'
+    }
 }
