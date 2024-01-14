@@ -24,7 +24,7 @@ import java.net.URL
 class AgreementActivity : AppCompatActivity() {
 
     companion object {
-
+        var agreementVer = ""
         const val EXTRA_RESULT = "result"
 
         fun createIntent(context: Context) =
@@ -58,9 +58,9 @@ class AgreementActivity : AppCompatActivity() {
         findViewById<Button>(R.id.agreement_button).setOnClickListener {
             val KEY = "KEY_agreementVersion"
 
-            AKLog(AKLogLevel.DEBUG, DataManager.agreementVer)
+            AKLog(AKLogLevel.DEBUG, agreementVer)
             getSharedPreferences("my_settings", Context.MODE_PRIVATE).edit().apply {
-                putString(KEY, DataManager.agreementVer).commit()
+                putString(KEY, agreementVer).commit()
             }
 
             val returnIntent = Intent()

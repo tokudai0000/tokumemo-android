@@ -65,5 +65,3 @@ object UrlCheckers {
         return targetURLs.contains(urlStr)
     }
 }
-
-// Url クラスと Url.string() メソッドは、Swiftコードで参照されているものと同じ機能を持つようにKotlinで定義する必要があります。

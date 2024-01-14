@@ -10,16 +10,6 @@ interface UnivAuthRepositoryInterface {
 
 class UnivAuthRepository(private val context: Context) : UnivAuthRepositoryInterface {
 
-    private val KEY_C_ACCOUNT = "KEY_cAccount"
-    private var accountCID: String
-        get() = getKeyStore(KEY_C_ACCOUNT)
-        set(value) = setKeyStore(KEY_C_ACCOUNT, value)
-
-    private val KEY_PASSWORD = "KEY_password"
-    private var password: String
-        get() = getKeyStore(KEY_PASSWORD)
-        set(value) = setKeyStore(KEY_PASSWORD, value)
-
     override fun fetchUnivAuth(): UnivAuth {
         val accountCID = accountCID
         val password = password
@@ -30,6 +20,19 @@ class UnivAuthRepository(private val context: Context) : UnivAuthRepositoryInter
         accountCID = items.accountCID
         password = items.password
     }
+
+
+    /// --- Private Fun ---
+
+    private val KEY_C_ACCOUNT = "KEY_cAccount"
+    private var accountCID: String
+        get() = getKeyStore(KEY_C_ACCOUNT)
+        set(value) = setKeyStore(KEY_C_ACCOUNT, value)
+
+    private val KEY_PASSWORD = "KEY_password"
+    private var password: String
+        get() = getKeyStore(KEY_PASSWORD)
+        set(value) = setKeyStore(KEY_PASSWORD, value)
 
     private fun getKeyStore(key: String): String {
         // shaaredPreferencesから読み込み

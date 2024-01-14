@@ -21,6 +21,7 @@ import com.tokudai0000.tokumemo.common.UrlCheckers
 import com.tokudai0000.tokumemo.data.DataManager
 import com.tokudai0000.tokumemo.data.DataManager.Companion.canExecuteJavascript
 import com.tokudai0000.tokumemo.ui.RootActivity
+import com.tokudai0000.tokumemo.ui.agreement.AgreementActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -55,7 +56,7 @@ class SplashActivity : AppCompatActivity() {
         GlobalScope.launch {
             try {
                 val termVersion = getCurrentTermVersion()
-                DataManager.agreementVer = termVersion
+                AgreementActivity.agreementVer = termVersion
 
                 // UIスレッドで実行
                 withContext(Dispatchers.Main) {
