@@ -18,15 +18,16 @@ class ClubListsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val view = inflater.inflate(R.layout.fragment_club_lists, container, false)
         val webView = view.findViewById<WebView>(R.id.club_lists_web_view)
-        // 有効にすることでHTML側からネイティブ側へアクションを起こしている
-        webView.settings.javaScriptEnabled = true
-        webView.loadUrl(Url.ClubLists.urlString)
 
+        webView.settings.javaScriptEnabled = true
+
+        webView.loadUrl(Url.ClubLists.urlString)
         webView.webChromeClient = object : WebChromeClient() {
+
             // Web側(HTML,JavaScript)からKotlinが通知を受け、WebActivityを表示させる
             override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {
                 // アラートの表示をキャンセルする

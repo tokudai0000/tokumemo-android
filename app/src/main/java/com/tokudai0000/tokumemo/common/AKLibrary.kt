@@ -8,8 +8,7 @@ enum class AKLogLevel {
 
 fun AKLog(
     level: AKLogLevel,
-    message: Any,
-    throwable: Throwable = Throwable()
+    message: Any
 ) {
     // デバッグビルドのみでログを出力する
     if (BuildConfig.DEBUG) {
@@ -21,8 +20,6 @@ fun AKLog(
             AKLogLevel.FATAL -> "FATAL"
         }
 
-        val datetime = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", java.util.Locale.getDefault()).format(java.util.Date())
-
-        println("AKLog: $datetime $levelString $message")
+        println("$levelString AKLog: $message")
     }
 }
