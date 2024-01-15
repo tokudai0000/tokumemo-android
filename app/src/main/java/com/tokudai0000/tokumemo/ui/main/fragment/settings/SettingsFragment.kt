@@ -22,13 +22,12 @@ class SettingsFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
         val listView = view.findViewById<ListView>(R.id.settings_recycler_view)
-        listView.adapter = SettingsListsAdapter(requireContext(), AppConstants.settingsItems)
+        listView.adapter = SettingsListViewAdapter(requireContext(), AppConstants.settingsItems)
         listView.setOnItemClickListener {_, _, position, _ ->
             val item = AppConstants.settingsItems[position]
             when (item.id) {
                 SettingsItem.Type.Password -> {
                     val intent = Intent(requireContext(), PasswordActivity::class.java)
-                    intent.putExtra("hogemon", PasswordActivity.DisplayType.Password)
                     startActivity(intent)
                 }
                 else -> {
