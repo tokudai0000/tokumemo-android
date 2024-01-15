@@ -1,4 +1,4 @@
-package com.tokudai0000.tokumemo.ui
+package com.tokudai0000.tokumemo.ui.main
 
 import android.content.Context
 import android.content.Intent

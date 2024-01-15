@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.common.AKLog
@@ -15,13 +16,13 @@ import com.tokudai0000.tokumemo.data.repository.AcceptedTermVersionRepository
 import com.tokudai0000.tokumemo.ui.RootActivity
 import com.tokudai0000.tokumemo.ui.web.WebActivity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 
 class AgreementActivity : AppCompatActivity(R.layout.activity_agreement) {
+
+    private val viewModel by viewModels<AgreementViewModel>()
 
     companion object {
         var currentTermVersion: String = ""
@@ -67,26 +68,11 @@ class AgreementActivity : AppCompatActivity(R.layout.activity_agreement) {
     private fun configureTermText() {
         val termTextView: TextView = findViewById(R.id.agreement_text_view)
 
-        GlobalScope.launch {
-            try {
-                termTextView.text = fetchTermText()
-            } catch (e: Exception) {
-                AKLog(AKLogLevel.ERROR, "Error occurred configureTermText: ${e.message}")
-            }
+        viewModel.termText.observe(this) { item ->
+            AKLog(AKLogLevel.DEBUG, "test")
+            termTextView.text = item
         }
-    }
 
-    // FIXME: ViewModel等に移行
-    private suspend fun fetchTermText(): String {
-        return withContext(Dispatchers.IO) {
-            try {
-                val apiUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/term_text.json"
-                val responseData = URL(apiUrl).readText()
-                val jsonData = JSONObject(responseData)
-                jsonData.getString("termText")
-            } catch (e: Exception) {
-                "Error: getTermText API通信失敗"
-            }
-        }
+        viewModel.fetchTermText()
     }
 }

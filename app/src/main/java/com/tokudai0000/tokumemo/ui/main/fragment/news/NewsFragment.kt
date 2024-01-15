@@ -1,4 +1,4 @@
-package com.tokudai0000.tokumemo.ui.news
+package com.tokudai0000.tokumemo.ui.main.fragment.news
 
 import android.content.Intent
 import android.os.Bundle

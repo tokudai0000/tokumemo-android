@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/back_ground_gray_color"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context=".ui.main.fragment.settings.SettingsFragment">
 
     <TextView
         android:id="@+id/settings_title"

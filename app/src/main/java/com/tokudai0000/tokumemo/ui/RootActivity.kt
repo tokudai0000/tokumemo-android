@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.ui.agreement.AgreementActivity
+import com.tokudai0000.tokumemo.ui.main.MainActivity
 import com.tokudai0000.tokumemo.ui.splash.SplashActivity
 
 class RootActivity : AppCompatActivity(R.layout.activity_root) {

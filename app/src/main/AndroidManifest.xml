@@ -37,7 +37,7 @@
 
         <activity android:name=".ui.splash.SplashActivity" />
         <activity android:name=".ui.agreement.AgreementActivity" />
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.pr.PublicRelationsActivity" />
         <activity android:name=".ui.web.WebActivity" />
         <activity android:name=".ui.password.PasswordActivity" />

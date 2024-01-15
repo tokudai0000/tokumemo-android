@@ -1,4 +1,4 @@
-package com.tokudai0000.tokumemo.ui.home
+package com.tokudai0000.tokumemo.ui.main.fragment.home
 
 import android.content.Context
 import android.view.LayoutInflater

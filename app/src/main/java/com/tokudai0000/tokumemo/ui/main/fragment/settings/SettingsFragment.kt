@@ -1,4 +1,4 @@
-package com.tokudai0000.tokumemo.ui.settings
+package com.tokudai0000.tokumemo.ui.main.fragment.settings
 
 import android.content.Intent
 import android.os.Bundle

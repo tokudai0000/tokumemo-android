@@ -1,4 +1,4 @@
-package com.tokudai0000.tokumemo.ui.clublists
+package com.tokudai0000.tokumemo.ui.main.fragment.clublists
 
 import android.content.Intent
 import android.os.Bundle
