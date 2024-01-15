@@ -12,11 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     companion object {
-
-        const val EXTRA_RESULT = "result"
-
-        fun createIntent(context: Context) =
-            Intent(context, MainActivity::class.java)
+        fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
