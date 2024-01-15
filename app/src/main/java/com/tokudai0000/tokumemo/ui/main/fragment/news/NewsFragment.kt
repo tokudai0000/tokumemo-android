@@ -22,12 +22,10 @@ class NewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view =  inflater.inflate(R.layout.fragment_news, container, false)
 
-        var view =  inflater.inflate(R.layout.fragment_news, container, false)
         listView = view.findViewById<ListView>(R.id.list_view)
-
         listView.setOnItemClickListener {_, _, position, _ ->
-            val intent = Intent(requireContext(), WebActivity::class.java)
             val newsItem = viewModel.newsItems.value?.get(position)
             newsItem?.let {
                 val intent = Intent(requireContext(), WebActivity::class.java)
@@ -36,11 +34,11 @@ class NewsFragment : Fragment() {
             }
         }
 
+        // Newsデータ取得
         viewModel.newsItems.observe(viewLifecycleOwner) { newsList ->
             listView.adapter = NewsListViewAdapter(requireContext(), newsList)
         }
-
-        viewModel.fetchNews()
+        viewModel.getNewsRSS()
 
         return view
     }

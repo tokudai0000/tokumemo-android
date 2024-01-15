@@ -15,10 +15,6 @@ import com.tokudai0000.tokumemo.common.Url
 import com.tokudai0000.tokumemo.data.repository.AcceptedTermVersionRepository
 import com.tokudai0000.tokumemo.ui.RootActivity
 import com.tokudai0000.tokumemo.ui.web.WebActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import java.net.URL
 
 class AgreementActivity : AppCompatActivity(R.layout.activity_agreement) {
 
