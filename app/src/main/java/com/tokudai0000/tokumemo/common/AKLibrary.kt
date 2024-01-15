@@ -13,10 +13,6 @@ fun AKLog(
 ) {
     // デバッグビルドのみでログを出力する
     if (BuildConfig.DEBUG) {
-        val stackTraceElement = throwable.stackTrace[0]
-        val fileName = stackTraceElement.fileName
-        val lineNumber = stackTraceElement.lineNumber
-        val methodName = stackTraceElement.methodName
 
         val levelString = when (level) {
             AKLogLevel.DEBUG -> "DEBUG"
@@ -27,6 +23,6 @@ fun AKLog(
 
         val datetime = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", java.util.Locale.getDefault()).format(java.util.Date())
 
-        println("AKLog: $datetime $levelString $fileName($lineNumber) $methodName: $message")
+        println("AKLog: $datetime $levelString $message")
     }
 }

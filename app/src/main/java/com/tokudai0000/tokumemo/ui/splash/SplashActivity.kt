@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.common.Url
 import com.tokudai0000.tokumemo.common.UrlCheckers
-import com.tokudai0000.tokumemo.data.DataManager
 import com.tokudai0000.tokumemo.data.DataManager.Companion.canExecuteJavascript
 import com.tokudai0000.tokumemo.ui.RootActivity
 import com.tokudai0000.tokumemo.ui.agreement.AgreementActivity
@@ -56,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
         GlobalScope.launch {
             try {
                 val termVersion = getCurrentTermVersion()
-                AgreementActivity.agreementVer = termVersion
+                AgreementActivity.currentTermVersion = termVersion
 
                 // UIスレッドで実行
                 withContext(Dispatchers.Main) {
@@ -64,7 +63,7 @@ class SplashActivity : AppCompatActivity() {
                     val sharedPreferences = getSharedPreferences("my_settings", Context.MODE_PRIVATE)
                     val oldAgreementVer = sharedPreferences.getString(KEY, null).toString()
 
-                    if (termVersion == oldAgreementVer) {
+                    if (termVersion != oldAgreementVer) {
                         webView.loadUrl(Url.UniversityTransitionLogin.urlString)
                     }else{
                         val returnIntent = Intent()
