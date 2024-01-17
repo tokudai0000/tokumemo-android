@@ -20,7 +20,6 @@ import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.common.AKLog
 import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
-import com.tokudai0000.tokumemo.data.DataManager
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
 import com.tokudai0000.tokumemo.ui.pr.PublicRelationsActivity
@@ -74,7 +73,7 @@ class HomeFragment : Fragment() {
             // displayPrItemのnullチェック
             viewModel.displayPrItem?.let { item ->
                 val intent = Intent(requireContext(), PublicRelationsActivity::class.java)
-                intent.putExtra("PAGE_KEY",item)
+                intent.putExtra(WebActivity.KEY_URL,item)
                 startActivity(intent)
             }
         }
@@ -83,7 +82,7 @@ class HomeFragment : Fragment() {
         univImageView.setOnClickListener {
             viewModel.displayUnivItem?.let { item ->
                 val intent = Intent(requireContext(), WebActivity::class.java)
-                intent.putExtra("PAGE_KEY",item.targetUrlStr)
+                intent.putExtra(WebActivity.KEY_URL,item.targetUrlStr)
                 startActivity(intent)
             }
         }
@@ -114,7 +113,6 @@ class HomeFragment : Fragment() {
             HomeMenuRecyclerAdapter.OnBookCellClickListener {
             override fun onItemClick(item: MenuItem) {
 
-                DataManager.canExecuteJavascript = true
                 when(item.id) {
 
                     // 講義関連
@@ -134,7 +132,7 @@ class HomeFragment : Fragment() {
 
                     else -> {
                         val intent = Intent(requireContext(), WebActivity::class.java)
-                        intent.putExtra("PAGE_KEY",item.url)
+                        intent.putExtra(WebActivity.KEY_URL,item.url)
                         startActivity(intent)
                     }
                 }
@@ -149,7 +147,7 @@ class HomeFragment : Fragment() {
         homeMiniSettingsRecyclerView.adapter = HomeMiniSettingsRecyclerAdapter(requireContext(), displayMenuLists)
         homeMiniSettingsRecyclerView.setOnItemClickListener {_, _, position, _ ->
             val intent = Intent(requireContext(), WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", displayMenuLists[position].targetUrl.toString())
+            intent.putExtra(WebActivity.KEY_URL, displayMenuLists[position].targetUrl.toString())
             startActivity(intent)
         }
     }
@@ -162,7 +160,7 @@ class HomeFragment : Fragment() {
 
         builder.setItems(itemNames) { dialog, which ->
             val intent = Intent(requireContext(), WebActivity::class.java)
-            intent.putExtra("PAGE_KEY",items[which].targetUrl)
+            intent.putExtra(WebActivity.KEY_URL,items[which].targetUrl)
             startActivity(intent)
         }
 

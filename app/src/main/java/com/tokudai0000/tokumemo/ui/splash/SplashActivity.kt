@@ -14,73 +14,40 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.tokudai0000.tokumemo.R
+import com.tokudai0000.tokumemo.common.AKLog
+import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.Url
 import com.tokudai0000.tokumemo.common.UrlCheckers
-import com.tokudai0000.tokumemo.data.DataManager.Companion.canExecuteJavascript
+import com.tokudai0000.tokumemo.data.repository.AcceptedTermVersionRepository
 import com.tokudai0000.tokumemo.ui.RootActivity
 import com.tokudai0000.tokumemo.ui.agreement.AgreementActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import java.net.URL
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
+
+    private val viewModel by viewModels<SplashViewModel>()
+
     companion object {
 
-        const val EXTRA_RESULT = "result"
+        private var canExecuteJavascript = true
 
-        fun createIntent(context: Context) =
-            Intent(context, SplashActivity::class.java)
+        fun createIntent(context: Context) = Intent(context, SplashActivity::class.java)
     }
 
     private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
-        Timer("Schedule", false).schedule(10000) {
-            val returnIntent = Intent()
-            returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
-            setResult(Activity.RESULT_OK, returnIntent)
-            finish()
-        }
-
-        GlobalScope.launch {
-            try {
-                val termVersion = getCurrentTermVersion()
-                AgreementActivity.currentTermVersion = termVersion
-
-                // UIスレッドで実行
-                withContext(Dispatchers.Main) {
-                    val KEY = "KEY_agreementVersion"
-                    val sharedPreferences = getSharedPreferences("my_settings", Context.MODE_PRIVATE)
-                    val oldAgreementVer = sharedPreferences.getString(KEY, null).toString()
-
-                    if (termVersion != oldAgreementVer) {
-                        webView.loadUrl(Url.UniversityTransitionLogin.urlString)
-                    }else{
-                        val returnIntent = Intent()
-                        returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "AgreementActivity")
-                        setResult(Activity.RESULT_OK, returnIntent)
-                        finish()
-                    }
-                }
-                println("Current term version: $termVersion")
-            } catch (e: Exception) {
-                println("Error occurred: ${e.message}")
-            }
-        }
 
         configureWebView()
         configureLoginStatus()
-        configureCopylight()
+        configureCopyright()
+        configureTermText()
+        configureTimer()
     }
 
     private fun configureWebView() {
@@ -135,7 +102,10 @@ class SplashActivity : AppCompatActivity() {
                 url ?: return
 
                 // ログイン処理を行うURLか判定
-                if (UrlCheckers.shouldInjectJavaScript(url, canExecuteJavascript, urlType = UrlCheckers.UrlType.UniversityLogin)) {
+                if (UrlCheckers.shouldInjectJavaScript(url,
+                        canExecuteJavascript,
+                        urlType = UrlCheckers.UrlType.UniversityLogin)) {
+
                     canExecuteJavascript = false
                     val univAuth = UnivAuthRepository(this@SplashActivity).fetchUnivAuth()
                     val cAccount = univAuth.accountCID //"c612333035x" //getPassword(view!!.context,"KEY_cAccount")
@@ -157,33 +127,43 @@ class SplashActivity : AppCompatActivity() {
         loginStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
     }
 
-    private fun configureCopylight() {
-        val copylight: TextView = findViewById(R.id.copylightTextView)
-        copylight.text = "Developed by Tokushima Univ students \n GitHub @tokudai0000"
-        copylight.gravity = Gravity.CENTER
-        copylight.setTextColor(Color.LTGRAY)
-        copylight.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+    private fun configureCopyright() {
+        val copyright: TextView = findViewById(R.id.copylightTextView)
+        copyright.text = "Developed by Tokushima Univ students \n GitHub @tokudai0000"
+        copyright.gravity = Gravity.CENTER
+        copyright.setTextColor(Color.LTGRAY)
+        copyright.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
     }
 
-    private fun isTermsVersionDifferent(current: String, accepted: String): Boolean {
-        return current != accepted
-    }
+    private fun configureTermText() {
+        viewModel.currentTermVersion.observe(this) { currentTermVersion ->
+            // 既に同意済みの規約バージョンを取得
+            val oldAgreementVer = AcceptedTermVersionRepository(this).fetchAcceptedTermVersion()
+            AKLog(AKLogLevel.DEBUG, "termVersionAPI取得: $currentTermVersion、同意済み: $oldAgreementVer")
 
-    // 関数をsuspend関数に変更
-    private suspend fun getCurrentTermVersion(): String {
-        val apiUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/current_term_version.json"
-
-        return withContext(Dispatchers.IO) {
-            try {
-                val responseData = URL(apiUrl).readText()
-                val jsonData = JSONObject(responseData)
-
-                // Jsonデータから内容物を取得
-                jsonData.getString("currentTermVersion")
-            } catch (e: Exception) {
-                // エラー処理、適宜エラーメッセージを返す
-                "Error: ${e.message}"
+            // APIから取得した最新の規約バージョンと、デバイスに保存された既に同意したバージョンを比較
+            if (currentTermVersion == oldAgreementVer) {
+                // 同意済みであれば、ログイン処理
+                webView.loadUrl(Url.UniversityTransitionLogin.urlString)
+            }else{
+                // 規約同意画面を表示させる
+                val returnIntent = Intent()
+                AgreementActivity.currentTermVersion = currentTermVersion
+                returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "AgreementActivity")
+                setResult(Activity.RESULT_OK, returnIntent)
+                finish()
             }
+        }
+        viewModel.getCurrentTermVersion()
+    }
+
+    private fun configureTimer() {
+        // 例外発生処理(10 s後に、Main画面へ遷移する)
+        Timer("Schedule", false).schedule(10000) {
+            val returnIntent = Intent()
+            returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         }
     }
 }

@@ -34,14 +34,14 @@ class AgreementActivity : AppCompatActivity(R.layout.activity_agreement) {
         // 利用規約のボタン
         findViewById<Button>(R.id.terms_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", Url.TermsOfService.urlString)
+            intent.putExtra(WebActivity.KEY_URL, Url.TermsOfService.urlString)
             startActivity(intent)
         }
 
         // プライバシーポリシーのボタン
         findViewById<Button>(R.id.privacy_button).setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", Url.PrivacyPolicy.urlString)
+            intent.putExtra(WebActivity.KEY_URL, Url.PrivacyPolicy.urlString)
             startActivity(intent)
         }
 
@@ -65,7 +65,6 @@ class AgreementActivity : AppCompatActivity(R.layout.activity_agreement) {
         val termTextView: TextView = findViewById(R.id.agreement_text_view)
 
         viewModel.termText.observe(this) { item ->
-            AKLog(AKLogLevel.DEBUG, "test")
             termTextView.text = item
         }
 

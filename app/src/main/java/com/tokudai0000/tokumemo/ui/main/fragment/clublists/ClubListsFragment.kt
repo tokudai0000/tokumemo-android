@@ -34,7 +34,7 @@ class ClubListsFragment : Fragment() {
                 result.cancel()
 
                 val intent = Intent(requireContext(), WebActivity::class.java)
-                intent.putExtra("PAGE_KEY",message)
+                intent.putExtra(WebActivity.KEY_URL,message)
                 startActivity(intent)
 
                 return true

@@ -32,7 +32,7 @@ class SettingsFragment : Fragment() {
                 }
                 else -> {
                     val intent = Intent(requireContext(), WebActivity::class.java)
-                    intent.putExtra("PAGE_KEY", item.targetUrl.toString())
+                    intent.putExtra(WebActivity.KEY_URL, item.targetUrl.toString())
                     startActivity(intent)
                 }
             }

@@ -20,7 +20,7 @@ class PublicRelationsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        item = intent.getSerializableExtra("PAGE_KEY") as AdItem
+        item = intent.getSerializableExtra(WebActivity.KEY_URL) as AdItem
 
         setContentView(R.layout.activity_public_relations)
 
@@ -32,7 +32,7 @@ class PublicRelationsActivity : AppCompatActivity() {
         val detailedInfoButton = findViewById<Button>(R.id.button)
         detailedInfoButton.setOnClickListener {
             val intent = Intent(this, WebActivity::class.java)
-            intent.putExtra("PAGE_KEY", item.targetUrlStr)
+            intent.putExtra(WebActivity.KEY_URL, item.targetUrlStr)
             startActivity(intent)
         }
 

@@ -29,7 +29,7 @@ class NewsFragment : Fragment() {
             val newsItem = viewModel.newsItems.value?.get(position)
             newsItem?.let {
                 val intent = Intent(requireContext(), WebActivity::class.java)
-                intent.putExtra("PAGE_KEY", it.link.toString())
+                intent.putExtra(WebActivity.KEY_URL, it.link.toString())
                 startActivity(intent)
             }
         }
