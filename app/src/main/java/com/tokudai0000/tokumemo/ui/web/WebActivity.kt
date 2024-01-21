@@ -50,14 +50,17 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
         // reloadボタン
         findViewById<Button>(R.id.reload_button).setOnClickListener{
             webView.reload()
+            AKLog(AKLogLevel.DEBUG, "reloadボタンが押された")
         }
 
         findViewById<ImageButton>(R.id.forward_button).setOnClickListener {
             webView.goForward()
+            AKLog(AKLogLevel.DEBUG, "goForwardボタンが押された")
         }
 
         findViewById<ImageButton>(R.id.back_button).setOnClickListener{
             webView.goBack()
+            AKLog(AKLogLevel.DEBUG, "goBackボタンが押された")
         }
 
         findViewById<ImageButton>(R.id.browser_button).setOnClickListener {
@@ -115,22 +118,6 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
                     webView.loadUrl(Url.UniversityTransitionLogin.urlString)
                 }
 
-                // ログイン成功
-                if (UrlCheckers.isImmediatelyAfterLoginURL(url)) {
-                    val returnIntent = Intent()
-                    returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
-                    setResult(Activity.RESULT_OK, returnIntent)
-                    finish()
-                }
-
-                // ログイン失敗
-                if (UrlCheckers.isFailureUniversityServiceLoggedInURL(url)) {
-                    val returnIntent = Intent()
-                    returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
-                    setResult(Activity.RESULT_OK, returnIntent)
-                    finish()
-                }
-
                 // pdfのリンクであれば
                 UrlCheckers.convertToGoogleDocsViewerUrlIfNeeded(url)?.let {
                     // Google Docs Viewerを使用するURLに変換して再読み込み
@@ -152,8 +139,10 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
 
                     canExecuteJavascript = false
                     val univAuth = UnivAuthRepository(this@WebActivity).fetchUnivAuth()
-                    webView.evaluateJavascript("document.getElementById('username').value= '$univAuth.cAccount'", null)
-                    webView.evaluateJavascript("document.getElementById('password').value= '$univAuth.password'", null)
+                    val cAccount = univAuth.accountCID
+                    val password = univAuth.password
+                    webView.evaluateJavascript("document.getElementById('username').value= '$cAccount'", null)
+                    webView.evaluateJavascript("document.getElementById('password').value= '$password'", null)
                     webView.evaluateJavascript("document.getElementsByClassName('form-element form-button')[0].click();", null)
                 }
 

@@ -156,7 +156,8 @@ class HomeFragment : Fragment() {
 
         builder.setItems(itemNames) { dialog, which ->
             // 図書館カレンダー.pdfのURLをWebスクレイピングしてくる
-            if (items[which].id == MenuDetailItem.Type.LibraryCalendarMain) {
+            if (items[which].id == MenuDetailItem.Type.LibraryCalendarMain ||
+                items[which].id == MenuDetailItem.Type.LibraryCalendarKura ) {
                 items[which].targetUrl?.let {
                     viewModel.getLibraryCalendarURL(it)
                     viewModel.libraryCalendarURL.observe(viewLifecycleOwner) { urlStr ->
