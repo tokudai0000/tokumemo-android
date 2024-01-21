@@ -99,9 +99,12 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
 
     // MaterialComponentsのBottomNavigationを使うため
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation "com.google.android.material:material:1.11.0"
 
     // Activity Result API
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.activity:activity-ktx:1.9.0-alpha01'
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.activity:activity-ktx:1.9.0-alpha01"
+
+    /// Webスクレイピング
+    implementation "org.jsoup:jsoup:1.15.1"
 }

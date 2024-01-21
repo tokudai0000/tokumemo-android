@@ -2,6 +2,7 @@ package com.tokudai0000.tokumemo.ui.web
 
 import UnivAuthRepository
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,6 +14,8 @@ import android.webkit.WebViewClient
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.tokudai0000.tokumemo.R
+import com.tokudai0000.tokumemo.common.AKLog
+import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.Url
 import com.tokudai0000.tokumemo.common.UrlCheckers
 import com.tokudai0000.tokumemo.ui.RootActivity
@@ -58,7 +61,9 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
         }
 
         findViewById<ImageButton>(R.id.browser_button).setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlString))
+            AKLog(AKLogLevel.DEBUG, "ブラウザ表示 - $urlString")
+            val url = Uri.parse(urlString)
+            val intent = Intent(Intent.ACTION_VIEW, url)
             startActivity(intent)
         }
     }
@@ -124,6 +129,13 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
                     returnIntent.putExtra(RootActivity.EXTRA_NEXT_ACTIVITY, "MainActivity")
                     setResult(Activity.RESULT_OK, returnIntent)
                     finish()
+                }
+
+                // pdfのリンクであれば
+                UrlCheckers.convertToGoogleDocsViewerUrlIfNeeded(url)?.let {
+                    // Google Docs Viewerを使用するURLに変換して再読み込み
+                    webView.loadUrl(it)
+                    AKLog(AKLogLevel.DEBUG, "PDFリンク： $it")
                 }
             }
 

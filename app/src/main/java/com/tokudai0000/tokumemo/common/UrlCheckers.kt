@@ -64,4 +64,16 @@ object UrlCheckers {
             Url.CourseManagementPC.urlString)
         return targetURLs.contains(urlStr)
     }
+
+    // .pdfのurlであれば、Google Docs Viewerを使用したurlに変更して返す
+    // .pdfのリンクでなければ、そのままの状態を返す
+    fun convertToGoogleDocsViewerUrlIfNeeded(originalUrl: String): String? {
+        // .pdfの拡張子を確認
+        if (originalUrl.endsWith(".pdf", ignoreCase = true)) {
+            // Google Docs ViewerのURLに変換して返す
+            return "https://docs.google.com/viewer?url=${originalUrl}&embedded=true"
+        }
+        return null
+
+    }
 }

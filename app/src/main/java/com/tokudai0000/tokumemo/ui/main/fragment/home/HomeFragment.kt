@@ -17,7 +17,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tokudai0000.tokumemo.R
+import com.tokudai0000.tokumemo.common.AKLog
+import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
+import com.tokudai0000.tokumemo.common.UrlCheckers
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
 import com.tokudai0000.tokumemo.ui.pr.PublicRelationsActivity
@@ -152,9 +155,23 @@ class HomeFragment : Fragment() {
         val itemNames = items.map { it.title }.toTypedArray()
 
         builder.setItems(itemNames) { dialog, which ->
-            val intent = Intent(requireContext(), WebActivity::class.java)
-            intent.putExtra(WebActivity.KEY_URL, items[which].targetUrl)
-            startActivity(intent)
+            // 図書館カレンダー.pdfのURLをWebスクレイピングしてくる
+            if (items[which].id == MenuDetailItem.Type.LibraryCalendarMain) {
+                items[which].targetUrl?.let {
+                    viewModel.getLibraryCalendarURL(it)
+                    viewModel.libraryCalendarURL.observe(viewLifecycleOwner) { urlStr ->
+                        val intent = Intent(requireContext(), WebActivity::class.java)
+                        val url = UrlCheckers.convertToGoogleDocsViewerUrlIfNeeded(urlStr)
+                        intent.putExtra(WebActivity.KEY_URL, url)
+                        startActivity(intent)
+                        AKLog(AKLogLevel.DEBUG, "URL - $url")
+                    }
+                }
+            }else{
+                val intent = Intent(requireContext(), WebActivity::class.java)
+                intent.putExtra(WebActivity.KEY_URL, items[which].targetUrl)
+                startActivity(intent)
+            }
         }
 
         val dialog = builder.create()

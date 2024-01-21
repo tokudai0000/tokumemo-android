@@ -9,7 +9,12 @@ import com.github.kittinunf.result.Result
 import com.tokudai0000.tokumemo.common.AKLog
 import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.domain.model.AdItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.jsoup.Jsoup
+import java.net.HttpURLConnection
+import java.net.URL
 
 class HomeViewModel: ViewModel() {
 
@@ -20,6 +25,8 @@ class HomeViewModel: ViewModel() {
 
     var univItems = arrayListOf<AdItem>()
     var displayUnivItem = MutableLiveData<AdItem>()
+
+    val libraryCalendarURL = MutableLiveData<String>()
 
     fun getNumberOfUsers() {
         viewModelScope.launch {
@@ -119,5 +126,44 @@ class HomeViewModel: ViewModel() {
             }
         }
         return adItems.random()
+    }
+
+    fun getLibraryCalendarURL(baseURLString: String) {
+        viewModelScope.launch {
+            try {
+                val libraryUrl = URL(baseURLString)
+
+                withContext(Dispatchers.IO) {
+                    val connection = libraryUrl.openConnection() as HttpURLConnection
+                    connection.requestMethod = "GET"
+
+                    val responseCode = connection.responseCode
+                    if (responseCode != HttpURLConnection.HTTP_OK) {
+                        AKLog(AKLogLevel.ERROR, "Error: getLibraryCalendarURL レスポンスコードが正しくありません - $responseCode")
+                        return@withContext
+                    }
+
+                    val inputStream = connection.inputStream
+                    val data = inputStream.bufferedReader().use { it.readText() }
+
+                    var urlStr = "https://www.lib.tokushima-u.ac.jp/"
+                    try {
+                        val doc = Jsoup.parse(data)
+                        val elements = doc.select("a[href*=\"pub/pdf/calender/\"]")
+                        for (element in elements) {
+                            val str = element.attr("href")
+                            urlStr += str
+                        }
+                    } catch (parseError: Throwable) {
+                        AKLog(AKLogLevel.ERROR, "Error: getLibraryCalendarURL HTMLの解析に失敗しました - 例外: ${parseError.message}")
+                        return@withContext
+                    }
+                    AKLog(AKLogLevel.DEBUG, "Success: Library calendar URL 取得成功 - $urlStr")
+                    libraryCalendarURL.postValue(urlStr)
+                }
+            } catch (exception: Exception) {
+                AKLog(AKLogLevel.ERROR, "Error: getLibraryCalendarURL 通信失敗 - 例外: ${exception.message}")
+            }
+        }
     }
 }
