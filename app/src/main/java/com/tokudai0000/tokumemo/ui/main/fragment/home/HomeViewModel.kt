@@ -1,61 +1,100 @@
 package com.tokudai0000.tokumemo.ui.main.fragment.home
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.json.responseJson
+import com.github.kittinunf.result.Result
+import com.tokudai0000.tokumemo.common.AKLog
+import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.domain.model.AdItem
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import java.net.URL
 
 class HomeViewModel: ViewModel() {
 
+    val numberOfUsers = MutableLiveData<String>()
+
     var prItems = arrayListOf<AdItem>()
-    var displayPrItem: AdItem? = null
+    var displayPrItem = MutableLiveData<AdItem>()
 
     var univItems = arrayListOf<AdItem>()
-    var displayUnivItem: AdItem? = null
+    var displayUnivItem = MutableLiveData<AdItem>()
 
-
-    fun getAdItems(): Job = GlobalScope.launch {
-        try {
-            val jsonUrl = "https://tokudai0000.github.io/tokumemo_resource/api/v1/ad_items.json"
-            val str = URL(jsonUrl).readText()
-//            print("😊"+jsonUrl)
-            print("😊"+str)
-            val json = JSONObject(str)
-            print("😊"+json)
-
-            // Jsonデータから内容物を取得
-            val prItems = json.getJSONArray("prItems")
-            val univItems = json.getJSONArray("univItems")
-
-            for (i in 0 until prItems.length()) {
-                val jsonObject = prItems.getJSONObject(i)
-                val prItem = AdItem(
-                    id = jsonObject.getInt("id"),
-                    clientName = jsonObject.getString("clientName"),
-                    imageUrlStr = jsonObject.getString("imageUrlStr"),
-                    targetUrlStr = jsonObject.getString("targetUrlStr"),
-                    imageDescription = jsonObject.getString("imageDescription"),
-                )
-                this@HomeViewModel.prItems.add(prItem)
+    fun getNumberOfUsers() {
+        viewModelScope.launch {
+            try {
+                val url = "https://tokudai0000.github.io/tokumemo_resource/api/v1/number_of_users.json"
+                url.httpGet().responseJson { _, _, result  ->
+                    when (result) {
+                        is Result.Success -> {
+                            val item: String = result.get().obj().getString("numberOfUsers")
+                            numberOfUsers.postValue(item)
+                        }
+                        is Result.Failure -> {
+                            val error = result.getException()
+                            AKLog(AKLogLevel.ERROR, "Error: getNumberOfUsers API通信失敗 - ステータスコード: ${error.message}")
+                        }
+                    }
+                }
+            } catch (exception: Exception) {
+                AKLog(AKLogLevel.ERROR, "Error: getCurrentTermVersion API通信失敗 - 例外: ${exception.message}")
             }
+        }
+    }
 
-            for (i in 0 until univItems.length()) {
-                val jsonObject = univItems.getJSONObject(i)
-                val prItem = AdItem(
-                    id = jsonObject.getInt("id"),
-                    clientName = jsonObject.getString("clientName"),
-                    imageUrlStr = jsonObject.getString("imageUrlStr"),
-                    targetUrlStr = jsonObject.getString("targetUrlStr"),
-                    imageDescription = jsonObject.getString("imageDescription"),
-                )
-                this@HomeViewModel.univItems.add(prItem)
+    fun getAdItems() {
+        viewModelScope.launch {
+            try {
+                val url = "https://tokudai0000.github.io/tokumemo_resource/api/v1/ad_items.json"
+                url.httpGet().responseJson { _, _, result  ->
+                    when (result) {
+                        is Result.Success -> {
+
+                            // Jsonデータから内容物を取得
+                            val prItems = result.get().obj().getJSONArray("prItems")
+                            val univItems = result.get().obj().getJSONArray("univItems")
+
+                            for (i in 0 until prItems.length()) {
+                                prItems.getJSONObject(i)?.let {
+                                    val jsonObject = prItems.getJSONObject(i)
+                                    val prItem = AdItem(
+                                        id = jsonObject.getInt("id"),
+                                        clientName = jsonObject.getString("clientName"),
+                                        imageUrlStr = jsonObject.getString("imageUrlStr"),
+                                        targetUrlStr = jsonObject.getString("targetUrlStr"),
+                                        imageDescription = jsonObject.getString("imageDescription"),
+                                    )
+                                    displayPrItem.postValue(prItem)
+                                    this@HomeViewModel.prItems.add(prItem)
+                                }
+                            }
+
+                            for (j in 0 until univItems.length()) {
+                                univItems.getJSONObject(j)?.let {
+                                    AKLog(AKLogLevel.DEBUG, "univItems $it")
+                                    val jsonObject = univItems.getJSONObject(j)
+                                    val univItem = AdItem(
+                                        id = jsonObject.getInt("id"),
+                                        clientName = jsonObject.getString("clientName"),
+                                        imageUrlStr = jsonObject.getString("imageUrlStr"),
+                                        targetUrlStr = jsonObject.getString("targetUrlStr"),
+                                        imageDescription = jsonObject.getString("imageDescription"),
+                                    )
+                                    displayUnivItem.postValue(univItem)
+                                    this@HomeViewModel.univItems.add(univItem)
+                                }
+                            }
+                        }
+                        is Result.Failure -> {
+                            val error = result.getException()
+                            AKLog(AKLogLevel.ERROR, "Error: getAdItems API通信失敗 - ステータスコード: ${error.message}")
+                        }
+                    }
+                }
+            } catch (exception: Exception) {
+                AKLog(AKLogLevel.ERROR, "Error: getAdItems API通信失敗 - 例外: ${exception.message}")
             }
-
-        } catch (e: Exception) {
-            // Error
         }
     }
     
