@@ -89,9 +89,9 @@ enum class Url(val urlString: String) {
     /// ホームページ
     HomePage("https://tokumemo.notion.site/6e750dcdc6d544a9a23460503d88ca5d"),
     /// トクメモ＋のプライバシーポリシー
-    PrivacyPolicy("https://tokumemo-store-house.notion.site/21abf42ea3134a07b5df41f206df1e5d"),
+    PrivacyPolicy("https://tokudai0000.github.io/tokumemo_resource/document/privacy_policy.txt"),
     /// トクメモ＋の利用規約
-    TermsOfService("https://tokumemo-store-house.notion.site/5c8ed54b641d481993f1ee9be8709aea"),
+    TermsOfService("https://tokudai0000.github.io/tokumemo_resource/document/terms_of_service.txt"),
     /// アプリ紹介文
     AppIntroduction("https://tokumemo.notion.site/945a1f46d3794d37b1317d668a98728b"),
     /// トクメモ＋のソースコード[GitHub]
