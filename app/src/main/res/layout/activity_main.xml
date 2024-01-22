@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -22,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation_menu"
+        app:menu="@navigation/bottom_navigation_menu"
         app:itemIconTint="@color/tabview_icon_color_selector"
         app:itemTextColor="@color/tabview_icon_color_selector"/>
 

@@ -2,49 +2,79 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    defaultConfig {
-        applicationId "com.tokudai0000.tokumemo"
-        minSdk 23
-        compileSdk 34
-        targetSdk 33
-        versionCode 18
-        versionName "4.0.1"
+    namespace 'com.tokudai0000.tokumemo'
 
+    defaultConfig {
+        // Androidの各種SdkVersionについて
+        // https://qiita.com/SpeakEasy/items/0c7df773c96de1ffa9c3
+
+        // この ID によってアプリがデバイスと Google Play ストアで一意に識別される。変更してはいけない。
+        applicationId "com.tokudai0000.tokumemo"
+
+        // アプリのバージョンを文字列で表したもの
+        versionName "4.0.1"
+        // アプリのバージョンを数値で表したも(各アップデートごとに値を「+1」する)
+        versionCode 18
+
+        // 最小対応SDK Android6.0(Marshmallow) 可能な限りは、SDKは下げるべき
+        minSdk 23
+
+        // このSDKまでの機能を使用することができる
+        // minSdk <= compileSdk
+        compileSdk 34
+
+        // テスト実行者の指定
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // アプリの圧縮を許可する
+            // 圧縮(アプリの軽量化) = 難読化 = 最適化　
+            // デメリットは圧縮による予期しないバグ,コード名も短縮されるのでAPIによる通信が失敗する可能性
+            minifyEnabled true
+
+            // ProGuardを使用してアプリケーションのコードを最適化し、保護するための設定ファイルを指定
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildFeatures {
-        viewBinding true
-    }
+
+
+    // FIXME: findViewByIdの後継としてViewBindingが推奨
+
+    //    viewBinding {
+    //        enabled = true
+    //    }
+
+    // コンパイルに使用するJavaのバージョン
+    // Java 8 はAndroid開発に置いてよく利用される機能が含まれている(現在もサポート中)
+    // https://ja.wikipedia.org/wiki/Javaバージョン履歴
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // KotlinコードがJava 8をターゲットとしている
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    namespace 'com.example.tokumemo'
 }
 
+// 依存するライブラリやツールを指定
 dependencies {
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
 
     // Support Library
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "com.google.android.material:material:1.11.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
     implementation "androidx.activity:activity-ktx:1.8.2"
 
     // Layout
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
 
     // Analytics
@@ -69,19 +99,12 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
 
     // MaterialComponentsのBottomNavigationを使うため
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation "com.google.android.material:material:1.11.0"
 
     // Activity Result API
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.activity:activity-ktx:1.9.0-alpha01'
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.activity:activity-ktx:1.9.0-alpha01"
 
-    // レイアウト
-    implementation 'androidx.cardview:cardview:1.0.0'
+    /// Webスクレイピング
+    implementation "org.jsoup:jsoup:1.15.1"
 }
-
-ext.applicationInfo = [
-        name           : "tokumemo_plus",
-        copyrightHolder: "tokudai0000",
-        year           : "2021",
-        url            : ""
-]

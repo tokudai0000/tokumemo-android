@@ -1,64 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-sdk tools:overrideLibrary="androidx.security.ktx" />
+
 
     <!--  WebViewのインターネット通信許可  -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!--  usesCleartextTraffic="true" HTTP通信の許可  -->
-    <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Tokumemo"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="31">
-        <!-- SplashActivity を初期画面に設定 -->
-        <activity android:name=".ui.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
 
-        <!-- MainActivity の定義 -->
-        <activity
-            android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true"
-            android:parentActivityName=".ui.web.WebActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".ui.agreement.AgreementActivity" android:screenOrientation="portrait" android:exported="true">
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
-    </activity>
-        <activity android:name=".ui.pr.PublicRelationsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.web.WebActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.password.PasswordActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ui.RootActivity" android:screenOrientation="portrait" android:exported="true">
+    <!--  screenOrientation="portrait"　画面を縦向きで固定  -->
+    <!--  supportsRtl: Right to Left 右から左に文字を書く「アラビア語」等に適応してるか-->
+    <!--  usesCleartextTraffic: HTTP通信の許可  -->
+    <!--  allowBackup: SharedPreferences等のデバイス保存データについてバックアップを許可しない(セキュリティ向上)  -->
+    <!--  exported: 外部からコンポーネントを起動したり、通信したりできることについて許可しない(セキュリティ向上)  -->
+    <application
+        android:label="@string/app_name_tokumemo"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.Tokumemo"
+        android:screenOrientation="portrait"
+        android:supportsRtl="false"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false"
+        android:exported="false">
+
+
+        <!--  RootActivity を初期画面に設定  -->
+        <!--  システムのホームスクリーンからアクセスされるため、外部からのアクセスが可能でなければならない  -->
+        <activity android:name=".ui.RootActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+
+        <activity android:name=".ui.splash.SplashActivity" />
+        <activity android:name=".ui.agreement.AgreementActivity" />
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.pr.PublicRelationsActivity" />
+        <activity android:name=".ui.web.WebActivity" />
+        <activity android:name=".ui.password.PasswordActivity" />
+    </application>
 </manifest>
