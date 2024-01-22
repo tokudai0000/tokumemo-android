@@ -87,7 +87,6 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
 //        webView.settings.useWideViewPort = true
 //        // 拡大縮小対応
 //        webView.settings.builtInZoomControls = true
-
         webView.webViewClient = object : WebViewClient() {
 
             // Url.UniversityTransitionLoginは強制で外部検索エンジンが開かれるので、ここで禁止している

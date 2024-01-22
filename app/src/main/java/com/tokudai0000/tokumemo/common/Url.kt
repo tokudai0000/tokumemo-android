@@ -85,7 +85,7 @@ enum class Url(val urlString: String) {
     /// GoogleFormsでお問い合わせフォームを作成
     ContactUs("https://docs.google.com/forms/d/e/1FAIpQLScYRhlWY9IjqWOrvnWJ0bJ_yPQZpXy4PPShWb68092t2klzeg/viewform"),
     /// X(Twitter)
-    OfficialSNS("https://twitter.com/tokumemo0000"),
+    OfficialSNS("https://x.com/tokumemo0000"),
     /// ホームページ
     HomePage("https://tokumemo.notion.site/6e750dcdc6d544a9a23460503d88ca5d"),
     /// トクメモ＋のプライバシーポリシー

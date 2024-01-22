@@ -74,6 +74,5 @@ object UrlCheckers {
             return "https://docs.google.com/viewer?url=${originalUrl}&embedded=true"
         }
         return null
-
     }
 }
