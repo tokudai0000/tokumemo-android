@@ -22,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation_menu"
+        app:menu="@navigation/bottom_navigation_menu"
         app:itemIconTint="@color/tabview_icon_color_selector"
         app:itemTextColor="@color/tabview_icon_color_selector"/>
 
