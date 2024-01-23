@@ -1,5 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
 
 android {
     namespace 'com.tokudai0000.tokumemo'
@@ -77,9 +81,12 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
 
-    // Analytics
-    implementation platform('com.google.firebase:firebase-bom:31.1.1')
-    implementation "com.google.firebase:firebase-analytics-ktx"
+    // Analytics　Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:32.1.0')
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     // cryoto
     def crypto_version = "1.1.0-alpha06"
