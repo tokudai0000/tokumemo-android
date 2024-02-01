@@ -16,12 +16,12 @@ android {
         applicationId "com.tokudai0000.tokumemo"
 
         // アプリのバージョンを文字列で表したもの
-        versionName "4.0.1"
+        versionName "5.0.0"
         // アプリのバージョンを数値で表したも(各アップデートごとに値を「+1」する)
-        versionCode 18
+        versionCode 23
 
-        // 最小対応SDK Android6.0(Marshmallow) 可能な限りは、SDKは下げるべき
-        minSdk 23
+        // 最小対応SDK
+        minSdk 33
 
         // このSDKまでの機能を使用することができる
         // minSdk <= compileSdk
