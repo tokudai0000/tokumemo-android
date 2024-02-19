@@ -157,8 +157,10 @@ class WebActivity : AppCompatActivity(R.layout.activity_web) {
 
                     canExecuteJavascript = false
                     val univAuth = UnivAuthRepository(this@WebActivity).fetchUnivAuth()
-                    webView.evaluateJavascript("document.getElementsByName('user_id')[0].value='$univAuth.cAccount'", null)
-                    webView.evaluateJavascript("document.getElementsByName('user_password')[0].value='$univAuth.password'", null)
+                    val cAccount = univAuth.accountCID
+                    val password = univAuth.password
+                    webView.evaluateJavascript("document.getElementsByName('user_id')[0].value='$cAccount'", null)
+                    webView.evaluateJavascript("document.getElementsByName('user_password')[0].value='$password'", null)
                 }
 
                 if (UrlCheckers.shouldInjectJavaScript(url,

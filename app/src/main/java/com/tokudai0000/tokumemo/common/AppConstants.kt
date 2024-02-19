@@ -37,7 +37,7 @@ object AppConstants {
             MenuDetailItem(title="蔵本図書館 カレンダー", id= MenuDetailItem.Type.LibraryCalendarKura, targetUrl=Url.LibraryHomePageKuraPC.urlString),
             MenuDetailItem(title="貸出図書の期間延長", id= MenuDetailItem.Type.LibraryBookLendingExtension, targetUrl= Url.LibraryBookLendingExtension.urlString),
             MenuDetailItem(title="本の購入リクエスト", id= MenuDetailItem.Type.LibraryBookPurchaseRequest, targetUrl= Url.LibraryBookPurchaseRequest.urlString),
-            MenuDetailItem(title="マイページ", id= MenuDetailItem.Type.LibraryMyPage, targetUrl= Url.LibraryBookPurchaseRequest.urlString),
+            MenuDetailItem(title="マイページ", id= MenuDetailItem.Type.LibraryMyPage, targetUrl= Url.LibraryMyPage.toString()),
         )
 
         etcItems = listOf(

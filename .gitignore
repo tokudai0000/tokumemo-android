@@ -1,4 +1,5 @@
 google-services.json
+app-release.aab
 
 ### 以下テンプレート
 ## Kotlin(https://github.com/JetBrains/kotlin/blob/master/.gitignore)
@@ -114,3 +115,4 @@ google-services.json
 
 # Android Profiling
 *.hprof
+key
