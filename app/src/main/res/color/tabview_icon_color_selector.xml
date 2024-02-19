@@ -2,10 +2,8 @@
 
 <!--タブビューのアイコンについて-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--タップ時-->
-    <item android:state_checked="true" android:color="@color/main_color"/>
-    <!--長押し時-->
-    <item android:state_pressed="true" android:color="@color/main_color"/>
+    <!--選択時-->
+    <item android:state_checked="true" android:color="#1252F9"/>
     <!--非選択時-->
     <item android:color="@color/gray_color" />
 </selector>

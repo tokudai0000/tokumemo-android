@@ -1,77 +1,117 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    namespace 'com.example.tokumemo'
-    compileSdk 33
+    namespace 'com.tokudai0000.tokumemo'
 
     defaultConfig {
-        applicationId "com.tokudai0000.tokumemo"
-        minSdk 21
-        targetSdk 33
-        versionCode 18
-        versionName "4.0.1"
+        // Androidの各種SdkVersionについて
+        // https://qiita.com/SpeakEasy/items/0c7df773c96de1ffa9c3
 
+        // この ID によってアプリがデバイスと Google Play ストアで一意に識別される。変更してはいけない。
+        applicationId "com.tokudai0000.tokumemo"
+
+        // アプリのバージョンを文字列で表したもの
+        versionName "5.0.0"
+        // アプリのバージョンを数値で表したも(各アップデートごとに値を「+1」する)
+        versionCode 23
+
+        // 最小対応SDK
+        minSdk 33
+
+        // このSDKまでの機能を使用することができる
+        // minSdk <= compileSdk
+        compileSdk 34
+
+        // テスト実行者の指定
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // アプリの圧縮を許可する
+            // 圧縮(アプリの軽量化) = 難読化 = 最適化　
+            // デメリットは圧縮による予期しないバグ,コード名も短縮されるのでAPIによる通信が失敗する可能性
+            minifyEnabled true
+
+            // ProGuardを使用してアプリケーションのコードを最適化し、保護するための設定ファイルを指定
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    // FIXME: findViewByIdの後継としてViewBindingが推奨
+
+    //    viewBinding {
+    //        enabled = true
+    //    }
+
+    // コンパイルに使用するJavaのバージョン
+    // Java 8 はAndroid開発に置いてよく利用される機能が含まれている(現在もサポート中)
+    // https://ja.wikipedia.org/wiki/Javaバージョン履歴
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // KotlinコードがJava 8をターゲットとしている
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
+// 依存するライブラリやツールを指定
 dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.security:security-crypto:1.1.0-alpha04"
-    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha04'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Support Library
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.google.android.material:material:1.11.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
+    implementation "androidx.activity:activity-ktx:1.8.2"
 
-    implementation platform('com.google.firebase:firebase-bom:31.1.1')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    // Layout
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
 
-    // MaterialComponentsのBottomNavigationを使うため
-    implementation 'com.google.android.material:material:1.8.0'
+    // Analytics　Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:32.1.0')
 
-    // Navigationを使うため
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // cryoto
+    def crypto_version = "1.1.0-alpha06"
+    implementation "androidx.security:security-crypto:$crypto_version"
+    implementation "androidx.security:security-crypto-ktx:$crypto_version"
+
+    // Navigation
     def nav_version = '2.0.0'
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-compose:2.7.6"
 
-
-    /// Fuel library
+    /// Fuel HTTP
     def fuel_version = "2.3.1"
     implementation "com.github.kittinunf.fuel:fuel:$fuel_version"
-    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-json:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
+
+    // MaterialComponentsのBottomNavigationを使うため
+    implementation "com.google.android.material:material:1.11.0"
+
+    // Activity Result API
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.activity:activity-ktx:1.9.0-alpha01"
+
+    /// Webスクレイピング
+    implementation "org.jsoup:jsoup:1.15.1"
 }
