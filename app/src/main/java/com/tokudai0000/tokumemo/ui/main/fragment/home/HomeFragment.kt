@@ -205,9 +205,9 @@ class HomeFragment : Fragment() {
 
     private fun setupCustomDuoButton(view: View) {
         val customButton = CustomDuoButton(requireContext()).apply {
-            setupButton(title = "My Button", tag = 1) // 他のパラメータも適宜設定
+            setupButton(title = "新歓イベントカレンダー", tag = 1) // 他のパラメータも適宜設定
             onTap = { tag ->
-                Toast.makeText(context, "Button $tag tapped", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Button $tag tapped", Toast.LENGTH_SHORT).show()
             }
         }
 

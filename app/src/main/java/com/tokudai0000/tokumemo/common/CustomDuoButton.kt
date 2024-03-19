@@ -1,7 +1,11 @@
 package com.tokudai0000.tokumemo.common
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -22,7 +26,8 @@ class CustomDuoButton : AppCompatButton {
     }
     private fun initialize() {
         setTextColor(Color.BLACK)
-        text = "Button"
+        // ボタン押下時のデフォルトの影を削除
+        stateListAnimator = null
     }
 
     // タッチイベントのハンドリング
@@ -38,13 +43,11 @@ class CustomDuoButton : AppCompatButton {
     }
 
     private fun buttonPressed() {
-        // ボタンが押された時の処理。例えば、影の不透明度を下げるなど
-        alpha = 0.5f // 例
+        translationY = 5f // ボタンを2f下に移動
     }
 
     private fun buttonReleased() {
-        // ボタンが離された時の処理。例えば、影の不透明度を元に戻すなど
-        alpha = 1.0f // 例
+        translationY = 0f // ボタンを元の位置に戻す
     }
 
     fun setupButton(
@@ -52,14 +55,48 @@ class CustomDuoButton : AppCompatButton {
         textColor: Int = Color.BLACK,
         backgroundColor: Int = Color.WHITE,
         borderColor: Int = ContextCompat.getColor(context, android.R.color.holo_blue_light),
-        fontSize: Float = 18f,
+        fontSize: Float = 19f,
         tag: Int = 0,
-        verticalMargin: Float = 25f,
-        horizontalMargin: Float = 50f
+        verticalMargin: Float = 18f,
+        horizontalMargin: Float = 26f
     ) {
         setText(title)
         setTextColor(textColor)
-        setBackgroundColor(backgroundColor)
-        // フォントサイズ、ボーダー、マージンなどの設定
+        setTypeface(typeface, Typeface.BOLD)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
+
+        // パディングを設定するためのdpからpxへの変換
+        val verticalPaddingPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, verticalMargin, resources.displayMetrics).toInt()
+        val horizontalPaddingPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, horizontalMargin, resources.displayMetrics).toInt()
+
+        // パディングを設定
+        setPadding(horizontalPaddingPx, verticalPaddingPx, horizontalPaddingPx, verticalPaddingPx)
+
+
+        // ボタン本体
+        val buttonDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(backgroundColor)
+            cornerRadius = 30f
+            setStroke(5, borderColor)
+        }
+
+        // "影"を模倣するためのDrawable
+        val shadowDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(borderColor)
+            cornerRadius = 35f
+        }
+
+        // LayerDrawableを使用して、影とボタンを重ねる
+        val layers = LayerDrawable(arrayOf(shadowDrawable, buttonDrawable)).apply {
+            setLayerInset(1, 0, 0, 0, 5)
+        }
+
+        background = layers
+
+
     }
 }
