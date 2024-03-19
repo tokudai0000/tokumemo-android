@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# 現在のブランチ名を返す
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# コミットメッセージに必要なチケット名の抽出
+TICKET_NAME=$(echo $BRANCH_NAME | cut -d "-" -f 1)
+
+# git commit --amendとの区別のために最初の一行を取得
+FIRST_LINE=$(head -n1 $1)
+
 # コミットメッセージは .git/COMMIT_EDITMSG に保存されてる
 COMMIT_MSG_FILE_PATH="$1"
 
@@ -11,18 +20,11 @@ PATTERN="^\[\d+\]"
 
 # コミットメッセージの検証
 if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
-	# \033[31m は赤文字にするANSIエスケープシーケンス
-    echo "\033[31mERROR: コミットメッセージは '[Issue番号]' で始めてください。"
-    echo "このままコミットを続けますか？ (y/n)"
-    read answer
-    case $answer in
-        [Yy]* )
-            ;;
-        * )
-            echo "コミットを中止します。"
-            exit 1
-            ;;
-    esac
+    # 最初の一行の先頭に [{チケット番号}] を追加し、残りのメッセージを保持
+    NEW_COMMIT_MSG="[$TICKET_NAME] $FIRST_LINE\n$(tail -n +2 "$COMMIT_MSG_FILE_PATH")"
+    # 新しいコミットメッセージをファイルに書き込み
+    echo "$NEW_COMMIT_MSG" > "$COMMIT_MSG_FILE_PATH"
+    exit 0
 fi
 
 exit 0
