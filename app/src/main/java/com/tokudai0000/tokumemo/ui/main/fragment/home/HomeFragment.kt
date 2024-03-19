@@ -9,9 +9,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +24,7 @@ import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.common.AKLog
 import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
+import com.tokudai0000.tokumemo.common.CustomDuoButton
 import com.tokudai0000.tokumemo.common.UrlCheckers
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
@@ -48,6 +53,12 @@ class HomeFragment : Fragment() {
         configureHomeMiniSettingsListView()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupCustomDuoButton(view)
     }
 
     private fun configureNumberOfUsers() {
@@ -190,6 +201,24 @@ class HomeFragment : Fragment() {
             intent.putExtra(WebActivity.KEY_URL, displayMenuLists[position].targetUrl.toString())
             startActivity(intent)
         }
+    }
+
+    private fun setupCustomDuoButton(view: View) {
+        val customButton = CustomDuoButton(requireContext()).apply {
+            setupButton(title = "My Button", tag = 1) // 他のパラメータも適宜設定
+            onTap = { tag ->
+                Toast.makeText(context, "Button $tag tapped", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        ).apply {}
+        customButton.layoutParams = layoutParams
+
+        val buttonContainer = view.findViewById<LinearLayout>(R.id.event_button_container)
+        buttonContainer.addView(customButton)
     }
 }
 
