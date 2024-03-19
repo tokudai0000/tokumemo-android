@@ -23,7 +23,7 @@ if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
     # 最初の一行の先頭に [{チケット番号}] を追加し、残りのメッセージを保持
     NEW_COMMIT_MSG="[$TICKET_NAME] $FIRST_LINE\n$(tail -n +2 "$COMMIT_MSG_FILE_PATH")"
     # 新しいコミットメッセージをファイルに書き込み
-    echo -e "$NEW_COMMIT_MSG" > "$COMMIT_MSG_FILE_PATH"
+    echo "$NEW_COMMIT_MSG" > "$COMMIT_MSG_FILE_PATH"
     exit 0
 fi
 
