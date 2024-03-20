@@ -5,6 +5,7 @@ import kotlin.concurrent.scheduleAtFixedRate
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tokudai0000.tokumemo.R
@@ -52,13 +54,23 @@ class HomeFragment : Fragment() {
         configureMenuRecyclerView()
         configureHomeMiniSettingsListView()
 
+        viewModel.getHomeEventInfos()
+
+        viewModel.popupItems.observe(viewLifecycleOwner, { popupItems ->
+            // popupItemsの変更に応じてUIを更新
+        })
+
+        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
+            for ((index, item) in buttonItems.withIndex()) {
+                setupCustomDuoButton(view, title = item.titleName, tag = index)
+            }
+        })
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupCustomDuoButton(view)
     }
 
     private fun configureNumberOfUsers() {
@@ -203,11 +215,20 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupCustomDuoButton(view: View) {
+    private fun setupCustomDuoButton(view: View, title: String, tag: Int) {
         val customButton = CustomDuoButton(requireContext()).apply {
-            setupButton(title = "新歓イベントカレンダー", tag = 1) // 他のパラメータも適宜設定
+            setupButton(title = title, tag = tag) // 他のパラメータも適宜設定
             onTap = { tag ->
-//                Toast.makeText(context, "Button $tag tapped", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), WebActivity::class.java)
+                viewModel.buttonItems.value?.let { list ->
+                    if (tag <= list.size) {
+                        val url = list[tag].targetUrlStr
+                        intent.putExtra(WebActivity.KEY_URL, url)
+                        startActivity(intent)
+                    }else{
+                        AKLog(AKLogLevel.ERROR, "setupCustomDuoButtonにおける、List数エラー")
+                    }
+                }
             }
         }
 

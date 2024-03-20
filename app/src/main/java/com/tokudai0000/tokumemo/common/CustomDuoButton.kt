@@ -14,6 +14,8 @@ import com.tokudai0000.tokumemo.R
 class CustomDuoButton : AppCompatButton {
 
     var onTap: ((Int) -> Unit)? = null
+    var buttonTag = 0
+
     constructor(context: Context) : super(context) {
         initialize()
     }
@@ -37,7 +39,8 @@ class CustomDuoButton : AppCompatButton {
             MotionEvent.ACTION_DOWN -> buttonPressed()
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 buttonReleased()
-                onTap?.invoke(tag as? Int ?: 0) // タグが設定されていればそれを使い、なければ0を渡す
+                AKLog(AKLogLevel.DEBUG, "tag $buttonTag")
+                onTap?.invoke(buttonTag as? Int ?: 0) // タグが設定されていればそれを使い、なければ0を渡す
             }
         }
         return super.onTouchEvent(event)
@@ -61,6 +64,8 @@ class CustomDuoButton : AppCompatButton {
         verticalMargin: Float = 18f,
         horizontalMargin: Float = 26f
     ) {
+        buttonTag = tag
+        AKLog(AKLogLevel.DEBUG, "buttonTag $buttonTag")
         setText(title)
         setTextColor(textColor)
         setTypeface(typeface, Typeface.BOLD)
