@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import com.tokudai0000.tokumemo.R
 
 class CustomDuoButton : AppCompatButton {
 
@@ -54,7 +55,7 @@ class CustomDuoButton : AppCompatButton {
         title: String,
         textColor: Int = Color.BLACK,
         backgroundColor: Int = Color.WHITE,
-        borderColor: Int = ContextCompat.getColor(context, android.R.color.holo_blue_light),
+        borderColor: Int = ContextCompat.getColor(context, R.color.custom_blue),
         fontSize: Float = 19f,
         tag: Int = 0,
         verticalMargin: Float = 18f,
