@@ -113,8 +113,7 @@ class HomeViewModel: ViewModel() {
     fun getHomeEventInfos() {
         viewModelScope.launch {
             try {
-                val url = "https://tokudai0000.github.io/tokumemo_resource/api/stub/home_event_infos.json"
-//                val url = "https://tokudai0000.github.io/tokumemo_resource/api/v1/home_event_infos.json"
+                val url = "https://tokudai0000.github.io/tokumemo_resource/api/v1/home_event_infos.json"
                 url.httpGet().responseJson { _, _, result  ->
                     when (result) {
                         is Result.Success -> {
