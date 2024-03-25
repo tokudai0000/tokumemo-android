@@ -120,21 +120,7 @@ class HomeViewModel: ViewModel() {
                         is Result.Success -> {
 
                             // Jsonデータから内容物を取得
-//                            val popupItems = result.get().obj().getJSONArray("popupItems")
                             val buttonItems = result.get().obj().getJSONArray("buttonItems")
-
-//                            for (i in 0 until popupItems.length()) {
-//                                popupItems.getJSONObject(i)?.let {
-//                                    val jsonObject = popupItems.getJSONObject(i)
-//                                    val popupItems = HomeEventInfoPopupItems(
-//                                        id = jsonObject.getInt("id"),
-//                                        clientName = jsonObject.getString("clientName"),
-//                                        titleName = jsonObject.getString("titleName"),
-//                                        description = jsonObject.getString("targetUrlStr"),
-//                                    )
-//                                    this@HomeViewModel.popupItems.value?.add(popupItems)
-//                                }
-//                            }
 
                             for (j in 0 until buttonItems.length()) {
                                 buttonItems.getJSONObject(j)?.let {

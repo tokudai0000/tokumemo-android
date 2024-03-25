@@ -162,6 +162,11 @@
         android:baselineAligned="false"
         android:padding="10dp">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            />
     <!-- ボタンをここに追加 -->
     </LinearLayout>
 </FrameLayout>

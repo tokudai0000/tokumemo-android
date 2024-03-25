@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.icu.text.CaseMap.Title
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.Space
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -53,18 +55,7 @@ class HomeFragment : Fragment() {
         configureAdImages()
         configureMenuRecyclerView()
         configureHomeMiniSettingsListView()
-
-        viewModel.getHomeEventInfos()
-
-        viewModel.popupItems.observe(viewLifecycleOwner, { popupItems ->
-            // popupItemsの変更に応じてUIを更新
-        })
-
-        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
-            for ((index, item) in buttonItems.withIndex()) {
-                setupCustomDuoButton(view, title = item.titleName, tag = index)
-            }
-        })
+        configureHomeEventInfos()
 
         return view
     }
@@ -213,6 +204,16 @@ class HomeFragment : Fragment() {
             intent.putExtra(WebActivity.KEY_URL, displayMenuLists[position].targetUrl.toString())
             startActivity(intent)
         }
+    }
+
+    private fun configureHomeEventInfos() {
+        viewModel.getHomeEventInfos()
+
+        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
+            for ((index, item) in buttonItems.withIndex()) {
+                setupCustomDuoButton(view, title = item.titleName, tag = index)
+            }
+        })
     }
 
     private fun setupCustomDuoButton(view: View, title: String, tag: Int) {

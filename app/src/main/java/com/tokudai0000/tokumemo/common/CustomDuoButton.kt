@@ -7,6 +7,7 @@ import android.graphics.drawable.LayerDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.tokudai0000.tokumemo.R
@@ -80,7 +81,6 @@ class CustomDuoButton : AppCompatButton {
         // パディングを設定
         setPadding(horizontalPaddingPx, verticalPaddingPx, horizontalPaddingPx, verticalPaddingPx)
 
-
         // ボタン本体
         val buttonDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
@@ -102,7 +102,5 @@ class CustomDuoButton : AppCompatButton {
         }
 
         background = layers
-
-
     }
 }
