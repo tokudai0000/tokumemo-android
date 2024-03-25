@@ -5,21 +5,30 @@ import kotlin.concurrent.scheduleAtFixedRate
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.icu.text.CaseMap.Title
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.Space
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tokudai0000.tokumemo.R
 import com.tokudai0000.tokumemo.common.AKLog
 import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
+import com.tokudai0000.tokumemo.common.CustomDuoButton
 import com.tokudai0000.tokumemo.common.UrlCheckers
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
@@ -46,8 +55,13 @@ class HomeFragment : Fragment() {
         configureAdImages()
         configureMenuRecyclerView()
         configureHomeMiniSettingsListView()
+        configureHomeEventInfos()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun configureNumberOfUsers() {
@@ -190,6 +204,43 @@ class HomeFragment : Fragment() {
             intent.putExtra(WebActivity.KEY_URL, displayMenuLists[position].targetUrl.toString())
             startActivity(intent)
         }
+    }
+
+    private fun configureHomeEventInfos() {
+        viewModel.getHomeEventInfos()
+
+        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
+            for ((index, item) in buttonItems.withIndex()) {
+                setupCustomDuoButton(view, title = item.titleName, tag = index)
+            }
+        })
+    }
+
+    private fun setupCustomDuoButton(view: View, title: String, tag: Int) {
+        val customButton = CustomDuoButton(requireContext()).apply {
+            setupButton(title = title, tag = tag) // 他のパラメータも適宜設定
+            onTap = { tag ->
+                val intent = Intent(requireContext(), WebActivity::class.java)
+                viewModel.buttonItems.value?.let { list ->
+                    if (tag <= list.size) {
+                        val url = list[tag].targetUrlStr
+                        intent.putExtra(WebActivity.KEY_URL, url)
+                        startActivity(intent)
+                    }else{
+                        AKLog(AKLogLevel.ERROR, "setupCustomDuoButtonにおける、List数エラー")
+                    }
+                }
+            }
+        }
+
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        ).apply {}
+        customButton.layoutParams = layoutParams
+
+        val buttonContainer = view.findViewById<LinearLayout>(R.id.event_button_container)
+        buttonContainer.addView(customButton)
     }
 }
 

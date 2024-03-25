@@ -9,6 +9,8 @@ import com.github.kittinunf.result.Result
 import com.tokudai0000.tokumemo.common.AKLog
 import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.domain.model.AdItem
+import com.tokudai0000.tokumemo.domain.model.HomeEventInfoButtonItems
+import com.tokudai0000.tokumemo.domain.model.HomeEventInfoPopupItems
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,6 +27,9 @@ class HomeViewModel: ViewModel() {
 
     var univItems = arrayListOf<AdItem>()
     var displayUnivItem = MutableLiveData<AdItem>()
+
+    var popupItems = MutableLiveData<ArrayList<HomeEventInfoPopupItems>>(arrayListOf())
+    var buttonItems = MutableLiveData<ArrayList<HomeEventInfoButtonItems>>(arrayListOf())
 
     val libraryCalendarURL = MutableLiveData<String>()
 
@@ -101,6 +106,45 @@ class HomeViewModel: ViewModel() {
                 }
             } catch (exception: Exception) {
                 AKLog(AKLogLevel.ERROR, "Error: getAdItems API通信失敗 - 例外: ${exception.message}")
+            }
+        }
+    }
+
+    fun getHomeEventInfos() {
+        viewModelScope.launch {
+            try {
+                val url = "https://tokudai0000.github.io/tokumemo_resource/api/v1/home_event_infos.json"
+                url.httpGet().responseJson { _, _, result  ->
+                    when (result) {
+                        is Result.Success -> {
+
+                            // Jsonデータから内容物を取得
+                            val buttonItems = result.get().obj().getJSONArray("buttonItems")
+
+                            for (j in 0 until buttonItems.length()) {
+                                buttonItems.getJSONObject(j)?.let {
+                                    AKLog(AKLogLevel.DEBUG, "buttonItems $it")
+                                    val jsonObject = buttonItems.getJSONObject(j)
+                                    val buttonItems = HomeEventInfoButtonItems(
+                                        id = jsonObject.getInt("id"),
+                                        clientName = jsonObject.getString("clientName"),
+                                        titleName = jsonObject.getString("titleName"),
+                                        targetUrlStr = jsonObject.getString("targetUrlStr"),
+                                    )
+                                    this@HomeViewModel.buttonItems.value?.add(buttonItems)
+                                }
+                            }
+
+                            this@HomeViewModel.buttonItems.postValue(this@HomeViewModel.buttonItems.value)
+                        }
+                        is Result.Failure -> {
+                            val error = result.getException()
+                            AKLog(AKLogLevel.ERROR, "Error: getHomeEventInfos API通信失敗 - ステータスコード: ${error.message}")
+                        }
+                    }
+                }
+            } catch (exception: Exception) {
+                AKLog(AKLogLevel.ERROR, "Error: getHomeEventInfos API通信失敗 - 例外: ${exception.message}")
             }
         }
     }

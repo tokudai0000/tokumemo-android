@@ -22,4 +22,6 @@
     <color name="lightBlue">#2196F3</color>
     <color name="aiiro">#165E83</color>
     <color name="orange">#FFC000</color>
+
+    <color name="custom_blue">#007AFF</color>
 </resources>
