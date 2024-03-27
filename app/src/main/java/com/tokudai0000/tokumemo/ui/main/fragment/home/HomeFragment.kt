@@ -30,6 +30,7 @@ import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
 import com.tokudai0000.tokumemo.common.CustomDuoButton
 import com.tokudai0000.tokumemo.common.UrlCheckers
+import com.tokudai0000.tokumemo.domain.model.HomeEventInfoButtonItems
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
 import com.tokudai0000.tokumemo.ui.pr.PublicRelationsActivity
@@ -41,6 +42,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var view: View
     private lateinit var menuRecyclerView: RecyclerView
+    private lateinit var timer: Timer
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -51,17 +53,23 @@ class HomeFragment : Fragment() {
 
         view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // ビューの作成が完了した後、ここで初期化処理を行う
         configureNumberOfUsers()
         configureAdImages()
         configureMenuRecyclerView()
         configureHomeMiniSettingsListView()
         configureHomeEventInfos()
-
-        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.resetViewModel()
+        timer.cancel()
     }
 
     private fun configureNumberOfUsers() {
@@ -102,9 +110,9 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
-        // 広告を5000 msごとに読み込ませる
-        Timer().scheduleAtFixedRate(0, 5000) {
+        timer = Timer()
+        // 広告を2500 msごとに読み込ませる
+        timer.scheduleAtFixedRate(0, 2500) {
             viewModel.randomChoiceForAdImage(
                 adItems = viewModel.prItems,
                 displayAdItem = viewModel.displayPrItem.value
@@ -208,12 +216,12 @@ class HomeFragment : Fragment() {
 
     private fun configureHomeEventInfos() {
         viewModel.getHomeEventInfos()
-
-        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
+        viewModel.buttonItems.value = arrayListOf<HomeEventInfoButtonItems>()
+        viewModel.buttonItems.observe(viewLifecycleOwner) { buttonItems ->
             for ((index, item) in buttonItems.withIndex()) {
                 setupCustomDuoButton(view, title = item.titleName, tag = index)
             }
-        })
+        }
     }
 
     private fun setupCustomDuoButton(view: View, title: String, tag: Int) {

@@ -33,6 +33,15 @@ class HomeViewModel: ViewModel() {
 
     val libraryCalendarURL = MutableLiveData<String>()
 
+    fun resetViewModel() {
+        numberOfUsers.value = ""
+        prItems.clear()
+        univItems.clear()
+        popupItems.value = arrayListOf()
+        buttonItems.value = arrayListOf()
+        libraryCalendarURL.value = ""
+    }
+
     fun getNumberOfUsers() {
         viewModelScope.launch {
             try {
