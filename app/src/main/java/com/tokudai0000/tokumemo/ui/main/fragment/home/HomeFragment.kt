@@ -30,6 +30,7 @@ import com.tokudai0000.tokumemo.common.AKLogLevel
 import com.tokudai0000.tokumemo.common.AppConstants
 import com.tokudai0000.tokumemo.common.CustomDuoButton
 import com.tokudai0000.tokumemo.common.UrlCheckers
+import com.tokudai0000.tokumemo.domain.model.HomeEventInfoButtonItems
 import com.tokudai0000.tokumemo.domain.model.MenuDetailItem
 import com.tokudai0000.tokumemo.domain.model.MenuItem
 import com.tokudai0000.tokumemo.ui.pr.PublicRelationsActivity
@@ -208,12 +209,12 @@ class HomeFragment : Fragment() {
 
     private fun configureHomeEventInfos() {
         viewModel.getHomeEventInfos()
-
-        viewModel.buttonItems.observe(viewLifecycleOwner, { buttonItems ->
+        viewModel.buttonItems.value = arrayListOf<HomeEventInfoButtonItems>()
+        viewModel.buttonItems.observe(viewLifecycleOwner) { buttonItems ->
             for ((index, item) in buttonItems.withIndex()) {
                 setupCustomDuoButton(view, title = item.titleName, tag = index)
             }
-        })
+        }
     }
 
     private fun setupCustomDuoButton(view: View, title: String, tag: Int) {
