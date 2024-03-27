@@ -111,8 +111,8 @@ class HomeFragment : Fragment() {
             }
         }
         timer = Timer()
-        // 広告を5000 msごとに読み込ませる
-        timer.scheduleAtFixedRate(0, 5000) {
+        // 広告を2500 msごとに読み込ませる
+        timer.scheduleAtFixedRate(0, 2500) {
             viewModel.randomChoiceForAdImage(
                 adItems = viewModel.prItems,
                 displayAdItem = viewModel.displayPrItem.value
