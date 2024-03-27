@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var view: View
     private lateinit var menuRecyclerView: RecyclerView
+    private lateinit var timer: Timer
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -52,17 +53,23 @@ class HomeFragment : Fragment() {
 
         view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // ビューの作成が完了した後、ここで初期化処理を行う
         configureNumberOfUsers()
         configureAdImages()
         configureMenuRecyclerView()
         configureHomeMiniSettingsListView()
         configureHomeEventInfos()
-
-        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.resetViewModel()
+        timer.cancel()
     }
 
     private fun configureNumberOfUsers() {
@@ -103,9 +110,9 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
+        timer = Timer()
         // 広告を5000 msごとに読み込ませる
-        Timer().scheduleAtFixedRate(0, 5000) {
+        timer.scheduleAtFixedRate(0, 5000) {
             viewModel.randomChoiceForAdImage(
                 adItems = viewModel.prItems,
                 displayAdItem = viewModel.displayPrItem.value
