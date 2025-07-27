@@ -21,11 +21,11 @@ android {
         versionCode 27
 
         // 最小対応SDK
-        minSdk 34
+        minSdk 35
 
         // このSDKまでの機能を使用することができる
         // minSdk <= compileSdk
-        compileSdk 34
+        compileSdk 35
 
         // テスト実行者の指定
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
