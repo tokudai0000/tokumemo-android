@@ -51,16 +51,16 @@ android {
     //    }
 
     // コンパイルに使用するJavaのバージョン
-    // Java 8 はAndroid開発に置いてよく利用される機能が含まれている(現在もサポート中)
+    // Java 11 を使用（Java 8は廃止予定のため）
     // https://ja.wikipedia.org/wiki/Javaバージョン履歴
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
-    // KotlinコードがJava 8をターゲットとしている
+    // KotlinコードがJava 11をターゲットとしている
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 }
 
