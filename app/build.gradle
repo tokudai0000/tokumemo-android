@@ -50,6 +50,10 @@ android {
     //        enabled = true
     //    }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     // コンパイルに使用するJavaのバージョン
     // Java 11 を使用（Java 8は廃止予定のため）
     // https://ja.wikipedia.org/wiki/Javaバージョン履歴
