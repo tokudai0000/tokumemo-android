@@ -21,7 +21,7 @@ android {
         versionCode 26
 
         // 最小対応SDK
-        minSdk 33
+        minSdk 34
 
         // このSDKまでの機能を使用することができる
         // minSdk <= compileSdk
