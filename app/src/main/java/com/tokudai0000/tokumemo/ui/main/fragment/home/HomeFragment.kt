@@ -177,24 +177,9 @@ class HomeFragment : Fragment() {
         val itemNames = items.map { it.title }.toTypedArray()
 
         builder.setItems(itemNames) { dialog, which ->
-            // 図書館カレンダー.pdfのURLをWebスクレイピングしてくる
-            if (items[which].id == MenuDetailItem.Type.LibraryCalendarMain ||
-                items[which].id == MenuDetailItem.Type.LibraryCalendarKura ) {
-                items[which].targetUrl?.let {
-                    viewModel.getLibraryCalendarURL(it)
-                    viewModel.libraryCalendarURL.observe(viewLifecycleOwner) { urlStr ->
-                        val intent = Intent(requireContext(), WebActivity::class.java)
-                        val url = UrlCheckers.convertToGoogleDocsViewerUrlIfNeeded(urlStr)
-                        intent.putExtra(WebActivity.KEY_URL, url)
-                        startActivity(intent)
-                        AKLog(AKLogLevel.DEBUG, "URL - $url")
-                    }
-                }
-            }else{
                 val intent = Intent(requireContext(), WebActivity::class.java)
                 intent.putExtra(WebActivity.KEY_URL, items[which].targetUrl)
                 startActivity(intent)
-            }
         }
 
         val dialog = builder.create()
