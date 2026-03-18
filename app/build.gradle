@@ -16,9 +16,9 @@ android {
         applicationId "com.tokudai0000.tokumemo"
 
         // アプリのバージョンを文字列で表したもの
-        versionName "5.1.3"
+        versionName "5.1.4"
         // アプリのバージョンを数値で表したも(各アップデートごとに値を「+1」する)
-        versionCode 27
+        versionCode 28
 
         // 最小対応SDK
         minSdk 35
