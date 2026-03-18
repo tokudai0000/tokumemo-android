@@ -16,16 +16,16 @@ android {
         applicationId "com.tokudai0000.tokumemo"
 
         // アプリのバージョンを文字列で表したもの
-        versionName "5.1.2"
+        versionName "5.1.3"
         // アプリのバージョンを数値で表したも(各アップデートごとに値を「+1」する)
-        versionCode 26
+        versionCode 27
 
         // 最小対応SDK
-        minSdk 33
+        minSdk 35
 
         // このSDKまでの機能を使用することができる
         // minSdk <= compileSdk
-        compileSdk 34
+        compileSdk 35
 
         // テスト実行者の指定
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -50,17 +50,21 @@ android {
     //        enabled = true
     //    }
 
-    // コンパイルに使用するJavaのバージョン
-    // Java 8 はAndroid開発に置いてよく利用される機能が含まれている(現在もサポート中)
-    // https://ja.wikipedia.org/wiki/Javaバージョン履歴
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    buildFeatures {
+        buildConfig = true
     }
 
-    // KotlinコードがJava 8をターゲットとしている
+    // コンパイルに使用するJavaのバージョン
+    // Java 11 を使用（Java 8は廃止予定のため）
+    // https://ja.wikipedia.org/wiki/Javaバージョン履歴
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // KotlinコードがJava 11をターゲットとしている
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 }
 
