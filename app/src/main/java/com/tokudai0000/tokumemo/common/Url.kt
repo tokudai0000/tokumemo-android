@@ -48,10 +48,10 @@ enum class Url(val urlString: String) {
 
 
     // ----- 図書館 関連 -----
-    /// 図書館サイト(本館PC)
-    LibraryHomePageMainPC("https://www.lib.tokushima-u.ac.jp/"),
-    /// 図書館サイト(蔵本PC)
-    LibraryHomePageKuraPC("https://www.lib.tokushima-u.ac.jp/kura.shtml"),
+    /// 図書館サイト(本館)
+    LibraryHomePageMainPC("https://opac.lib.tokushima-u.ac.jp/library/"),
+    /// 図書館サイト(蔵本)
+    LibraryHomePageKuraPC("https://opac.lib.tokushima-u.ac.jp/library/"),
     /// 本貸出し期間延長
     LibraryBookLendingExtension("https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"),
     /// 本購入リクエスト
